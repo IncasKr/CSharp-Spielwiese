@@ -26,7 +26,7 @@ namespace XSocketsClient
             
             client.OnDisconnected += (ws, e) =>
             {
-                Console.WriteLine($"You are deconnected");
+                Console.WriteLine($"You are disconnected");
             };
 
             client.OnError += (ws, e) =>
@@ -38,7 +38,7 @@ namespace XSocketsClient
             int i = 10;
             do
             {
-                Console.Write($"it writes some text. \nDeconnection in: {i} second(s)... ");
+                Console.Write($"it writes some text. \nDisconnection in: {i} second(s)... ");
                 Thread.Sleep(1000);
                 i--;
                 Console.Clear();

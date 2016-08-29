@@ -143,7 +143,7 @@ namespace ServerSecure
                 //        client.Instance.WriteString($"the client [{ws.GetHashCode()}] is deconnected!");
                 //    }
                 //}
-                Console.WriteLine($"The client {ws.RemoteEndpoint.Address.ToString()} ist deconnected.");
+                Console.WriteLine($"The client {ws.RemoteEndpoint.Address.ToString()} ist disconnected.");
                 ws.Dispose();
             }
         }

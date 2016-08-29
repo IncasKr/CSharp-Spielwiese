@@ -14,6 +14,14 @@ namespace ServerNoSecure
         private static string SQLResponse = string.Empty;
         static void Main(string[] args)
         {
+            /* Request format:
+             * #TYPE#Table_name#request_string
+             * 
+             * Default request: #request
+             * 
+             * Ein beispiel von request:
+             * #sql#configuration#select [key], [value], [lastChangeDateTime] from configuration where section='websocketproxy'
+             */
             using (var server = new WebSocketEventListener(new IPEndPoint(IPAddress.Any, 23600)/*, new X509Certificate2(@"..\certificat\Test.pfx", "ndsoft")*/))
             {               
                 server.OnConnect += (ws) =>
@@ -28,12 +36,16 @@ namespace ServerNoSecure
                     if (msg[0].ToString() == "#")
                     {
                         string[] sqlElement = msg.Substring(1, msg.Length - 1).Split('#');
-                        if (sqlElement.Length == 3)
+                        if (sqlElement.Length == 3 || (sqlElement.Length > 0 && sqlElement[0].ToUpper() == "REQUEST"))
                         {
                             switch (sqlElement[0].ToUpper())
                             {
                                 case "SQL":
                                     GetRequest(sqlElement[1], sqlElement[2]);
+                                    break;
+                                case "REQUEST":
+                                    Data dataIC = new Data();
+                                    GetRequest("Configuration", dataIC.Request());
                                     break;
                             }
                             ws.WriteStringAsync(SQLResponse, CancellationToken.None).Wait();

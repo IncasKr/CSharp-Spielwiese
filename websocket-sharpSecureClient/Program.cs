@@ -27,7 +27,7 @@ namespace websocket_sharpSecureClient
                     Console.WriteLine("Welcome to Intracall Server (IC)");
 
                 ws.Connect();
-                Console.WriteLine("Give a name of firm:");
+                Console.WriteLine("Give a message to send:");
                 string chaine;
                 do
                 {

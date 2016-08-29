@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Sockets;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -72,7 +71,7 @@ namespace Intracall
         {
             while (webSocket.State == WebSocketState.Open)
             {
-                Console.WriteLine("Write data to send to server or 'Exit' to deconnect.");
+                Console.WriteLine("Write data to send to server or 'Exit' to disconnect.");
                 string dataToSend = Console.ReadLine();
                 if (dataToSend.ToUpper().Equals("EXIT"))
                 {

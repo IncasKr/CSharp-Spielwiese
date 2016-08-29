@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServerNoSecure
 {
@@ -54,7 +51,7 @@ namespace ServerNoSecure
         public Table Result;
         private List<string> allToList;
 
-        public Data(string dataSource = "Douabalet-NB", string initialCatalog = "NDSoft", bool integratedSecurity = true)
+        public Data(string dataSource = "IC-WebDev", string initialCatalog = "Intracall", bool integratedSecurity = true)
         {
             conIC = new SqlConnection();
             cmd = new SqlCommand();
@@ -71,7 +68,7 @@ namespace ServerNoSecure
         {
             if (conIC.State == ConnectionState.Closed)
             {
-                conIC.ConnectionString = "Data Source=Douabalet-NB; Initial Catalog=NDSoft; integrated security=true";
+                conIC.ConnectionString = "Data Source=IC-WebDev;Initial Catalog=Intracall;Persist Security Info=True;User ID=sa;Password=xs4intracall";
                 conIC.Open();
             }
         }
@@ -156,9 +153,9 @@ namespace ServerNoSecure
             return cmd.ExecuteReader();
         }
 
-        private string Request()
+        public string Request()
         {
-            return "SELECT StadtID, Name, Einwohner FROM Stadt WHERE Einwohner > 0";
+            return "SELECT [key], [value], [lastChangeDateTime] FROM Configuration WHERE [section] = 'WebsocketProxy'";
         }
 
         public List<string> toList()
