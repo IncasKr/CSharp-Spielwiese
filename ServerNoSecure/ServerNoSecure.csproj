@@ -42,13 +42,13 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="vtortola.WebSockets">
-      <HintPath>..\..\TestFrameworkSolution\packages\vtortola.WebSocketListener.2.2.0.1\lib\net45\vtortola.WebSockets.dll</HintPath>
+      <HintPath>..\packages\vtortola.WebSocketListener.2.2.1.0\lib\net45\vtortola.WebSockets.dll</HintPath>
     </Reference>
     <Reference Include="vtortola.WebSockets.Deflate">
-      <HintPath>..\..\TestFrameworkSolution\packages\vtortola.WebSocketListener.2.2.0.1\lib\net45\vtortola.WebSockets.Deflate.dll</HintPath>
+      <HintPath>..\packages\vtortola.WebSocketListener.2.2.1.0\lib\net45\vtortola.WebSockets.Deflate.dll</HintPath>
     </Reference>
     <Reference Include="vtortola.WebSockets.Rfc6455">
-      <HintPath>..\..\TestFrameworkSolution\packages\vtortola.WebSocketListener.2.2.0.1\lib\net45\vtortola.WebSockets.Rfc6455.dll</HintPath>
+      <HintPath>..\packages\vtortola.WebSocketListener.2.2.1.0\lib\net45\vtortola.WebSockets.Rfc6455.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
