@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbortMethode", "AbortMethode\AbortMethode.csproj", "{0D63669B-1B46-4808-B9E4-FD1A70E41B60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceCondition1", "RaceCondition1\RaceCondition1.csproj", "{0E44F0C2-F186-45AE-A890-BB7D190E7B5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockSolution", "LockSolution\LockSolution.csproj", "{B31F3F81-8D49-4B54-B06E-52C6D1B5319F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorSolution", "MonitorSolution\MonitorSolution.csproj", "{AAC19B54-31C9-49DB-B1D3-A861F0143EA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoResetEventSolution", "AutoResetEventSolution\AutoResetEventSolution.csproj", "{442C654E-4D2A-4536-9C4E-9D09D241409A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManualResetEventSolution", "ManualResetEventSolution\ManualResetEventSolution.csproj", "{39E5464D-2F2E-4460-A512-79296C1D733C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutexSolution", "MutexSolution\MutexSolution.csproj", "{C4F1E611-8452-479F-958A-D7FD0B256A73}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D63669B-1B46-4808-B9E4-FD1A70E41B60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D63669B-1B46-4808-B9E4-FD1A70E41B60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D63669B-1B46-4808-B9E4-FD1A70E41B60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D63669B-1B46-4808-B9E4-FD1A70E41B60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E44F0C2-F186-45AE-A890-BB7D190E7B5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E44F0C2-F186-45AE-A890-BB7D190E7B5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E44F0C2-F186-45AE-A890-BB7D190E7B5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E44F0C2-F186-45AE-A890-BB7D190E7B5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B31F3F81-8D49-4B54-B06E-52C6D1B5319F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B31F3F81-8D49-4B54-B06E-52C6D1B5319F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B31F3F81-8D49-4B54-B06E-52C6D1B5319F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B31F3F81-8D49-4B54-B06E-52C6D1B5319F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAC19B54-31C9-49DB-B1D3-A861F0143EA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAC19B54-31C9-49DB-B1D3-A861F0143EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAC19B54-31C9-49DB-B1D3-A861F0143EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAC19B54-31C9-49DB-B1D3-A861F0143EA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{442C654E-4D2A-4536-9C4E-9D09D241409A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{442C654E-4D2A-4536-9C4E-9D09D241409A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{442C654E-4D2A-4536-9C4E-9D09D241409A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{442C654E-4D2A-4536-9C4E-9D09D241409A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39E5464D-2F2E-4460-A512-79296C1D733C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39E5464D-2F2E-4460-A512-79296C1D733C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39E5464D-2F2E-4460-A512-79296C1D733C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39E5464D-2F2E-4460-A512-79296C1D733C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4F1E611-8452-479F-958A-D7FD0B256A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4F1E611-8452-479F-958A-D7FD0B256A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4F1E611-8452-479F-958A-D7FD0B256A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4F1E611-8452-479F-958A-D7FD0B256A73}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

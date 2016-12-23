@@ -418,28 +418,28 @@ namespace ClientNoSecure
                 Console.WriteLine("Attempting to connect to server");
                 if (client != null) client.Close();
                 client = null;
-                client = new Client(null);
+                client = new Client(@"..\..\..\client.json");
 
-                client.AsyncMessageReceived = AsyncMessageReceived;
-                client.SyncMessageReceived = SyncMessageReceived;
-                // client.ServerDisconnected = ServerDisconnected;
-                client.ServerDisconnected = ConnectToServer;
+                //client.AsyncMessageReceived = AsyncMessageReceived;
+                //client.SyncMessageReceived = SyncMessageReceived;
+                client.ServerDisconnected = ServerDisconnected;
+                //client.ServerDisconnected = ConnectToServer;
                 client.ServerConnected = ServerConnected;
                 client.ClientJoinedServer = ClientJoinedServer;
                 client.ClientLeftServer = ClientLeftServer;
-                client.ClientJoinedChannel = ClientJoinedChannel;
-                client.ClientLeftChannel = ClientLeftChannel;
-                client.SubscriberJoinedChannel = SubscriberJoinedChannel;
-                client.SubscriberLeftChannel = SubscriberLeftChannel;
-                // client.LogMessage = LogMessage;
-                client.LogMessage = null;
+                //client.ClientJoinedChannel = ClientJoinedChannel;
+                //client.ClientLeftChannel = ClientLeftChannel;
+                //client.SubscriberJoinedChannel = SubscriberJoinedChannel;
+                //client.SubscriberLeftChannel = SubscriberLeftChannel;
+                //client.LogMessage = LogMessage;
+                //client.LogMessage = null;
 
                 Message response;
                 if (!client.Login(out response))
                 {
                     Console.WriteLine("Unable to login, retrying in five seconds");
                     Thread.Sleep(5000);
-                    return ConnectToServer();
+                    return true; // ConnectToServer();
                 }
 
                 Console.WriteLine("Successfully connected to server");
@@ -450,14 +450,14 @@ namespace ClientNoSecure
                 Console.WriteLine("*** Unable to connect to server (port not reachable)");
                 Console.WriteLine("*** Retrying in five seconds");
                 Thread.Sleep(5000);
-                return ConnectToServer();
+                return true; // ConnectToServer();
             }
             catch (TimeoutException)
             {
                 Console.WriteLine("*** Timeout connecting to server");
                 Console.WriteLine("*** Retrying in five seconds");
                 Thread.Sleep(5000);
-                return ConnectToServer();
+                return true; // ConnectToServer();
             }
             catch (Exception e)
             {
@@ -465,7 +465,7 @@ namespace ClientNoSecure
                 PrintException("ConnectToServer", e);
                 Console.WriteLine("*** Retrying in five seconds");
                 Thread.Sleep(5000);
-                return ConnectToServer();
+                return true; // ConnectToServer();
             }
         }
 

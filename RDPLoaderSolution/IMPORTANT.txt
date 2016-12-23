@@ -1,0 +1,6 @@
+Before launching the file RDPRegister.reg:
+1) compile the project
+2) copy the path of RDPLoader.exe and replace the path in the RDPRegister.reg 
+3) save it and launch the file RDPRegister.reg by double clicking.
+
+Test the project by opening the file RDPIndex.html and by clicking on "IC-Webdev access"

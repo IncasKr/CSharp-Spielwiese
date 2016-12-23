@@ -287,21 +287,21 @@ namespace ServerNoSecure
             //
             // initialize with default configuration
             //
-            server = new Server(null);
-            server.MessageReceived = MessageReceived;
-            server.ServerStopped = StartServer;
+            server = new Server(@"..\..\..\server.json");
+            //server.MessageReceived = MessageReceived;
+            //server.ServerStopped = StartServer;
             server.ClientConnected = ClientConnected;
             server.ClientLogin = ClientLogin;
             server.ClientDisconnected = ClientDisconnected;
-            server.LogMessage = LogMessage;
-            server.LogMessage = null;
+            //server.LogMessage = LogMessage;
+            //server.LogMessage = null;
 
             return true;
         }
 
         static bool MessageReceived(Message msg)
         {
-            // Console.WriteLine(msg.ToString());
+             Console.WriteLine(msg.ToString());
             return true;
         }
 

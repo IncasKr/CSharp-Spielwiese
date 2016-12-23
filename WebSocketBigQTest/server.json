@@ -1,0 +1,48 @@
+{
+	"Version": "1.0.0",
+  "AcceptInvalidSSLCerts": true,
+  "Files": {
+    "UsersFile": "users.json",
+    "PermissionsFile": "permissions.json"
+  },
+	"Heartbeat": {
+		"Enable": true,
+		"IntervalMs": 1000,
+		"MaxFailures": 5
+	},
+	"Notification": {
+		"MsgAcknowledgement": false,
+		"ServerJoinNotification": true,
+		"ChannelJoinNotification": true
+	},
+	"Debug": {
+		"Enable": true,
+		"LockMethodResponseTime": true,
+		"MsgResponseTime": true,
+		"ConsoleLogging": true
+	},
+	"TcpServer": {
+		"Enable": true,
+		"IP": "127.0.0.1",
+		"Port": 8000
+	},
+	"TcpSSLServer": {
+		"Enable": false,
+		"IP": "127.0.0.1",
+		"Port": 8001,
+		"PFXCertFile": "Test.pfx",
+		"PFXCertPassword": "ndsoft"
+	},
+	"WebsocketServer": {
+		"Enable": false,
+		"IP": "127.0.0.1",
+		"Port": 8002
+	},
+	"WebsocketSSLServer": {
+		"Enable": false,
+		"IP": "0.0.0.0",
+		"Port": 8003,
+		"PFXCertFile": "Test.pfx",
+		"PFXCertPassword": "ndsoft"
+	}
+}
