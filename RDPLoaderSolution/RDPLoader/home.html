@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <title>RDP Test</title>
+        <script>
+            window.openRDP = function (obj) {
+                var objFromJson = {};
+                if (obj == 1) {
+                    objFromJson = { "Username": "Administrator", "Password": "eHM0aW50cmFjYWxs", "AdminSession": isAdmin.checked, "Host": inputHost.value };
+                }
+                else {
+                    objFromJson = { "Username": "Gladis", "Password": "cXdlcnR6", "AdminSession": isAdmin.checked, "Host": inputHost.value, "Port": inputPort.value, "Width": inputWidth.value, "Height": inputHeight.value, "Colors": inputColors.value };
+                }
+
+                var url = "remotedesktop://" + JSON.stringify(objFromJson);
+
+                inputRes.value = url;
+                window.location.href = url;                    
+            }
+
+            window.init = function () {
+                if (defaultHost.checked) {
+                    inputHost.value = "IC-Webdev";
+                }
+                if (defaultPort.checked) {
+                    inputPort.value = 3389;
+                }
+                if (defaultWidth.checked) {
+                    inputWidth.value = 1024;
+                }
+                if (defaultHeight.checked) {
+                    inputHeight.value = 720;
+                }
+                if (defaultColors.checked) {
+                    inputColors.selectedIndex = 1;
+                }
+                inputRes.value = "";
+            }          
+        </script>
+    </head>
+    <body>
+        <l>
+            Host:&emsp;&emsp;&emsp;
+            <input type="text" id="inputHost" value="3389" disabled="disabled" />
+            <input type="checkbox" id="defaultHost" checked="checked" onchange="inputHost.disabled = defaultHost.checked; init()" />
+            <span style="color:blueviolet">default value of Host</span>
+            <br />
+        </l>
+        <l>
+            Port: &emsp;&emsp;&emsp;
+            <input type="number" id="inputPort" value="3389" disabled="disabled" />
+            <input type="checkbox" id="defaultPort" checked="checked" onchange="inputPort.disabled = defaultPort.checked; init()" />
+            <span style="color:blueviolet">default value of Port</span>
+            <br />
+        </l>
+        <l>
+            Width: &emsp; &emsp;
+            <input type="number" id="inputWidth" value="1024" disabled="disabled" />
+            <input type="checkbox" id="defaultWidth" checked="checked" onchange="inputWidth.disabled = defaultWidth.checked; init()" />
+            <span style="color:blueviolet">default value of Width</span>
+            <br />
+        </l>
+        <l>
+            Height:&emsp; &emsp;
+            <input type="number" id="inputHeight" value="720" disabled="disabled" />
+            <input type="checkbox" id="defaultHeight" checked="checked" onchange="inputHeight.disabled = defaultHeight.checked; init()" />
+            <span style="color:blueviolet">default value of Height</span>
+            &emsp;&emsp;&emsp;&emsp;
+        </l>
+        <l>
+            <input type="checkbox" id="isAdmin" />
+            <span style="color:red">The agent is admin</span>
+            <br />
+        </l>
+        <l>
+            ColorBits:&emsp;
+            <select id="inputColors" name="selectColor" disabled="disabled">
+                <option value="4">4 Bits (16)</option>
+                <option value="8" selected>8 Bits (256)</option>
+                <option value="15">15 Bits (32765)</option>
+                <option value="16">16 Bits (65536)</option>
+                <option value="24">24 Bits (16777216)</option>
+                <option value="32">32 Bits (4294967296)</option>
+            </select>
+            <input type="checkbox" id="defaultColors" checked="checked" onchange="inputColors.disabled = defaultColors.checked; init()" />
+            <span style="color:blueviolet">default value of Color Bits</span>
+            <br />
+        </l>
+        <l>
+            Result:  
+            <input type="text" readonly id="inputRes" value="" size="175" />
+            <br /><br />
+        </l>
+        <button onclick="openRDP(1)">Start rdpLoader without parameters</button>&emsp;&emsp;
+        <button onclick="openRDP(2)">Start rdpLoader with parameters</button>
+</body>
+</html>

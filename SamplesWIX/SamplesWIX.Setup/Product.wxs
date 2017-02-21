@@ -1,30 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="SamplesWIX.Setup" Language="1033" Version="1.0.0.0" Manufacturer="" UpgradeCode="02a9f022-25e1-4d21-80f9-ed46ab33967a">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
-
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
-
-		<Feature Id="ProductFeature" Title="SamplesWIX.Setup" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
-		</Feature>
-	</Product>
-
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="SamplesWIX.Setup" />
-			</Directory>
-		</Directory>
-	</Fragment>
-
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<!-- <Component Id="ProductComponent"> -->
-				<!-- TODO: Insert files, registry keys, and other resources here. -->
-			<!-- </Component> -->
-		</ComponentGroup>
-	</Fragment>
+  <Product Id="{B1676161-83D6-46DC-AA4F-BBEF35D31F58}"
+           Name="SampleCalc"
+           Language="1033"
+           Version="1.0.0.0"
+           Manufacturer="INCAS GmbH"
+           UpgradeCode="{38FD6C52-A76A-475F-B6B6-B33837BA1730}">
+    <Package InstallerVersion="301" Compressed="yes" />
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    <!--Directory structure-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPDir" Name="ICSampleCalc" />
+        <Directory Id="ProgramMenuFolder">
+          <Directory Id="MyShortcutsDir" Name="ICSampleCalc" />
+        </Directory>
+      </Directory>
+    </Directory>
+    <!--Components-->
+    <DirectoryRef Id="APPDir">
+      <Component Id="CMP_InstallMeTXT"
+                 Guid="{AA9BF4AC-2ECA-4BDD-8F43-391ABAAE81FA}">
+        <File Id="FILE_InstallMeTXT"
+              Source="exampleCalculater.exe"
+              KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <!--Start Menu Shortcuts-->
+    <DirectoryRef Id="MyShortcutsDir">
+      <Component Id="CMP_DocumentationShortcut"
+                 Guid="{3F74CBDB-93D2-4C02-B1E9-3840538C4969}">
+        <Shortcut Id="DocumentationStartMenuShortcut"
+                  Name="ICCalculater"
+                  Description="Read Awesome Software Documentation"
+                  Target="[APPDir]exampleCalculater.exe" />
+        <Shortcut Id="UninstallShortcut"
+                  Name="Uninstall InstallPractice"
+                  Description="Uninstalls Awesome Software"
+                  Target="[System64Folder]msiexec.exe"
+                  Arguments="/x [ProductCode]" />
+        <RemoveFolder Id="RemoveMyShortcutsDir"
+                      On="uninstall" />
+        <RegistryValue Root="HKCU"
+               Key="Software\Microsoft\AwesomeSoftware"
+               Name="installed"
+               Type="integer"
+               Value="1"
+               KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <!--Features-->
+    <Feature Id="ProductFeature"
+             Title="Main Product"
+             Level="1">
+      <ComponentRef Id="CMP_InstallMeTXT" />
+      <ComponentRef Id="CMP_DocumentationShortcut" />
+    </Feature>
+  </Product>
 </Wix>

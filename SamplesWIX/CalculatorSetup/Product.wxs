@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--VARIABLES-->
+<?define ProductVersion = "1.1.2.2"?>
+<?define ProductUpgradeCode = "{B17CABC7-143B-4D2E-86F6-684C17BB4EB1}"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name=" Example of Calculator by $(var.Autor)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="INCAS GmbH" UpgradeCode="$(var.ProductUpgradeCode)">
+		<Package InstallerVersion="200" Compressed="yes" Comments="Windows installer Package" />
+    <Media Id="1" Cabinet="product.cab" EmbedCab="yes" />
+    <!--Definition of ICON-->
+    <Icon Id="ProductIcon" SourceFile="soft.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="ProductIcon"/>
+    <!--Definition of LINK-->
+    <Property Id="ARPHELPLINK" Value="http://www.incas.de"/>
+    <Property Id="ARPURLINFOABOUT" Value="http://www.intracall.de"/>
+    <Property Id="ARPNOREPAIR" Value="1"/>   
+    
+    <!--Definition Windows Dialog-->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+      <!-- Skip license dialog -->
+      <Publish Dialog="WelcomeDlg"
+               Control="Next"
+               Event="NewDialog"
+               Value="InstallDirDlg"
+               Order="2">
+        1
+      </Publish>
+      <Publish Dialog="InstallDirDlg"
+               Control="Back"
+               Event="NewDialog"
+               Value="WelcomeDlg"
+               Order="2">
+        1
+      </Publish>
+    </UI>
+    
+    <!--Defintion UPGRADE-->
+    <Upgrade Id="$(var.ProductUpgradeCode)">
+      <UpgradeVersion Minimum="$(var.ProductVersion)" OnlyDetect="yes" Property="NEWERVERSIONDETECTED" />
+      <UpgradeVersion Minimum="1.0.0.1" Maximum="$(var.ProductVersion)" IncludeMinimum="yes" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED" />
+    </Upgrade>
+    <Condition Message="A newer version of this software is already installed.">NOT NEWERVERSIONDETECTED</Condition>
+
+    <!--Definition Files Directory-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INCASDIR" Name="INCAS">
+          <Directory Id="INSTALLDIR" Name="SampleCalc">
+            <Component Id="ApplicationFiles" Guid="{6287E420-A5C8-4D2A-AF05-F2BBBEA7C0E7}">
+              <File Id="ApplicationFile1" Source="exampleCalculater.exe" />
+              <ProgId Id="exampleCalculater.file" Description="IC Desktop config file">
+                <Extension Id="2">
+                  <Verb Id="open" Command="Open" TargetFile="ApplicationFile1" />
+                </Extension>
+              </ProgId>              
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <!--Definition Menu Directory-->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ProgramMenuSubFolder" Name="Example of Calculator">
+          <Component Id="ApplicationShortcuts" Guid="{1643E46B-5106-4B3D-BE6C-CF7F22AD99A0}">
+            <Shortcut Id="ApplicationShortcuts1" Name="ExampleCalculator" Description="Example of Calculator" Target="[INSTALLDIR]exampleCalculater.exe" WorkingDirectory="INSTALLDIR" />
+            <RegistryValue Root="HKCU" Key="Software\INCAS\ExampleCalculator" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+            <RemoveFolder Id="ProgrammenuSubFolder" On="uninstall"/>
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallValidate" />
+    </InstallExecuteSequence>
+    
+    <!--Definition Features-->
+		<Feature Id="DefaultFeature" Level="1">
+			<ComponentRef Id="ApplicationFiles" />
+      <ComponentRef Id="ApplicationShortcuts"/>
+		</Feature>
+	</Product>
+</Wix>

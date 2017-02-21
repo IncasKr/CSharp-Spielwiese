@@ -7,6 +7,10 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "SamplesWIX.Setup", "Samples
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamplesWIX.Core", "SamplesWIX.Core\SamplesWIX.Core.csproj", "{3CFBBA07-CB99-4BEF-A3FC-D73532E50C89}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "CalculatorSetup", "CalculatorSetup\CalculatorSetup.wixproj", "{6C05A81B-437D-4D45-B63E-423DF94A4BD7}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "FullSetup", "FullSetup\FullSetup.wixproj", "{9117093B-418A-42D6-9502-ECDEB787E544}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,18 @@ Global
 		{3CFBBA07-CB99-4BEF-A3FC-D73532E50C89}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3CFBBA07-CB99-4BEF-A3FC-D73532E50C89}.Release|x86.ActiveCfg = Release|Any CPU
 		{3CFBBA07-CB99-4BEF-A3FC-D73532E50C89}.Release|x86.Build.0 = Release|Any CPU
+		{6C05A81B-437D-4D45-B63E-423DF94A4BD7}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{6C05A81B-437D-4D45-B63E-423DF94A4BD7}.Debug|x86.ActiveCfg = Debug|x86
+		{6C05A81B-437D-4D45-B63E-423DF94A4BD7}.Debug|x86.Build.0 = Debug|x86
+		{6C05A81B-437D-4D45-B63E-423DF94A4BD7}.Release|Any CPU.ActiveCfg = Release|x86
+		{6C05A81B-437D-4D45-B63E-423DF94A4BD7}.Release|x86.ActiveCfg = Release|x86
+		{6C05A81B-437D-4D45-B63E-423DF94A4BD7}.Release|x86.Build.0 = Release|x86
+		{9117093B-418A-42D6-9502-ECDEB787E544}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{9117093B-418A-42D6-9502-ECDEB787E544}.Debug|x86.ActiveCfg = Debug|x86
+		{9117093B-418A-42D6-9502-ECDEB787E544}.Debug|x86.Build.0 = Debug|x86
+		{9117093B-418A-42D6-9502-ECDEB787E544}.Release|Any CPU.ActiveCfg = Release|x86
+		{9117093B-418A-42D6-9502-ECDEB787E544}.Release|x86.ActiveCfg = Release|x86
+		{9117093B-418A-42D6-9502-ECDEB787E544}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

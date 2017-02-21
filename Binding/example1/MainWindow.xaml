@@ -15,7 +15,7 @@
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="HauptList" Grid.Column="0" ItemsSource="{Binding ListOfTasks}" Margin="0,26,0,0" >
+        <ListBox x:Name="HauptList" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding ListOfTasks}" Margin="10,26,272,5" Grid.ColumnSpan="2" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -26,12 +26,12 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListView x:Name="tbList" ItemsSource="{Binding SelectedItem.Task.Description, ElementName=HauptList, Mode=Default}" Margin="10,26,10,0" Width="257" Grid.Column="1">
-            <ListView.View>
+        <ListView x:Name="tbList" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding SelectedItem.ID, ElementName=HauptList, Mode=TwoWay}" Margin="287,26,10,0" Width="257">
+            <!--<ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description, Mode=TwoWay}"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=ID, ElementName=HauptList, Mode=TwoWay}" />
                 </GridView>
-            </ListView.View>
+            </ListView.View>-->
         </ListView>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
             <Button x:Name="btnAdd" Content="Add element" Grid.Row="1" Grid.Column="0" Click="btnAdd_Click" />
