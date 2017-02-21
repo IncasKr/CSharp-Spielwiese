@@ -9,9 +9,9 @@ namespace HelloWorld.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        public string Index()
+        public string Index(string id)
         {
-            return "Hello World MVC, hello Gladis";
+            return "Hello World MVC, hello " + id;
         }
     }
 }
