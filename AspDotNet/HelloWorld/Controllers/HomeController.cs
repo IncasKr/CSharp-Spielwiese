@@ -30,11 +30,11 @@ namespace HelloWorld.Controllers
             return View();
         }
 
-        public ActionResult FindClient(string name)
+        public ActionResult FindClient(string id)
         {
-            ViewData["Name"] = name;
+            ViewData["Name"] = id;
             Clients clients = new Clients();
-            Client client = clients.GetClients().FirstOrDefault(c => c.Name == name);
+            Client client = clients.GetClients().FirstOrDefault(c => c.Name == id);
             if (client != null)
             {
                 ViewData["Age"] = client.Age;
