@@ -9,9 +9,17 @@ namespace HelloWorld.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
-            return View();
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return View("Error");
+            }
+            else
+            {
+                ViewData["Name"] = id;
+                return View();
+            }           
         }
     }
 }
