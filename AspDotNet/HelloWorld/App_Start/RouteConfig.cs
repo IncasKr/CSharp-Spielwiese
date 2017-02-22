@@ -14,6 +14,36 @@ namespace HelloWorld
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Add",
+                url: "Add/{value1}/{value2}",
+                defaults: new { controller = "Calculator", action = "Add", value1 = 0, value2 = 0 }
+            );
+
+            routes.MapRoute(
+                name: "Diff",
+                url: "Diff/{value1}/{value2}",
+                defaults: new { controller = "Calculator", action = "Diff", value1 = 0, value2 = 0 }
+            );
+
+            routes.MapRoute(
+                name: "Div",
+                url: "Div/{value1}/{value2}",
+                defaults: new { controller = "Calculator", action = "Div", value1 = 0, value2 = 0 }
+            );
+
+            routes.MapRoute(
+                name: "Mult",
+                url: "Mult/{value1}/{value2}",
+                defaults: new { controller = "Calculator", action = "Mult", value1 = 0, value2 = 0 }
+            );
+
+            routes.MapRoute(
+                name: "Weather",
+                url: "{day}/{month}/{year}",
+                defaults: new { controller = "Weather", action = "Display" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
