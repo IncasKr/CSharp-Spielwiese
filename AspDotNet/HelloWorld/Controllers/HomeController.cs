@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace HelloWorld.Controllers
 {
     public class HomeController : Controller
     {
         // GET: Home
+        public string Start(string id)
+        {
+            return HtmlHelper.GenerateLink(Request.RequestContext, RouteTable.Routes, "Zur link", null, "Index", "Home", new RouteValueDictionary { { "id", id } }, null);
+        }
         public ActionResult Index(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
