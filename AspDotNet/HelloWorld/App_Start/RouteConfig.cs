@@ -40,12 +40,19 @@ namespace HelloWorld
             routes.MapRoute(
                 name: "Weather",
                 url: "{day}/{month}/{year}",
-                defaults: new { controller = "Weather", action = "Display" }
+                defaults: new { controller = "Weather", action = "Display" },
+                constraints: new { day = @"\d{1,2}", month = @"\d{1,2}" , year = @"\d+" }
             );
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "GetAll",
+                url: "{controller}/{action}/{*id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }

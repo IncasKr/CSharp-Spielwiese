@@ -18,7 +18,27 @@ namespace HelloWorld.Controllers
             }
             else
             {
-                ViewData["Name"] = id;
+                var tab = id.Split('/');
+                if (tab.Length == 1)
+                {
+                    ViewData["Name"] = id;
+                }
+                else
+                {
+                    id = tab[0];
+                    for (int i = 1; i < tab.Length; i++)
+                    {
+                        if (i == tab.Length - 1)
+                        {
+                            id += $" and {tab[i]}";
+                        }
+                        else
+                        {
+                            id += $", {tab[i]}";
+                        }
+                    }
+                    ViewData["Name"] = id;
+                }
                 return View();
             }           
         }
