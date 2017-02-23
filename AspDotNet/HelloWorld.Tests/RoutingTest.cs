@@ -25,7 +25,7 @@ namespace HelloWorld.Tests
             RouteData routeData = DefineUrl("~/");
             Assert.IsNotNull(routeData);
             Assert.AreEqual("Home", routeData.Values["controller"]);
-            Assert.AreEqual("Index", routeData.Values["action"]);
+            Assert.AreEqual("Start", routeData.Values["action"]);
             Assert.AreEqual(UrlParameter.Optional, routeData.Values["id"]);
         }
 
