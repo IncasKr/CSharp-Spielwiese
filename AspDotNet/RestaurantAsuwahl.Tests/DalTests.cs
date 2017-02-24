@@ -13,7 +13,10 @@ namespace RestaurantAsuwahl.Tests
         {
             using (IDal dal = new Dal())
             {
-                dal.CreateRestaurant("Vapiano", "02151 12");
+                if (!dal.RestaurantExists("Vapiano"))
+                {
+                    dal.CreateRestaurant("Vapiano", "02151 12");
+                }
                 List<Restaurant> restos = dal.GetAllRestaurants();
 
                 Assert.IsNotNull(restos);

@@ -20,6 +20,11 @@ namespace RestaurantAsuwahl.Models
             db = new RADbContext();
         }
 
+        /// <summary>
+        /// Create a new restaurant and save it into the database.
+        /// </summary>
+        /// <param name="name">name of the restaurant</param>
+        /// <param name="telephone">telephone of the restaurant</param>
         public void CreateRestaurant(string name, string telephone)
         {
             db.Restaurants.Add(new Restaurant { Name = name, Telephone = telephone });
@@ -27,7 +32,7 @@ namespace RestaurantAsuwahl.Models
         }
 
         /// <summary>
-        /// Get the list of all restaurants.
+        /// Get the list of all restaurants from the database.
         /// </summary>
         /// <returns>Returns the list of restaurants.</returns>
         public List<Restaurant> GetAllRestaurants()
@@ -43,6 +48,11 @@ namespace RestaurantAsuwahl.Models
             db.Dispose();
         }
 
+        /// <summary>
+        /// Determines if this restaurant already exists into the database.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public bool RestaurantExists(string name)
         {
             foreach (var item in db.Restaurants.ToList())

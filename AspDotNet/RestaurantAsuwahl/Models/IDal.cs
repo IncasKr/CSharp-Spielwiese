@@ -23,5 +23,12 @@ namespace RestaurantAsuwahl.Models
         /// </summary>
         /// <returns>Returns the list of restaurants.</returns>
         List<Restaurant> GetAllRestaurants();
+
+        /// <summary>
+        /// Determines if this restaurant already exists in the data context
+        /// </summary>
+        /// <param name="name">name of the restaurant</param>
+        /// <returns></returns>
+        bool RestaurantExists(string name);
     }
 }
