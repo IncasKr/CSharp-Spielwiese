@@ -32,6 +32,23 @@ namespace RestaurantAsuwahl.Models
         }
 
         /// <summary>
+        /// Edite an existing restaurant.
+        /// </summary>
+        /// <param name="id">ID of the existing restaurant</param>
+        /// <param name="name">New name for this restaurant</param>
+        /// <param name="telephone">New telephone number for this restaurant</param>
+        public void EditRestaurant(int id, string name, string telephone)
+        {
+            Restaurant rFound = db.Restaurants.FirstOrDefault(resto => resto.Id == id);
+            if (rFound != null)
+            {
+                rFound.Name = name;
+                rFound.Telephone = telephone;
+                db.SaveChanges();
+            }
+        }
+
+        /// <summary>
         /// Get the list of all restaurants from the database.
         /// </summary>
         /// <returns>Returns the list of restaurants.</returns>

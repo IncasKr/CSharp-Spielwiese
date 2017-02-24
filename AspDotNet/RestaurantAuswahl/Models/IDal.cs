@@ -17,7 +17,15 @@ namespace RestaurantAsuwahl.Models
         /// <param name="name">Name of the restaurant</param>
         /// <param name="telephone">telephone number of the restaurant</param>
         void CreateRestaurant(string name, string telephone);
-        
+
+        /// <summary>
+        /// Edite an existing restaurant.
+        /// </summary>
+        /// <param name="id">ID of the existing restaurant</param>
+        /// <param name="name">New name for this restaurant</param>
+        /// <param name="telephone">New telephone number for this restaurant</param>
+        void EditRestaurant(int id, string name, string telephone);
+
         /// <summary>
         /// Get all restaurants from data context.
         /// </summary>
