@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -20,11 +21,13 @@ namespace RestaurantAsuwahl.Models
         /// <summary>
         /// Get or set the restaurant voted.
         /// </summary>
+        [Required]
         public virtual Restaurant Restaurant { get; set; }
 
         /// <summary>
         /// Get or set the user that initializes the vote.
         /// </summary>
+        [Required]
         public virtual User User { get; set; }
     }
 }

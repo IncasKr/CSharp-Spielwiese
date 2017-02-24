@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -14,12 +15,13 @@ namespace RestaurantAsuwahl.Models
     {
         /// <summary>
         /// Get or set the identification of the restaurant.
-        /// </summary>
+        /// </summary>        
         public int Id { get; set; }
 
         /// <summary>
         /// Get or set the name of the restaurant.
         /// </summary>
+        [Required]
         public string Name { get; set; }
 
         /// <summary>
