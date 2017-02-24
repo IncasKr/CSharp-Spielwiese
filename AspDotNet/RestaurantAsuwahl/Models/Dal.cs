@@ -42,5 +42,17 @@ namespace RestaurantAsuwahl.Models
         {
             db.Dispose();
         }
+
+        public bool RestaurantExists(string name)
+        {
+            foreach (var item in db.Restaurants.ToList())
+            {
+                if (item.Name.ToLower().Equals(name.ToLower()))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
