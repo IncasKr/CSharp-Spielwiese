@@ -21,7 +21,7 @@ namespace RestaurantAsuwahl.Models
         /// <summary>
         /// Get or set the first name of the user.
         /// </summary>
-        [Required]
+        [Required, MaxLength(25)]
         public string FirstName { get; set; }
     }
 }
