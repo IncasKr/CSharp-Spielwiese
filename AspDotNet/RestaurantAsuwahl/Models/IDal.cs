@@ -12,6 +12,13 @@ namespace RestaurantAsuwahl.Models
     public interface IDal : IDisposable
     {
         /// <summary>
+        /// Create a new restaurant.
+        /// </summary>
+        /// <param name="name">Name of the restaurant</param>
+        /// <param name="telephone">telephone number of the restaurant</param>
+        void CreateRestaurant(string name, string telephone);
+        
+        /// <summary>
         /// Get all restaurants from data context.
         /// </summary>
         /// <returns>Returns the list of restaurants.</returns>

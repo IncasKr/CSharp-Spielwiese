@@ -20,6 +20,12 @@ namespace RestaurantAsuwahl.Models
             db = new RADbContext();
         }
 
+        public void CreateRestaurant(string name, string telephone)
+        {
+            db.Restaurants.Add(new Restaurant { Name = name, Telephone = telephone });
+            db.SaveChanges();
+        }
+
         /// <summary>
         /// Get the list of all restaurants.
         /// </summary>
