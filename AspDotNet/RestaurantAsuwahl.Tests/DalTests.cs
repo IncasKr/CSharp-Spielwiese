@@ -2,12 +2,21 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestaurantAsuwahl.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace RestaurantAsuwahl.Tests
 {    
     [TestClass]
     public class DalTests
     {
+        [TestInitialize]
+        public void Init_Before_StartTests()
+        {
+            IDatabaseInitializer<RADbContext> init = new DropCreateDatabaseAlways<RADbContext>();
+            Database.SetInitializer(init);
+            init.InitializeDatabase(new RADbContext());
+        }
+
         [TestMethod]
         public void Create_NewRestaurant_And_GetIt()
         {
