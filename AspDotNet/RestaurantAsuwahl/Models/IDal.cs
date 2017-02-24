@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RestaurantAsuwahl.Models
+{
+    /// <summary>
+    /// Data Access Layer (DAL)
+    /// </summary>
+    public interface IDal : IDisposable
+    {
+        /// <summary>
+        /// Get all restaurants from data context.
+        /// </summary>
+        /// <returns>Returns the list of restaurants.</returns>
+        List<Restaurant> GetAllRestaurants();
+    }
+}
