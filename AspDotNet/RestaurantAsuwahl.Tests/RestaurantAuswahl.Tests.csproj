@@ -60,9 +60,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RestaurantAsuwahl\RestaurantAsuwahl.csproj">
+    <ProjectReference Include="..\RestaurantAsuwahl\RestaurantAuswahl.csproj">
       <Project>{94991EDD-1314-48CE-B0B9-10FF96740E90}</Project>
-      <Name>RestaurantAsuwahl</Name>
+      <Name>RestaurantAuswahl</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

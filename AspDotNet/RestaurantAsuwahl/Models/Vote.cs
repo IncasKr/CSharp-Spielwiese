@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -8,6 +9,7 @@ namespace RestaurantAsuwahl.Models
     /// <summary>
     /// Represents the voting table.
     /// </summary>
+    [Table("Vote")]
     public class Vote
     {
         /// <summary>
