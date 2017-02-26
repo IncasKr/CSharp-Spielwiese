@@ -23,5 +23,7 @@ namespace RestaurantAsuwahl.Models
         /// </summary>
         [Required, MaxLength(25)]
         public string FirstName { get; set; }
+
+        public string Password { get; set; }
     }
 }
