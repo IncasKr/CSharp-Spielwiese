@@ -116,15 +116,13 @@ namespace RestaurantAsuwahl.Models
             return BitConverter.ToString(new MD5CryptoServiceProvider().ComputeHash(ASCIIEncoding.Default.GetBytes(pwdSel)));
         }
 
-        private string GetSelConfig()
+        private static string GetSelConfig()
         {
             try
             {
-                FileStream fic = null;
-                string AppPath = System.IO.Path.GetFullPath(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
-                string path = AppPath + @".config";
-                fic = new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-                XmlTextReader txtReader = new XmlTextReader(fic);
+                string filePath = $"{Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)}\\machine.config";
+                XmlTextReader txtReader = new XmlTextReader(filePath);
+                txtReader.WhitespaceHandling = WhitespaceHandling.None;
                 string strValue = "";
 
                 while (txtReader.Read())
