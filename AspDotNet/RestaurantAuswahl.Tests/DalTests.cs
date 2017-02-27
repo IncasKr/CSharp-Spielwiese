@@ -1,9 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestaurantAsuwahl.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Text;
 
 namespace RestaurantAsuwahl.Tests
 {    
