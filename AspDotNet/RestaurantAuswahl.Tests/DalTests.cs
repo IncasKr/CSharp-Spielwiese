@@ -164,7 +164,6 @@ namespace RestaurantAsuwahl.Tests
             int idUtilisateur = dal.AddUser("Nouvel utilisateur", "12345");
             dal.CreateRestaurant("La bonne fourchette", "0102030405");
             dal.AddVote(idSondage, 1, idUtilisateur);
-
             bool aVote = dal.AlreadyVoted(idSondage, idUtilisateur.ToString());
 
             Assert.IsTrue(aVote);

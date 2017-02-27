@@ -15,7 +15,7 @@ namespace RestaurantAsuwahl.Models
     public class Dal : IDal
     {
         private RADbContext db;
-
+        
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -26,34 +26,41 @@ namespace RestaurantAsuwahl.Models
 
         public int AddUser(string name, string password)
         {
-            return db.Users.Add(new User { FirstName = name, Password = EncodeMD5(password) }).Id;
+            User user = db.Users.Add(new User { FirstName = name, Password = EncodeMD5(password) });
+            if (user != null)
+            {
+                db.SaveChanges();
+                return user.Id;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public void AddVote(int idSurvey, int idRestaurant, int idUser)
         {
-            if (!AlreadyVoted(idSurvey, idUser.ToString()))
+            Vote vote = new Vote
             {
-                Vote vote = new Vote
-                {
-                    Restaurant = db.Restaurants.FirstOrDefault(r => r.Id == idRestaurant),
-                    User = db.Users.FirstOrDefault(u => u.Id == idUser)
-                };
-                if (vote != null)
-                {
-                    db.Votes.Add(vote);
-                    db.Surveys.FirstOrDefault(s => s.Date.ToString("dd.MM.yyy") == DateTime.Now.ToString("dd.MM.yyy"))?.Votes.Add(vote);
-                }                               
-            }            
+                Restaurant = db.Restaurants.FirstOrDefault(r => r.Id == idRestaurant),
+                User = db.Users.FirstOrDefault(u => u.Id == idUser)
+            };
+            if (vote != null)
+            {
+                db.Surveys.FirstOrDefault(s => s.Id == idSurvey)?.Votes.Add(vote);
+                db.SaveChanges();
+            }                                           
         }
 
         public bool AlreadyVoted(int idSurvey, string idUser)
         {
-            return db.Surveys.FirstOrDefault(s => s.Id == idSurvey && s.Votes.FirstOrDefault(v => v.User.Id.ToString() == idUser) != null && s.Date == DateTime.Now) != null;
+            return db.Surveys.FirstOrDefault(s => s.Id == idSurvey && s.Votes.FirstOrDefault(v => v.User.Id.ToString() == idUser) != null) != null;
         }
 
         public User Authenticate(string name, string password)
         {
-            return db.Users.FirstOrDefault(u => u.FirstName == name && u.Password == EncodeMD5(password));
+            var pwd = EncodeMD5(password);
+            return db.Users.FirstOrDefault(u => u.FirstName == name && u.Password == pwd);
         }
 
         /// <summary>
@@ -69,7 +76,16 @@ namespace RestaurantAsuwahl.Models
 
         public int CreateSurvey()
         {
-            return db.Surveys.Add(new Survey { Date = DateTime.Now, Votes = new List<Vote>() }).Id;
+            Survey survey = db.Surveys.Add(new Survey { Date = DateTime.Now, Votes = new List<Vote>() });
+            if (survey != null)
+            {
+                db.SaveChanges();
+                return survey.Id;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         /// <summary>
@@ -137,8 +153,8 @@ namespace RestaurantAsuwahl.Models
 
         public List<Results> GetResults(int idSurvey)
         {
-            List<Results> results = new List<Results>();
             List<Vote> votes = db.Surveys.FirstOrDefault(s => s.Id == idSurvey).Votes;
+            List<Results> results = new List<Results>();
 
             foreach (var vote in votes)
             {
@@ -148,7 +164,7 @@ namespace RestaurantAsuwahl.Models
                 }
                 else
                 {
-                    results.Add(new Results { Name = vote.Restaurant.Name, Telephone = vote.Restaurant.Telephone, NumberOfVotes = 0 });
+                    results.Add(new Results { Name = vote.Restaurant.Name, Telephone = vote.Restaurant.Telephone, NumberOfVotes = 1 });
                 }
             }
 
