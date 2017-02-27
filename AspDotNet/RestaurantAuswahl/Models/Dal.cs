@@ -54,7 +54,12 @@ namespace RestaurantAsuwahl.Models
 
         public bool AlreadyVoted(int idSurvey, string idUser)
         {
-            return db.Surveys.FirstOrDefault(s => s.Id == idSurvey && s.Votes.FirstOrDefault(v => v.User.Id.ToString() == idUser) != null) != null;
+            int id;
+            if (int.TryParse(idUser, out id))
+            {
+                return db.Surveys.FirstOrDefault(s => s.Id == idSurvey && s.Votes.FirstOrDefault(v => v.User.Id == id) != null) != null;
+            }
+            return false;
         }
 
         public User Authenticate(string name, string password)
@@ -176,9 +181,14 @@ namespace RestaurantAsuwahl.Models
             return db.Users.FirstOrDefault(u => u.Id == id);
         }
 
-        public User GetUser(string id)
+        public User GetUser(string idStr)
         {
-            return db.Users.FirstOrDefault(u => u.Id.ToString() == id);
+            int id;
+            if (int.TryParse(idStr, out id))
+            {
+                return db.Users.FirstOrDefault(u => u.Id == id);
+            }
+            return null;
         }
 
         /// <summary>
@@ -196,14 +206,7 @@ namespace RestaurantAsuwahl.Models
         /// <returns></returns>
         public bool RestaurantExists(string name)
         {
-            foreach (var item in db.Restaurants.ToList())
-            {
-                if (item.Name.ToLower().Equals(name.ToLower()))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return db.Restaurants.Any(r => string.Compare(r.Name, name, StringComparison.CurrentCultureIgnoreCase) == 0);
         }
     }
 }
