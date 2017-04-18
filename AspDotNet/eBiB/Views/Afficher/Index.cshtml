@@ -11,10 +11,11 @@
     <title>eBibliotheque - Liste livres</title>
 </head>
 <body>
-    <table title="Liste de tous les livres">
+    <table>
+        <caption>Liste de tous les livres</caption>
         <tr>
-            <th>Titre</th>
-            <th>Auteur</th>
+            <th><u>Titre</u></th>
+            <th><u>Auteur</u></th>
         </tr>
         @foreach(eBiB.Models.Book book in ViewData["Books"] as List<eBiB.Models.Book>)
         {

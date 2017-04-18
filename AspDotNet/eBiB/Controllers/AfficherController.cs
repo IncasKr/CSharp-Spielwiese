@@ -13,7 +13,14 @@ namespace eBiB.Controllers
             ViewData["Books"] = books.GetBooks();
             return View();
         }
-        
+
+        public ActionResult Auteurs()
+        {
+            Authors auteurs = new Authors();
+            ViewData["Authors"] = auteurs.GetAuthors();
+            return View();
+        }
+
 
     }
 }
