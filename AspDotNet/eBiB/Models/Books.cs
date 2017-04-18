@@ -6,7 +6,7 @@ namespace eBiB.Models
     {
         public List<Book> GetBooks()
         {
-            return new List<Book>
+            var list = new List<Book>
             {
                 new Book(3, "Mathe für Informatiker", 3),
                 new Book(1, "Einführung in .NET", 1, "gladis@incas.de"),
@@ -14,6 +14,14 @@ namespace eBiB.Models
                 new Book(4, "Einführung in Raspberry Pi", 1, "gladis@incas.de"),
                 new Book(2, "Einführung in ASP .NET", 2, "sergio@incas.de")
             };
+            list.Sort(delegate (Book a, Book b)
+            {
+                if (a.Title == null && b.Title == null) return 0;
+                else if (a.Title == null) return -1;
+                else if (b.Title == null) return 1;
+                else return a.Title.CompareTo(b.Title);
+            });
+            return list;
         }
     }
 }
