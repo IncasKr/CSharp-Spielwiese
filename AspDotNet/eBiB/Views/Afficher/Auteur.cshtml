@@ -1,0 +1,27 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>eBibliotheque - Liste livres-Auteur</title>
+</head>
+<body>
+    <table>        
+    <caption>Liste de tous les livres de l'auteur "@ViewData["Author"]"</caption>
+    <tr>
+        <th><u>Titre du livre</u></th>
+    </tr>
+        @foreach(eBiB.Models.Book book in ViewData["BooksOfAuthor"] as List<eBiB.Models.Book>)
+        {
+        <tr>
+            <th>@book.Title</th>            
+        </tr>
+        }
+</table>
+</body>
+</html>

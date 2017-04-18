@@ -9,18 +9,39 @@ namespace eBiB.Controllers
         // GET: Afficher
         public ActionResult Index()
         {
-            Books books = new Books();
-            ViewData["Books"] = books.GetBooks();
+            ViewData["Books"] = new Books().GetBooks();
+            ViewData["Authors"] = new Authors().GetAuthors();            
             return View();
         }
 
         public ActionResult Auteurs()
         {
-            Authors auteurs = new Authors();
-            ViewData["Authors"] = auteurs.GetAuthors();
+            ViewData["Authors"] = new Authors().GetAuthors();
             return View();
         }
 
-
+        public ActionResult Auteur(int id)
+        {
+            var aut = new Authors().GetAuthors().Find(a => a.ID == id);
+            if (aut == null)
+            {
+                return View("ErrorA01");
+            }
+            ViewData["Author"] = new Authors().GetAuthors().Find(a => a.ID == id).Name;
+            if (! new Books().GetBooks().Exists(b => b.ID == id))
+            {
+                return View("ErrorL01");
+            }
+            List<Book> tmp = new List<Book>();
+            foreach (var book in new Books().GetBooks())
+            {
+                if (book.AuthorID == id)
+                {
+                    tmp.Add(book);
+                }
+            }
+            ViewData["BooksOfAuthor"] = tmp;
+            return View();
+        }
     }
 }

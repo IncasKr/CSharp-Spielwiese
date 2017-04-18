@@ -19,10 +19,11 @@
         </tr>
         @foreach(eBiB.Models.Book book in ViewData["Books"] as List<eBiB.Models.Book>)
         {
-        <tr>
-            <th>@book.Title</th>
-            <th>@book.AuthorID</th>
-        </tr>
+            var authors = ViewData["Authors"] as List<eBiB.Models.Author>;            
+            <tr>
+                <th>@book.Title</th>
+                <th>@authors.Find(a => a.ID == book.AuthorID).Name</th>
+            </tr>
         }
     </table>
 </body>

@@ -111,6 +111,9 @@
     <Content Include="packages.config" />
     <Content Include="Views\Afficher\Index.cshtml" />
     <Content Include="Views\Afficher\Auteurs.cshtml" />
+    <Content Include="Views\Afficher\Auteur.cshtml" />
+    <Content Include="Views\Afficher\ErrorL01.cshtml" />
+    <Content Include="Views\Afficher\ErrorA01.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
