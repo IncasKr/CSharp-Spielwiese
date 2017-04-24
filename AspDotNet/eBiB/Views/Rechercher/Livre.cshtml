@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>eBibliotheque - Livres trouvés</title>
+</head>
+<body>
+    <table>
+        @{
+            List<eBiB.Models.Book> books = ViewData["Books"] as List<eBiB.Models.Book>;
+            List<eBiB.Models.Author> authors = ViewData["Authors"] as List<eBiB.Models.Author>;
+            List<eBiB.Models.Client> clients = ViewData["Clients"] as List<eBiB.Models.Client>;
+            <caption>Liste des livres contenant le mot-clé "@ViewData["key-word"]"</caption>
+            <tr>
+                <th><u>Titre</u></th>
+                <th>|</th>
+                <th><u>Auteur</u></th>
+                <th>|</th>
+                <th><u>Date de parution</u></th>
+                <th>|</th>
+                <th><u>Emprunteur</u></th>
+            </tr>
+            foreach(eBiB.Models.Book book in books)
+            {
+            <tr>
+                <th>@book.Title</th>
+                <th>|</th>
+                <th>@authors.Find(a => a.ID == book.AuthorID).Name</th>
+                <th>|</th>
+                <th>@book.ReleaseDate</th>
+                <th>|</th>
+                @{
+                eBiB.Models.Client client = clients.Find(c => c.Email == book.ClientID);
+                if(client != null){
+                    <th>@client.Name</th>}
+                }
+            </tr>
+            }
+        }
+    </table>
+</body>
+</html>

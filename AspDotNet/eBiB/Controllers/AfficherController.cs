@@ -20,14 +20,14 @@ namespace eBiB.Controllers
             return View();
         }
 
-        public ActionResult Auteur(int id)
+        public ActionResult Auteur(int id = 0)
         {
             var aut = new Authors().GetAuthors().Find(a => a.ID == id);
             if (aut == null)
             {
                 return View("ErrorA01");
             }
-            ViewData["Author"] = new Authors().GetAuthors().Find(a => a.ID == id).Name;
+            ViewData["AuthorName"] = new Authors().GetAuthors().Find(a => a.ID == id).Name;
             if (! new Books().GetBooks().Exists(b => b.ID == id))
             {
                 return View("ErrorL01");
@@ -41,6 +41,19 @@ namespace eBiB.Controllers
                 }
             }
             ViewData["BooksOfAuthor"] = tmp;
+            return View();
+        }
+
+        public ActionResult Livre(int id = 0)
+        {
+            var livre = new Books().GetBooks().Find(b => b.ID == id);
+            if (livre == null)
+            {
+                return View("ErrorL02");
+            }
+            var client = new Clients().GetClients().Find(c => c.Email == livre.ClientID);
+            ViewData["ClientName"] = (client != null) ? client.Name : "";
+            ViewData["Book"] = livre;
             return View();
         }
     }

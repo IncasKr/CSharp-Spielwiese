@@ -4,13 +4,13 @@ namespace eBiB.Models
 {
     public class Clients
     {
+        private List<Client> list = new List<Client>
+        {
+            new Client("gladis@ndsoft.de", "Gladis"),
+            new Client("sergio@ndsoft.de", "Sergio")
+        };
         public List<Client> GetClients()
         {
-            var list = new List<Client>
-            {
-                new Client("gladis@incas.de", "Gladis"),                
-                new Client("sergio@incas.de", "Sergio")
-            };
             list.Sort(delegate (Client a, Client b)
             {
                 if (a.Name == null && b.Name == null) return 0;

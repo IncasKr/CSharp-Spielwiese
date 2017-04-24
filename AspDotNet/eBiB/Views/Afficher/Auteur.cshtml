@@ -12,16 +12,16 @@
 </head>
 <body>
     <table>        
-    <caption>Liste de tous les livres de l'auteur "@ViewData["Author"]"</caption>
-    <tr>
-        <th><u>Titre du livre</u></th>
-    </tr>
+        <caption>Liste de tous les livres de l'auteur "@ViewData["AuthorName"]"</caption>
+        <tr>
+            <th><u>Titre du livre</u></th>
+        </tr>
         @foreach(eBiB.Models.Book book in ViewData["BooksOfAuthor"] as List<eBiB.Models.Book>)
         {
-        <tr>
-            <th>@book.Title</th>            
-        </tr>
+            <tr>
+                <th>@book.Title</th>            
+            </tr>
         }
-</table>
+    </table>
 </body>
 </html>

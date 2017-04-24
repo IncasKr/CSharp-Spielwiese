@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AfficherController.cs" />
+    <Compile Include="Controllers\RechercherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -112,8 +113,12 @@
     <Content Include="Views\Afficher\Index.cshtml" />
     <Content Include="Views\Afficher\Auteurs.cshtml" />
     <Content Include="Views\Afficher\Auteur.cshtml" />
-    <Content Include="Views\Afficher\ErrorL01.cshtml" />
-    <Content Include="Views\Afficher\ErrorA01.cshtml" />
+    <Content Include="Views\Shared\ErrorL01.cshtml" />
+    <Content Include="Views\Shared\ErrorA01.cshtml" />
+    <Content Include="Views\Afficher\Livre.cshtml" />
+    <Content Include="Views\Shared\ErrorL02.cshtml" />
+    <Content Include="Views\Rechercher\Livre.cshtml" />
+    <Content Include="Views\Shared\ErrorL03.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
