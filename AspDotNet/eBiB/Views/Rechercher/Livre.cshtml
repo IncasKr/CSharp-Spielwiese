@@ -31,14 +31,16 @@
             <tr>
                 <th>@book.Title</th>
                 <th>|</th>
-                <th>@authors.Find(a => a.ID == book.AuthorID).Name</th>
+                @{
+                    eBiB.Models.Author auteur = authors.Find(a => a.ID == book.AuthorID);
+                    if(auteur != null){ <th>@auteur.Name</th> }
+                }                
                 <th>|</th>
                 <th>@book.ReleaseDate</th>
                 <th>|</th>
                 @{
-                eBiB.Models.Client client = clients.Find(c => c.Email == book.ClientID);
-                if(client != null){
-                    <th>@client.Name</th>}
+                    eBiB.Models.Client client = clients.Find(c => c.Email == book.ClientID);
+                    if(client != null){ <th>@client.Name</th> }
                 }
             </tr>
             }

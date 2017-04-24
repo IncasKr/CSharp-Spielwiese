@@ -16,8 +16,8 @@ namespace eBiB.Controllers
             {
                 return View("ErrorL03");
             }
-            var auteurs = new Authors().GetAuthors().FindAll(a => a.Name.ToLower().Contains(id.ToLower()));
-            var livres = new Books().GetBooks().FindAll(b => b.Title.ToLower().Contains(id.ToLower()) || auteurs.Exists(aut => aut.ID == b.ID));
+            var auteurs = new Authors().GetAuthors();
+            var livres = new Books().GetBooks().FindAll(b => b.Title.ToLower().Contains(id.ToLower()) || auteurs.Find(aut => aut.ID.Equals(b.AuthorID)).Name.ToLower().Contains(id.ToLower()));
             var clients = new Clients().GetClients().FindAll(c => livres.Exists(l => l.ClientID == c.Email));
             if (livres == null)
             {
