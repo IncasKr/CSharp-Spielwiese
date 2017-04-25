@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManualResetEventSolution", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutexSolution", "MutexSolution\MutexSolution.csproj", "{C4F1E611-8452-479F-958A-D7FD0B256A73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemaphoreSolution", "SemaphoreSolution\SemaphoreSolution.csproj", "{3DBF38B9-FBD9-4390-827C-6BAE0E3B66AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{C4F1E611-8452-479F-958A-D7FD0B256A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4F1E611-8452-479F-958A-D7FD0B256A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4F1E611-8452-479F-958A-D7FD0B256A73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DBF38B9-FBD9-4390-827C-6BAE0E3B66AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DBF38B9-FBD9-4390-827C-6BAE0E3B66AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DBF38B9-FBD9-4390-827C-6BAE0E3B66AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DBF38B9-FBD9-4390-827C-6BAE0E3B66AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

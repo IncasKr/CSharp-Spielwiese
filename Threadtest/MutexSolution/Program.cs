@@ -11,7 +11,7 @@ namespace MutexSolution
     {
         // Create a new Mutex. The creating thread does not own the mutex.
         private static Mutex mut = new Mutex();
-        private const int numIterations = 1;
+        private const int numIterations = 2;
         private const int numThreads = 3;
 
         static void Main(string[] args)
