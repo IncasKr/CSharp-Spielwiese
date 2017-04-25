@@ -18,11 +18,7 @@ namespace LockSolution
             new Thread(PrintLetter).Start();
             new Thread(PrintNumber).Start();
 
-            Thread.Sleep(100);
-            lock (locker)
-            {
-                Console.WriteLine("Ending main thread\n");
-            }
+            Console.WriteLine("Ending main thread");
             Console.ReadLine();
         }
 
@@ -34,7 +30,6 @@ namespace LockSolution
                 {
                     Console.Write(counter + "\t");
                 }
-                Console.WriteLine("\n");
             }
         }
 
@@ -46,7 +41,6 @@ namespace LockSolution
                 {
                     Console.Write(chars[i] + counter.ToString() + "\t");
                 }
-                Console.WriteLine("\n");
             }
         }
     }
