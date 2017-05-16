@@ -30,6 +30,13 @@
       <DocumentationSource sourceFile="..\RDPLoader\bin\Debug\RDPLoader.XML" xmlns="" />
       <DocumentationSource sourceFile="..\RDPLoader\bin\Debug\RDPLoader.exe" xmlns="" />
     </DocumentationSources>
+    <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
+    <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
+    <HelpFileFormat>HtmlHelp1</HelpFileFormat>
+    <IndentHtml>True</IndentHtml>
+    <KeepLogFile>True</KeepLogFile>
+    <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
+    <CleanIntermediates>True</CleanIntermediates>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
