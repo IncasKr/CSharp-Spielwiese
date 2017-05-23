@@ -2,13 +2,24 @@
 
 namespace eBiB.Models
 {
+    /// <summary>
+    /// Customer list definition class
+    /// </summary>
     public class Clients
     {
+        /// <summary>
+        /// Generation of the customers list
+        /// </summary>
         private List<Client> list = new List<Client>
         {
             new Client("gladis@ndsoft.de", "Gladis"),
             new Client("sergio@ndsoft.de", "Sergio")
         };
+
+        /// <summary>
+        /// Gets the list of existing customers
+        /// </summary>
+        /// <returns>The list of customers</returns>
         public List<Client> GetClients()
         {
             list.Sort(delegate (Client a, Client b)

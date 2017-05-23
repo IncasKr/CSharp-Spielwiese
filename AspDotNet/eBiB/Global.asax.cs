@@ -7,8 +7,14 @@ using System.Web.Routing;
 
 namespace eBiB
 {
+    /// <summary>
+    /// MvcApplication class
+    /// </summary>
     public class MvcApplication : System.Web.HttpApplication
     {
+        /// <summary>
+        /// Application start
+        /// </summary>
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

@@ -4,9 +4,15 @@ using System.Web.Mvc;
 
 namespace eBiB.Controllers
 {
+    /// <summary>
+    /// Display Control Class.
+    /// </summary>
     public class AfficherController : Controller
     {
-        // GET: Afficher
+        /// <summary>
+        /// Default View
+        /// </summary>
+        /// <returns>The default view object</returns>
         public ActionResult Index()
         {
             ViewData["Books"] = new Books().GetBooks();
@@ -14,12 +20,21 @@ namespace eBiB.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Viewing Authors
+        /// </summary>
+        /// <returns>The list of all authors</returns>
         public ActionResult Auteurs()
         {
             ViewData["Authors"] = new Authors().GetAuthors();
             return View();
         }
 
+        /// <summary>
+        /// Viewing a given author's books
+        /// </summary>
+        /// <param name="id">The author's identifier</param>
+        /// <returns>A list of all books by this author</returns>
         public ActionResult Auteur(int id = 0)
         {
             var aut = new Authors().GetAuthors().Find(a => a.ID == id);
@@ -44,6 +59,11 @@ namespace eBiB.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Viewing details of a given book
+        /// </summary>
+        /// <param name="id">The book's identifier</param>
+        /// <returns>The view of the book found.</returns>
         public ActionResult Livre(int id = 0)
         {
             var livre = new Books().GetBooks().Find(b => b.ID == id);

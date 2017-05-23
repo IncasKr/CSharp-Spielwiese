@@ -2,8 +2,14 @@
 
 namespace eBiB.Models
 {
+    /// <summary>
+    /// Author list definition class
+    /// </summary>
     public class Authors
     {
+        /// <summary>
+        /// Generation of the authors list
+        /// </summary>
         private List<Author> list = new List<Author>
         {
             new Author(1, "Martin"),
@@ -11,6 +17,10 @@ namespace eBiB.Models
             new Author(2, "David")
         };
 
+        /// <summary>
+        /// Gets the list of existing authors
+        /// </summary>
+        /// <returns>The list of authors</returns>
         public List<Author> GetAuthors()
         {
             list.Sort(delegate (Author a, Author b)

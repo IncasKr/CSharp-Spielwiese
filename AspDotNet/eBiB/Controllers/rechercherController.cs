@@ -7,9 +7,16 @@ using System.Web.Mvc;
 
 namespace eBiB.Controllers
 {
+    /// <summary>
+    /// Search Control Class.
+    /// </summary>
     public class RechercherController : Controller
     {
-        // GET: rechercher
+        /// <summary>
+        /// Search a book by keyword in the title or in the author's name
+        /// </summary>
+        /// <param name="id">The keyword</param>
+        /// <returns>The view of the books found.</returns>
         public ActionResult Livre(string id = "")
         {
             if (id == "")

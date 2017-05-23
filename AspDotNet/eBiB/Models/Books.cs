@@ -2,8 +2,15 @@
 
 namespace eBiB.Models
 {
+    /// <summary>
+    /// Book list definition class
+    /// </summary>
     public class Books
     {
+        /// <summary>
+        /// Gets the list of existing books
+        /// </summary>
+        /// <returns>The list of books</returns>
         public List<Book> GetBooks()
         {
             var list = new List<Book>
