@@ -11,9 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoTests.Tests", "DemoTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld.Tests", "HelloWorld.Tests\HelloWorld.Tests.csproj", "{221F3EE9-CF8A-4587-AD0A-23D2E339A604}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantAsuwahl", "RestaurantAsuwahl\RestaurantAsuwahl.csproj", "{94991EDD-1314-48CE-B0B9-10FF96740E90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantAuswahl", "RestaurantAuswahl\RestaurantAuswahl.csproj", "{94991EDD-1314-48CE-B0B9-10FF96740E90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantAsuwahl.Tests", "RestaurantAsuwahl.Tests\RestaurantAsuwahl.Tests.csproj", "{4F54CE1C-F8A3-4192-B222-215C2FF99B7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantAuswahl.Tests", "RestaurantAuswahl.Tests\RestaurantAuswahl.Tests.csproj", "{4F54CE1C-F8A3-4192-B222-215C2FF99B7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

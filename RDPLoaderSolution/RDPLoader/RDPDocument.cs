@@ -105,9 +105,7 @@ namespace RDPLoader
 
 
     #endregion
-    /// <summary>
-    /// 
-    /// </summary>
+
     class RDPDocument
     {
         #region Imports
