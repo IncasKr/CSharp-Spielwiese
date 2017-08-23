@@ -91,5 +91,16 @@ namespace LogAn.Tests
             bool result = logan.IsValidLogFileName("File.ext");
             Assert.IsTrue(result, "File name should be too short to be considered valid");
         }
+
+        [Test]
+        public void OverrideTestWithoutStub()
+        {
+            TestableLogAnalyzer logan = new TestableLogAnalyzer()
+            {
+                IsSupported = true
+            };
+            bool result = logan.IsValidLogFileName("file.ext");
+            Assert.IsTrue(result, "File name should be too short to be considered valid");
+        }
     }
 }
