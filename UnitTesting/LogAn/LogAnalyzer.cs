@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace LogAn
 {
@@ -26,12 +22,12 @@ namespace LogAn
 
         public LogAnalyzer()
         {
-            _manager = new FileExtensionManager();
+            _manager = ExtensionManagerFactory.Create();
         }
         
         public bool IsValidLogFileName(string fileName)
         {
-            _wasLastFileNameValid = _manager.IsValid(fileName);
+            _wasLastFileNameValid = _manager.IsValid(fileName) && Path.GetFileNameWithoutExtension(fileName).Length > 5;
             return _wasLastFileNameValid;
         }
     }
