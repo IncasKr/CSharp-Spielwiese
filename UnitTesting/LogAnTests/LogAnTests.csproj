@@ -49,6 +49,7 @@
     <Compile Include="LogAnalyzerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CalculatorTests.cs" />
+    <Compile Include="StubExtensionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
