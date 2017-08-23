@@ -1,13 +1,20 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LogAn;
+﻿using LogAn;
+using NUnit.Framework;
 
 namespace LogAnTests
 {
-    [TestClass]
+    [TestFixture]
     public class LogAnalyzerTests
     {
-        [TestMethod]
+        private LogAnalyzer m_analyzer = null;
+
+        [SetUp]
+        public void Setup()
+        {
+            m_analyzer = new LogAnalyzer();
+        }
+
+        [Test]
         public void IsValidFileName_validFileLowerCased_ReturnsTrue()
         {
             //arrange
