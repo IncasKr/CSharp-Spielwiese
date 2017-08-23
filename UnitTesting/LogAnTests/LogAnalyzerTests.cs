@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace LogAn.Tests
 {
@@ -34,6 +35,12 @@ namespace LogAn.Tests
         {
             bool result = m_analyzer.IsValidLogFileName("whatever.SLF");
             Assert.IsTrue(result, "filename should be valid!");
+        }
+
+        [Test]
+        public void IsValidFileName_EmptyFileName_ThrowsException()
+        {
+            Assert.Throws(typeof(ArgumentException), () => { m_analyzer.IsValidLogFileName(string.Empty); });
         }
     }
 }

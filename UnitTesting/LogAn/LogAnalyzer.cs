@@ -8,9 +8,13 @@ namespace LogAn
 {
     public class LogAnalyzer
     {
-        public bool IsValidLogFileName(string filename)
+        public bool IsValidLogFileName(string fileName)
         {
-            return filename.ToLower().EndsWith(".slf");
+            if (String.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentException("No filename provided!");
+            }
+            return fileName.ToLower().EndsWith(".slf");
         }
     }
 }
