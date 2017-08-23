@@ -74,8 +74,8 @@ namespace LogAn.Tests
             //create analyzer and inject stub
             LogAnalyzer log = new LogAnalyzer();
             //Assert logic assuming extension is supported
-            bool result = log.IsValidLogFileName("short.ext");
-            Assert.IsFalse(result, "File name with less than 5 chars should have failed the method, even if the extension is supported");
+            bool result = log.IsValidLogFileName("longName.ext");
+            Assert.IsTrue(result, "File name with less than 5 chars should have failed the method, even if the extension is supported");
 }
     }
 }
