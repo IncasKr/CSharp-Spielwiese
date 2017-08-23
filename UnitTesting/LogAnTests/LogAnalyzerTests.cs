@@ -22,6 +22,7 @@ namespace LogAn.Tests
         }
 
         [Test]
+        [Category("Slow Tests")]
         public void IsValidFileName_validFileLowerCased_ReturnsTrue()
         {
             //act
@@ -31,6 +32,7 @@ namespace LogAn.Tests
         }
 
         [Test]
+        [Category("Slow Tests")]
         public void IsValidFileName_validFileUpperCased_ReturnsTrue()
         {
             bool result = m_analyzer.IsValidLogFileName("whatever.SLF");
@@ -38,9 +40,18 @@ namespace LogAn.Tests
         }
 
         [Test]
+        [Category("Fast Tests")]
         public void IsValidFileName_EmptyFileName_ThrowsException()
         {
             Assert.Throws(typeof(ArgumentException), () => { m_analyzer.IsValidLogFileName(string.Empty); });
+        }
+
+        [Test]
+        [Category("Fast Tests")]
+        [Ignore("there is a problem with this test")]
+        public void IsValidFileName_ValidFile_ReturnsTrue()
+        {
+            /// ...
         }
     }
 }
