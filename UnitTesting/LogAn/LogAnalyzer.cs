@@ -12,6 +12,12 @@ namespace LogAn
 
         private bool _wasLastFileNameValid;
 
+        public IExtensionManager ExtensionManager
+        {
+            get { return _manager; }
+            set { _manager = value; }
+        }
+
         public bool WasLastFileNameValid
         {
             get { return _wasLastFileNameValid; }
@@ -22,12 +28,7 @@ namespace LogAn
         {
             _manager = new FileExtensionManager();
         }
-
-        public LogAnalyzer(IExtensionManager mgr)
-        {
-            _manager = mgr;
-        }
-
+        
         public bool IsValidLogFileName(string fileName)
         {
             _wasLastFileNameValid = _manager.IsValid(fileName);
