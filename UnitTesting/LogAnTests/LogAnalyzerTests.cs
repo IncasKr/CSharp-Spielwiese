@@ -8,7 +8,7 @@ namespace LogAnTests
     public class LogAnalyzerTests
     {
         [TestMethod]
-        public void IsValidFileName_validFile_ReturnsTrue()
+        public void IsValidFileName_validFileLowerCased_ReturnsTrue()
         {
             //arrange
             LogAnalyzer analyzer = new LogAnalyzer();
