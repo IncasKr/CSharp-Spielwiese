@@ -11,6 +11,7 @@ namespace LogAnTests
         [SetUp]
         public void Setup()
         {
+            //arrange
             m_analyzer = new LogAnalyzer();
         }
 
@@ -23,10 +24,8 @@ namespace LogAnTests
         [Test]
         public void IsValidFileName_validFileLowerCased_ReturnsTrue()
         {
-            //arrange
-            LogAnalyzer analyzer = new LogAnalyzer();
             //act
-            bool result = analyzer.IsValidLogFileName("whatever.slf");
+            bool result = m_analyzer.IsValidLogFileName("whatever.slf");
             //assert
             Assert.IsTrue(result, "filename should be valid!");
         }
