@@ -53,5 +53,13 @@ namespace LogAn.Tests
         {
             /// ...
         }
+
+        [Test]
+        public void IsValidLogFileName_ValidName_RemembersTrue()
+        {
+            LogAnalyzer log = new LogAnalyzer();
+            log.IsValidLogFileName("somefile.slf");
+            Assert.IsTrue(log.WasLastFileNameValid);
+        }
     }
 }
