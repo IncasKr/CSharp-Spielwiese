@@ -18,11 +18,8 @@ namespace LogAn
 
         public bool IsValidLogFileName(string fileName)
         {
-            if (String.IsNullOrEmpty(fileName))
-            {
-                throw new ArgumentException("No filename provided!");
-            }
-            _wasLastFileNameValid = fileName.ToLower().EndsWith(".slf");
+            IExtensionManager mgr = new FileExtensionManager();
+            _wasLastFileNameValid = mgr.IsValid(fileName);
             return _wasLastFileNameValid;
         }
     }
