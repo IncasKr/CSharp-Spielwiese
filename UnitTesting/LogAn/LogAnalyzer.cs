@@ -10,7 +10,7 @@ namespace LogAn
     {
         public bool IsValidLogFileName(string filename)
         {
-            return filename.EndsWith(".SLF");
+            return filename.ToLower().EndsWith(".slf");
         }
     }
 }
