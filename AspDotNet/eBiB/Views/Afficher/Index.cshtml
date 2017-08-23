@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>eBibliotheque - Liste livres</title>
+</head>
+<body>
+    <table>
+        <caption>Liste de tous les livres</caption>
+        <tr>
+            <th><u>Titre</u></th>
+            <th>|</th>
+            <th><u>Auteur</u></th>
+        </tr>
+        @foreach(eBiB.Models.Book book in ViewData["Books"] as List<eBiB.Models.Book>)
+        {
+            var authors = ViewData["Authors"] as List<eBiB.Models.Author>;            
+            <tr>
+                <th>@book.Title</th>
+                <th>|</th>
+                <th>@authors.Find(a => a.ID == book.AuthorID).Name</th>
+            </tr>
+        }
+    </table>
+</body>
+</html>
