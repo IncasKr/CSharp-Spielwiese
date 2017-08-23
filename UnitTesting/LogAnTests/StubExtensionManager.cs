@@ -1,5 +1,4 @@
-﻿
-namespace LogAn.Tests
+﻿namespace LogAn.Tests
 {
     internal class StubExtensionManager : IExtensionManager
     {

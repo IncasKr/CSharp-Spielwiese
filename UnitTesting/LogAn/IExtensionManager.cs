@@ -1,5 +1,4 @@
-﻿
-namespace LogAn
+﻿namespace LogAn
 {
     public interface IExtensionManager
     {
