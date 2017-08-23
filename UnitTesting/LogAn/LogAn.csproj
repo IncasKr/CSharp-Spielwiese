@@ -47,6 +47,7 @@
     <Compile Include="FileExtensionManager.cs" />
     <Compile Include="IExtensionManager.cs" />
     <Compile Include="LogAnalyzer.cs" />
+    <Compile Include="LogAnalyzerUsingFactoryMethod.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

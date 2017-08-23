@@ -76,6 +76,20 @@ namespace LogAn.Tests
             //Assert logic assuming extension is supported
             bool result = log.IsValidLogFileName("longName.ext");
             Assert.IsTrue(result, "File name with less than 5 chars should have failed the method, even if the extension is supported");
-}
+        }
+
+        [Test]
+        public void OverrideTest()
+        {
+            TestableLogAnalyzer logan = new TestableLogAnalyzer()
+            {
+                Manager = new StubExtensionManager()
+                {
+                    ShouldExtensionBeValid = true
+                }
+            };
+            bool result = logan.IsValidLogFileName("File.ext");
+            Assert.IsTrue(result, "File name should be too short to be considered valid");
+        }
     }
 }
