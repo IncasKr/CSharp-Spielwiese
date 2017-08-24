@@ -32,7 +32,7 @@ namespace LogAn.Tests
             using (mocks.Record())
             {
                 stubService.LogError("whatever");
-                LastCall.IgnoreArguments();
+                LastCall.Constraints(Rhino.Mocks.Constraints.Is.Anything());
                 LastCall.Throw(new Exception("fake exception"));
                 mockEmail.SendEmail("a", "subject", "fake exception");
             }
@@ -139,6 +139,20 @@ namespace LogAn.Tests
             {
                 Assert.AreEqual("The system is out of memory!", e.Message);
             }
+        }
+
+        [Test]
+        public void SimpleStringConstraints()
+        {
+            MockRepository mocks = new MockRepository();
+            IWebService mockService = mocks.StrictMock<IWebService>();
+            using (mocks.Record())
+            {
+                mockService.LogError("ignored string");
+                LastCall.Constraints(new Rhino.Mocks.Constraints.Contains("abc"));
+            }
+            mockService.LogError($"{Guid.NewGuid()} abc");
+            mocks.VerifyAll();
         }
     }
 }
