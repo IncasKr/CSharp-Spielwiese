@@ -48,10 +48,13 @@
     <Compile Include="IExtensionManager.cs" />
     <Compile Include="IServices.cs" />
     <Compile Include="LogAnalyzer.cs" />
+    <Compile Include="LogAnalyzer2.cs" />
     <Compile Include="LogAnalyzerUsingFactoryMethod.cs" />
+    <Compile Include="MockEmailService.cs" />
     <Compile Include="MockService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StubService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
