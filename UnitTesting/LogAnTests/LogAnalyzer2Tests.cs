@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Rhino.Mocks;
 using System;
 
 namespace LogAn.Tests
@@ -23,10 +24,12 @@ namespace LogAn.Tests
         [Test]
         public void Analyze_WebServiceThrows_SendsEmail()
         {
+            // Creates manually stub object
             StubService stubService = new StubService()
             {
                 ToThrow = new Exception("fake exception")
             };
+            // Creates manually mock object
             MockEmailService mockEmail = new MockEmailService();
             //we use setters instead of constructor parameters for easier coding
             LogAnalyzer2 log = new LogAnalyzer2()
@@ -39,6 +42,27 @@ namespace LogAn.Tests
             Assert.AreEqual("a", mockEmail.To);
             Assert.AreEqual("fake exception", mockEmail.Body);
             Assert.AreEqual("subject", mockEmail.Subject);
+        }
+
+        [Test]
+        public void Analyze_TooShortFileName_ErrorLoggedToService()
+        {
+            // Creates dynamic mock object
+            MockRepository mocks = new MockRepository();
+            IWebService simulatedService =
+            mocks.StrictMock<IWebService>();
+            // Sets expectation
+            // each method call on the simulated object is recorded as an expectation
+            using (mocks.Record())
+            {
+                simulatedService.LogError("Filename too short:abc.ext");
+            }
+            // Invokes LogAnalyzer
+            LogAnalyzer2 log = new LogAnalyzer2(simulatedService);
+            string tooShortFileName = "abc.ext";
+            log.Analyze(tooShortFileName);
+            // Asserts expectations have been met
+            mocks.Verify(simulatedService);
         }
     }
 }
