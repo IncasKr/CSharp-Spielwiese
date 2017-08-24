@@ -118,5 +118,15 @@ namespace LogAn.Tests
             bool result = logan.IsValidLogFileName("file.ext");
             Assert.IsTrue(result, "File name should be too short to be considered valid");
         }
+
+        [Test]
+        public void Analyze_TooShortFileName_CallsWebService()
+        {
+            MockService mockService = new MockService();
+            LogAnalyzer log = new LogAnalyzer(mockService);
+            string tooShortFileName = "abc.ext";
+            log.Analyze(tooShortFileName);
+            Assert.AreEqual("Filename too short:abc.ext", mockService.LastError);
+        }
     }
 }
