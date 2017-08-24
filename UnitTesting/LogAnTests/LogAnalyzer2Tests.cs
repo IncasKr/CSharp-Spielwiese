@@ -49,8 +49,7 @@ namespace LogAn.Tests
         {
             // Creates dynamic mock object
             MockRepository mocks = new MockRepository();
-            IWebService simulatedService =
-            mocks.StrictMock<IWebService>();
+            IWebService simulatedService = mocks.DynamicMock<IWebService>();
             // Sets expectation
             // each method call on the simulated object is recorded as an expectation
             using (mocks.Record())
@@ -62,7 +61,7 @@ namespace LogAn.Tests
             string tooShortFileName = "abc.ext";
             log.Analyze(tooShortFileName);
             // Asserts expectations have been met
-            mocks.Verify(simulatedService);
+            mocks.VerifyAll();
         }
     }
 }
