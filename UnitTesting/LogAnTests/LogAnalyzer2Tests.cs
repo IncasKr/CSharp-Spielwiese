@@ -23,8 +23,10 @@ namespace LogAn.Tests
         [Test]
         public void Analyze_WebServiceThrows_SendsEmail()
         {
-            StubService stubService = new StubService();
-            stubService.ToThrow = new Exception("fake exception");
+            StubService stubService = new StubService()
+            {
+                ToThrow = new Exception("fake exception")
+            };
             MockEmailService mockEmail = new MockEmailService();
             //we use setters instead of constructor parameters for easier coding
             LogAnalyzer2 log = new LogAnalyzer2()
