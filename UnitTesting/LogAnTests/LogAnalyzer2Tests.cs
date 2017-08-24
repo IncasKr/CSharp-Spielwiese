@@ -85,5 +85,19 @@ namespace LogAn.Tests
             int result3 = resultGetter.GetSomeNumber("a");
             Assert.AreEqual(2, result3);
         }
+
+        [Test]
+        public void ReturnResultsFromStub()
+        {
+            MockRepository mocks = new MockRepository();
+            IGetResults resultGetter = mocks.Stub<IGetResults>();
+            using (mocks.Record())
+            {
+                resultGetter.GetSomeNumber("a");
+                LastCall.Return(1);
+            }
+            int result = resultGetter.GetSomeNumber("a");
+            Assert.AreEqual(1, result);
+        }
     }
 }
