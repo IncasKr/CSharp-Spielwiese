@@ -126,9 +126,16 @@ namespace LogAn.Tests
             using (mocks.Record())
             {
                 resultGetter.GetSomeNumber("A");
-                LastCall.Throw(new OutOfMemoryException("The system is out of memory!"));
+                LastCall.Throw(new OutOfMemoryException("The system is out of memory!"));                
             }
-            resultGetter.GetSomeNumber("A");
+            try
+            {
+                resultGetter.GetSomeNumber("A");
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("The system is out of memory!", e.Message);
+            }
         }
     }
 }
