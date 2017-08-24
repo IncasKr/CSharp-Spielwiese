@@ -114,5 +114,21 @@ namespace LogAn.Tests
             resultGetter.GetSomeNumber("b");
             mocks.Verify(resultGetter); // Will never fail on stubs
         }
+
+        [Test]
+        public void StubSimulatingException()
+        {
+            MockRepository mocks = new MockRepository();
+            IGetResults resultGetter = mocks.Stub<IGetResults>();
+            /* For simple properties on stub objects, get and set properties are 
+             * automatically implemented and can be used as if the stub were a real object.*/
+            resultGetter.ID = 2;
+            using (mocks.Record())
+            {
+                resultGetter.GetSomeNumber("A");
+                LastCall.Throw(new OutOfMemoryException("The system is out of memory!"));
+            }
+            resultGetter.GetSomeNumber("A");
+        }
     }
 }
