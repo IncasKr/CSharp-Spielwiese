@@ -63,5 +63,27 @@ namespace LogAn.Tests
             // Asserts expectations have been met
             mocks.VerifyAll();
         }
+
+        [Test]
+        public void ReturnResultsFromMock()
+        {
+            MockRepository mocks = new MockRepository();
+            IGetResults resultGetter = mocks.DynamicMock<IGetResults>();
+            using (mocks.Record())
+            {
+                resultGetter.GetSomeNumber("a");
+                LastCall.Return(1); // Forces method call to return value
+                resultGetter.GetSomeNumber("a");
+                LastCall.Return(2);
+                resultGetter.GetSomeNumber("b");
+                LastCall.Return(3);
+            }
+            int result = resultGetter.GetSomeNumber("b");
+            Assert.AreEqual(3, result);
+            int result2 = resultGetter.GetSomeNumber("a");
+            Assert.AreEqual(1, result2);
+            int result3 = resultGetter.GetSomeNumber("a");
+            Assert.AreEqual(2, result3);
+        }
     }
 }
