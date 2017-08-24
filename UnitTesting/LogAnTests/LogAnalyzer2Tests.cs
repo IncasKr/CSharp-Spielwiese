@@ -9,6 +9,17 @@ namespace LogAn.Tests
     [TestFixture]
     public class LogAnalyzer2Tests
     {
+
+        [Test]
+        public void Analyze_TooShortFileName_CallsWebService()
+        {
+            MockService mockService = new MockService();
+            LogAnalyzer2 log = new LogAnalyzer2(mockService);
+            string tooShortFileName = "abc.ext";
+            log.Analyze(tooShortFileName);
+            Assert.AreEqual("Filename too short:abc.ext", mockService.LastError);
+        }
+
         [Test]
         public void Analyze_WebServiceThrows_SendsEmail()
         {

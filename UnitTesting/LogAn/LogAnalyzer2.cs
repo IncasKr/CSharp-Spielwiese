@@ -20,6 +20,14 @@ namespace LogAn
             set { _email = value; }
         }
 
+        public LogAnalyzer2():this(null, null){ }
+
+        public LogAnalyzer2(IWebService service, IEmailService email = null)
+        {
+            _service = service;
+            _email = email;
+        }
+        
         public void Analyze(string fileName)
         {
             if (fileName.Length < 8)

@@ -7,9 +7,7 @@ namespace LogAn
     public class LogAnalyzer
     {
         private IExtensionManager _manager;
-
-        private IWebService _service;
-
+        
         private bool _wasLastFileNameValid;
 
         internal IExtensionManager ExtensionManager
@@ -36,19 +34,6 @@ namespace LogAn
         internal LogAnalyzer(IExtensionManager extentionMgr)
         {
             _manager = extentionMgr;
-        }
-
-        public LogAnalyzer(IWebService service)
-        {
-            _service = service;
-        }
-
-        public void Analyze(string fileName)
-        {
-            if (fileName.Length < 8)
-            {
-                _service.LogError($"Filename too short:{fileName}");
-            }
         }
 
         public bool IsValidLogFileName(string fileName)
