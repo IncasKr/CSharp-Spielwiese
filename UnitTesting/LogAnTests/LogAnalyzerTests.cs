@@ -70,9 +70,25 @@ namespace LogAn.Tests
             {
                 ShouldExtensionBeValid = true
             };
+            //inject stub into the extention
             ExtensionManagerFactory.SetManager(myFakeManager);
-            //create analyzer and inject stub
+            //create analyzer
             LogAnalyzer log = new LogAnalyzer();
+            //Assert logic assuming extension is supported
+            bool result = log.IsValidLogFileName("longName.txt");
+            Assert.IsTrue(result, "File name with less than 5 chars should have failed the method, even if the extension is supported");
+        }
+
+        [Test]
+        public void IsValidFileName_NameShorterThan6CharsWithInjectStub_ReturnsFalse()
+        {
+            //set up the stub to use, make sure it returns true
+            StubExtensionManager myFakeManager = new StubExtensionManager()
+            {
+                ShouldExtensionBeValid = true
+            };
+            //create analyzer and inject stub
+            LogAnalyzer log = new LogAnalyzer(myFakeManager);
             //Assert logic assuming extension is supported
             bool result = log.IsValidLogFileName("longName.txt");
             Assert.IsTrue(result, "File name with less than 5 chars should have failed the method, even if the extension is supported");

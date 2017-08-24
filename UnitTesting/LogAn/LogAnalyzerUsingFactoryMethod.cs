@@ -1,4 +1,7 @@
-﻿namespace LogAn
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("LogAnTests")]
+namespace LogAn
 {
     public class LogAnalyzerUsingFactoryMethod
     {
@@ -24,7 +27,7 @@
         }
     }
 
-    public class TestableLogAnalyzer : LogAnalyzerUsingFactoryMethod
+    internal class TestableLogAnalyzer : LogAnalyzerUsingFactoryMethod
     {
         public IExtensionManager Manager;
 
