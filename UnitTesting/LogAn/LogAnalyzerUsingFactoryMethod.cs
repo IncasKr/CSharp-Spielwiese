@@ -33,6 +33,7 @@ namespace LogAn
 
         public bool IsSupported;
 
+#if DEBUG
         protected override IExtensionManager GetManager()
         {
             return Manager;
@@ -42,5 +43,6 @@ namespace LogAn
         {
             return IsSupported;
         }
+#endif        
     }
 }
