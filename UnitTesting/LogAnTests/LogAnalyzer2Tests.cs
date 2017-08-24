@@ -99,5 +99,20 @@ namespace LogAn.Tests
             int result = resultGetter.GetSomeNumber("a");
             Assert.AreEqual(1, result);
         }
+
+        [Test]
+        public void StubNeverFailsTheTest()
+        {
+            MockRepository mocks = new MockRepository();
+            IGetResults resultGetter = mocks.Stub<IGetResults>();
+            using (mocks.Record())
+            {
+                // Specifies a rule, not an expectation
+                resultGetter.GetSomeNumber("a");
+                LastCall.Return(1);
+            }
+            resultGetter.GetSomeNumber("b");
+            mocks.Verify(resultGetter); // Will never fail on stubs
+        }
     }
 }
