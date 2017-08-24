@@ -24,13 +24,18 @@ namespace LogAn.Tests
         [Test]
         public void Analyze_WebServiceThrows_SendsEmail()
         {
-            // Creates manually stub object
-            StubService stubService = new StubService()
+            MockRepository mocks = new MockRepository();
+            // Creates automatically stub and mock objects
+            IWebService stubService = mocks.Stub<IWebService>();
+            IEmailService mockEmail = mocks.StrictMock<IEmailService>();
+            // Sets expectation
+            using (mocks.Record())
             {
-                ToThrow = new Exception("fake exception")
-            };
-            // Creates manually mock object
-            MockEmailService mockEmail = new MockEmailService();
+                stubService.LogError("whatever");
+                LastCall.IgnoreArguments();
+                LastCall.Throw(new Exception("fake exception"));
+                mockEmail.SendEmail("a", "subject", "fake exception");
+            }
             //we use setters instead of constructor parameters for easier coding
             LogAnalyzer2 log = new LogAnalyzer2()
             {
@@ -39,16 +44,14 @@ namespace LogAn.Tests
             };
             string tooShortFileName = "abc.ext";
             log.Analyze(tooShortFileName);
-            Assert.AreEqual("a", mockEmail.To);
-            Assert.AreEqual("fake exception", mockEmail.Body);
-            Assert.AreEqual("subject", mockEmail.Subject);
+            mocks.VerifyAll();
         }
 
         [Test]
         public void Analyze_TooShortFileName_ErrorLoggedToService()
         {
-            // Creates dynamic mock object
             MockRepository mocks = new MockRepository();
+            // Creates dynamic mock object
             IWebService simulatedService = mocks.DynamicMock<IWebService>();
             // Sets expectation
             // each method call on the simulated object is recorded as an expectation
