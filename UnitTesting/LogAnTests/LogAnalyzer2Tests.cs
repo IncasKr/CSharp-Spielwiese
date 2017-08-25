@@ -279,5 +279,19 @@ namespace LogAn.Tests
             log.Analyze(tooShortFileName);
             mockEngine.Verify(simulatedService);
         }
+
+        [Test]
+        public void CreateMock_WithReplayAll_AAA()
+        {
+            MockRepository mockEngine = new MockRepository();
+            IWebService simulatedService =
+            mockEngine.DynamicMock<IWebService>();
+            LogAnalyzer2 log = new LogAnalyzer2(simulatedService);
+            // Moves to act mode
+            mockEngine.ReplayAll();
+            log.Analyze("abc.ext");
+            // Asserts using Rhino Mocks
+            simulatedService.AssertWasCalled( svc => svc.LogError("Filename too short:abc.ext"));
+        }
     }
 }
