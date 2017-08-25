@@ -61,6 +61,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventsTester\EventsTesterProj.csproj">
+      <Project>{5e2a8930-0179-446b-9551-9551a2ecb5f6}</Project>
+      <Name>EventsTesterProj</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LogAn\LogAn.csproj">
       <Project>{3288a0e7-edaf-4a96-a523-8cb80092cbf7}</Project>
       <Name>LogAn</Name>
