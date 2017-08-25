@@ -4,6 +4,7 @@ using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Impl;
 using Rhino.Mocks.Interfaces;
 using System;
+using TeamAgile.NUnitExtensions.EventsTesting;
 
 namespace LogAn.Tests
 {
@@ -251,6 +252,16 @@ namespace LogAn.Tests
             };
             view.TriggerLoad(null, EventArgs.Empty);
             Assert.IsTrue(loadFired);
+        }
+
+        [Test]
+        public void EventFiringWithEventsVerifier()
+        {
+            EventsVerifier verifier = new EventsVerifier();
+            SomeView view = new SomeView();
+            verifier.Expect(view, "Load", null, EventArgs.Empty);
+            view.TriggerLoad(null, EventArgs.Empty);
+            verifier.Verify();
         }
     }
 }

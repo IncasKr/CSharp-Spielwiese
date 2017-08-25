@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace TeamAgile.NUnitExtensions.EventsTesting
 {
-	class EventsVerifier:IDisposable
+	public class EventsVerifier:IDisposable
 	{
 		private ArrayList expectations=new ArrayList();
 
