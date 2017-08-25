@@ -163,13 +163,15 @@ namespace LogAn.Tests
             IWebService mockservice = mocks.StrictMock<IWebService>();
             using (mocks.Record())
             {                
-                mockservice.LogError(new TraceMessage("", 100, ""));
+                mockservice.LogError(new TraceMessage("", 1, ""));
+                // Set constraints
+                Or combined1 = new Or(Property.Value("Message", "expected msg"),
+                                        Property.Value("Severity", 100));
+                And combined2 = new And(combined1, Property.Value("Source", "Some Source"));
                 // Checks property values
-                LastCall.Constraints(Property.Value("Message", "expected msg")
-                                    && Property.Value("Severity", 100)
-                                    && Property.Value("Source", "Some Source"));
+                LastCall.Constraints(combined2);
             }
-            mockservice.LogError(new TraceMessage("", 1, "Some Source"));
+            mockservice.LogError(new TraceMessage("", 100, "Some Source"));
             mocks.VerifyAll();
         }
     }
