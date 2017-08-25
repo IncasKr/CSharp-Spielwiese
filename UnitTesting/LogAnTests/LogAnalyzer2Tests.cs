@@ -75,7 +75,7 @@ namespace LogAn.Tests
             IGetResults resultGetter = mocks.DynamicMock<IGetResults>();
             using (mocks.Record())
             {
-                resultGetter.GetSomeNumber("a");
+                resultGetter.GetSomeNumber("ac");
                 LastCall.Return(1); // Forces method call to return value
                 resultGetter.GetSomeNumber("a");
                 LastCall.Return(2);
@@ -84,7 +84,7 @@ namespace LogAn.Tests
             }
             int result = resultGetter.GetSomeNumber("b");
             Assert.AreEqual(3, result);
-            int result2 = resultGetter.GetSomeNumber("a");
+            int result2 = resultGetter.GetSomeNumber("ac");
             Assert.AreEqual(1, result2);
             int result3 = resultGetter.GetSomeNumber("a");
             Assert.AreEqual(2, result3);
