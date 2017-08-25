@@ -174,5 +174,19 @@ namespace LogAn.Tests
             mockservice.LogError(new TraceMessage("", 100, "Some Source"));
             mocks.VerifyAll();
         }
+
+        [Test]
+        public void TestingObjectPropertiesWithObjects()
+        {
+            MockRepository mocks = new MockRepository();
+            IWebService mockservice = mocks.StrictMock<IWebService>();
+            using (mocks.Record())
+            {
+                mockservice.LogError(
+                new TraceMessage("Some Message", 100, "Some Source"));
+            }
+            mockservice.LogError(new TraceMessage("", 1, "Some Source"));
+            mocks.VerifyAll(); //this should fail the test
+        }
     }
 }
