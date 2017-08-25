@@ -182,8 +182,7 @@ namespace LogAn.Tests
             IWebService mockservice = mocks.StrictMock<IWebService>();
             using (mocks.Record())
             {
-                mockservice.LogError(
-                new TraceMessage("Some Message", 100, "Some Source"));
+                mockservice.LogError(new TraceMessage("", 1, "Some Source"));
             }
             mockservice.LogError(new TraceMessage("", 1, "Some Source"));
             mocks.VerifyAll(); //this should fail the test
