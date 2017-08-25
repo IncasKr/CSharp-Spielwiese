@@ -263,5 +263,21 @@ namespace LogAn.Tests
             view.TriggerLoad(null, EventArgs.Empty);
             verifier.Verify();
         }
+
+        [Test]
+        public void CreateMock_WithReplayAll()
+        {
+            MockRepository mockEngine = new MockRepository();
+            IWebService simulatedService =
+            mockEngine.DynamicMock<IWebService>();
+            using (mockEngine.Record())
+            {
+                simulatedService.LogError("Filename too short:abc.ext");
+            }
+            LogAnalyzer2 log = new LogAnalyzer2(simulatedService);
+            string tooShortFileName = "abc.ext";
+            log.Analyze(tooShortFileName);
+            mockEngine.Verify(simulatedService);
+        }
     }
 }
