@@ -11,6 +11,11 @@ namespace LogAn.Tests
     [TestFixture]
     public class LogAnalyzer2Tests
     {
+        private bool VerifyComplexMessage(ComplexTraceMessage msg)
+        {
+            return !(msg.InnerMessage.Severity < 50 && msg.InnerMessage.Message.Contains("a"));
+        }
+
         [Test]
         public void Analyze_TooShortFileName_CallsWebService()
         {
@@ -195,10 +200,7 @@ namespace LogAn.Tests
             using (mocks.Record())
             {
                 mockservice.LogError(new TraceMessage("", 0, ""));
-                LastCall.Constraints(Rhino.Mocks.Constraints.Is.Matching<ComplexTraceMessage>(delegate (ComplexTraceMessage msg)
-                {
-                    return !(msg.InnerMessage.Severity < 50 && msg.InnerMessage.Message.Contains("a"));
-                }));
+                LastCall.Constraints(Rhino.Mocks.Constraints.Is.Matching<ComplexTraceMessage>(VerifyComplexMessage));
             }           
         }
     }
