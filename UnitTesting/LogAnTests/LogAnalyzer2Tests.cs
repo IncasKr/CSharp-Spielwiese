@@ -203,5 +203,20 @@ namespace LogAn.Tests
                 LastCall.Constraints(Rhino.Mocks.Constraints.Is.Matching<ComplexTraceMessage>(VerifyComplexMessage));
             }           
         }
+
+        [Test]
+        public void VerifyAttachesToViewEvents()
+        {
+            MockRepository mocks = new MockRepository();
+            IView viewMock = (IView)mocks.StrictMock(typeof(IView));
+            using (mocks.Record())
+            {
+                // Records expected event registration
+                viewMock.Load += null;
+                LastCall.IgnoreArguments();
+            }
+            new Presenter(viewMock);
+            mocks.VerifyAll();
+        }
     }
 }
