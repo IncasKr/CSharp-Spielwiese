@@ -136,7 +136,7 @@ namespace LogAn.Tests
             using (mocks.Record())
             {
                 resultGetter.GetSomeNumber("A");
-                LastCall.Throw(new OutOfMemoryException("The system is out of memory!"));                
+                LastCall.Throw(new OutOfMemoryException("The system is out of memory!"));
             }
             try
             {
@@ -168,7 +168,7 @@ namespace LogAn.Tests
             MockRepository mocks = new MockRepository();
             IWebService mockservice = mocks.StrictMock<IWebService>();
             using (mocks.Record())
-            {                
+            {
                 mockservice.LogError(new TraceMessage("", 1, ""));
                 // Set constraints
                 Or combined1 = new Or(Property.Value("Message", "expected msg"),
@@ -203,7 +203,7 @@ namespace LogAn.Tests
             {
                 mockservice.LogError(new TraceMessage("", 0, ""));
                 LastCall.Constraints(Rhino.Mocks.Constraints.Is.Matching<ComplexTraceMessage>(VerifyComplexMessage));
-            }           
+            }
         }
 
         [Test]
@@ -238,6 +238,19 @@ namespace LogAn.Tests
             IEventRaiser eventer = EventRaiser.Create(viewStub, "Load");
             eventer.Raise(null, EventArgs.Empty); // Triggers event
             mocks.Verify(serviceMock);
+        }
+
+        [Test]
+        public void EventFiringManual()
+        {
+            bool loadFired = false;
+            SomeView view = new SomeView();
+            view.Load += delegate
+            {
+                loadFired = true;
+            };
+            view.TriggerLoad(null, EventArgs.Empty);
+            Assert.IsTrue(loadFired);
         }
     }
 }
