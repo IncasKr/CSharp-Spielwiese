@@ -4,6 +4,7 @@
     {
         void LogError(string message);
         void LogError(TraceMessage message);
+        void LogInfo(string message);
     }
 
     public interface IEmailService

@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
+using Rhino.Mocks.Impl;
+using Rhino.Mocks.Interfaces;
 using System;
 
 namespace LogAn.Tests
@@ -217,6 +219,25 @@ namespace LogAn.Tests
             }
             new Presenter(viewMock);
             mocks.VerifyAll();
+        }
+
+        [Test]
+        public void TriggerAndVerifyRespondingToEvents()
+        {
+            MockRepository mocks = new MockRepository();
+            // Uses stub for event triggering
+            IView viewStub = mocks.Stub<IView>();
+            // Uses mock to check log call
+            IWebService serviceMock = mocks.StrictMock<IWebService>();
+            using (mocks.Record())
+            {
+                serviceMock.LogInfo("view loaded");
+            }
+            new Presenter(viewStub, serviceMock);
+            // Creates event raiser
+            IEventRaiser eventer = EventRaiser.Create(viewStub, "Load");
+            eventer.Raise(null, EventArgs.Empty); // Triggers event
+            mocks.Verify(serviceMock);
         }
     }
 }

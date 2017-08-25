@@ -18,5 +18,10 @@ namespace LogAn
         {
             LogError(message.Message);
         }
+
+        public void LogInfo(string message)
+        {
+
+        }
     }
 }
