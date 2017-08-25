@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Rhino.Mocks;
+using Rhino.Mocks.Constraints;
 using System;
 
 namespace LogAn.Tests
@@ -152,6 +153,23 @@ namespace LogAn.Tests
                 LastCall.Constraints(new Rhino.Mocks.Constraints.Contains("abc"));
             }
             mockService.LogError($"{Guid.NewGuid()} abc");
+            mocks.VerifyAll();
+        }
+
+        [Test]
+        public void ConstraintsAgainstObjectPropeties()
+        {
+            MockRepository mocks = new MockRepository();
+            IWebService mockservice = mocks.StrictMock<IWebService>();
+            using (mocks.Record())
+            {                
+                mockservice.LogError(new TraceMessage("", 100, ""));
+                // Checks property values
+                LastCall.Constraints(Property.Value("Message", "expected msg")
+                                    && Property.Value("Severity", 100)
+                                    && Property.Value("Source", "Some Source"));
+            }
+            mockservice.LogError(new TraceMessage("", 1, "Some Source"));
             mocks.VerifyAll();
         }
     }

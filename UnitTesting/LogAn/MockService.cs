@@ -8,5 +8,10 @@
         {
             LastError = message;
         }
+        
+        public void LogError(TraceMessage message)
+        {
+            LogError(message.Message);
+        }
     }
 }

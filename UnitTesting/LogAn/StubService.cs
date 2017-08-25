@@ -13,5 +13,10 @@ namespace LogAn
                 throw ToThrow;
             }
         }
+
+        public void LogError(TraceMessage message)
+        {
+            LogError(message.Message);
+        }
     }
 }

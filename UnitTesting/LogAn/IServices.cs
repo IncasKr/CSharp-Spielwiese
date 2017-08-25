@@ -3,6 +3,7 @@
     public interface IWebService
     {
         void LogError(string message);
+        void LogError(TraceMessage message);
     }
 
     public interface IEmailService
