@@ -1,13 +1,32 @@
-﻿using System;
+﻿using example1.Properties;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace example1
 {
+    public enum DataType
+    {
+        Inbound,
+        Outbound
+    }
+
+    public struct Data
+    {
+        public string Name;
+        public DataType Type;
+        public Data(string name, DataType type = DataType.Inbound)
+        {
+            Name = name;
+            Type = type;
+        }
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -22,9 +41,130 @@ namespace example1
             }
         }
 
+        public ObservableCollection<MenuItemViewModel> MenuItems { get; set; }
+
+        private static int CompareGroups(Data x, Data y)
+        {
+            if (x.Name == null)
+            {
+                if (y.Name == null)
+                {
+                    // If x is null and y is null, they're
+                    // equal. 
+                    return 0;
+                }
+                else
+                {
+                    // If x is null and y is not null, y
+                    // is greater. 
+                    return -1;
+                }
+            }
+            else
+            {
+                // If x is not null...
+                //
+                if (y.Name == null)
+                // ...and y is null, x is greater.
+                {
+                    return 1;
+                }
+                else
+                {
+                    // ...and y is not null, compare the 
+                    // lengths of the two strings.
+                    //
+                    int retval = x.Name.Length.CompareTo(y.Name.Length);
+
+                    if (retval != 0)
+                    {
+                        // If the strings are not of equal length,
+                        // the longer string is greater.
+                        //
+                        return retval;
+                    }
+                    else
+                    {
+                        // If the strings are of equal length,
+                        // sort them with ordinary string comparison.
+                        //
+                        return x.Name.CompareTo(y.Name);
+                    }
+                }
+            }
+        }
+
+        private void CreateMenus()
+        {
+            List<Data> groups = new List<Data>
+            {
+                new Data("AInbound1"),
+                new Data("aInbound2"),
+                new Data("PG_AOutbound1", DataType.Outbound),
+                new Data("NInbound1"),
+                new Data("NInbound2"),
+                new Data("AInbound3"),
+                new Data("SInbound1"),
+                new Data("vOutbound1", DataType.Outbound),
+                new Data("vInbound1"),
+                new Data("AOutbound1", DataType.Outbound),
+            };
+            MenuItems = new ObservableCollection<MenuItemViewModel>();
+            foreach (var g in groups.GroupBy(d => d.Type))
+            {
+                var kind = new MenuItemViewModel
+                {
+                    Header = g.Key.ToString()
+                };
+                MenuItems.Add(kind);
+                var elts = groups.Where(t => t.Type.Equals(g.Key));
+                if (elts.Count() == 0)
+                {
+                    continue;
+                }
+                var eltsGroup = groups.GroupBy(n =>n.Name.ToUpper()[0]);
+                kind.MenuItems = new ObservableCollection<MenuItemViewModel>();
+                foreach (var eltGroup in eltsGroup)
+                {
+                    var cat = new MenuItemViewModel
+                    {
+                        Header = $"{eltGroup.Key}".ToUpper()
+                    };
+                    elts = groups.Where(t => t.Type.Equals(g.Key) && t.Name.ToUpper().StartsWith(cat.Header) && !t.Name.ToUpper().StartsWith("PG_"));
+                    switch (elts.Count())
+                    {
+                        case 0:
+                            continue;
+                        case 1:
+                            kind.MenuItems.Add(new MenuItemViewModel { Header = elts.First().Name });
+                            break;
+                        default:
+                            if (elts.Count() > Settings.Default.ItemsMaxBeforeSort)
+                            {
+                                kind.MenuItems.Add(cat);
+                                cat.MenuItems = new ObservableCollection<MenuItemViewModel>();
+                                foreach (var item in elts)
+                                {
+                                    cat.MenuItems.Add(new MenuItemViewModel { Header = item.Name });
+                                }
+                            }
+                            else
+                            {
+                                foreach (var item in elts)
+                                {
+                                    kind.MenuItems.Add(new MenuItemViewModel { Header = item.Name });
+                                }
+                            }                           
+                            break;
+                    }
+                }
+            }            
+        }
+
         public MainWindow()
         {
             InitializeComponent();
+            CreateMenus();
 
             List<TaskToDo> thingsToDo = new List<TaskToDo>
             {
@@ -219,6 +359,60 @@ namespace example1
         public TTask()
         {
             Priority = 1;
+        }
+    }
+
+    public class MenuItemViewModel
+    {
+        private readonly ICommand _command;
+
+        public MenuItemViewModel()
+        {
+            _command = new CommandViewModel(Execute);
+        }
+
+        public string Header { get; set; }
+
+        public ObservableCollection<MenuItemViewModel> MenuItems { get; set; }
+
+        public ICommand Command
+        {
+            get
+            {
+                return _command;
+            }
+        }
+
+        private void Execute()
+        {
+            // (NOTE: In a view model, you normally should not use MessageBox.Show()).
+            MessageBox.Show("Clicked at " + Header);
+        }
+    }
+
+    public class CommandViewModel : ICommand
+    {
+        private readonly Action _action;
+
+        public CommandViewModel(Action action)
+        {
+            _action = action;
+        }
+
+        public void Execute(object o)
+        {
+            _action();
+        }
+
+        public bool CanExecute(object o)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { }
+            remove { }
         }
     }
 }
