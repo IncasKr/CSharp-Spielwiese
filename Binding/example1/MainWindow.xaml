@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:example1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="415.265" Width="561.734">
+        Title="MainWindow" Height="864.415" Width="562.734">
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -16,37 +16,20 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <ToolBar Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="39" Margin="10,10,0,0" VerticalAlignment="Top" Width="534">
-            <Menu>
-                <MenuItem Header="Menu1">
-                    <MenuItem Header="SubMenu1.1">
-                        <MenuItem Header="SubMenu1.1.1">
-
-                        </MenuItem>
-                        <MenuItem Header="SubMenu1.1.2">
-
-                        </MenuItem>
-                    </MenuItem>
-                    <MenuItem Header="SubMenu1.2">
-                        <MenuItem Header="SubMenu1.2.1">
-
-                        </MenuItem>
-                        <MenuItem Header="SubMenu1.2.2">
-
-                        </MenuItem>
-                        <MenuItem Header="SubMenu1.2.3">
-
-                        </MenuItem>
-                        <MenuItem Header="SubMenu1.2.4">
-
-                        </MenuItem>
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="Menu2">
-
-                </MenuItem>
+            <Menu DockPanel.Dock="Top" ItemsSource="{Binding MenuItems}">
+                <Menu.ItemContainerStyle>
+                    <Style TargetType="{x:Type MenuItem}">
+                        <Setter Property="Command" Value="{Binding Command}" />
+                    </Style>
+                </Menu.ItemContainerStyle>
+                <Menu.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type local:MenuItemViewModel}" ItemsSource="{Binding Path=MenuItems}">
+                        <TextBlock Text="{Binding Header}"/>
+                    </HierarchicalDataTemplate>
+                </Menu.ItemTemplate>
             </Menu>
         </ToolBar>
-        <ListBox x:Name="HauptList" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding ListOfTasks}" Margin="10,49,272,5" Grid.ColumnSpan="2" >
+        <ListBox x:Name="HauptList" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ListOfTasks}" Margin="9,248,272,5" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -57,7 +40,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListView x:Name="tbList" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding SelectedItem.ID, ElementName=HauptList, Mode=TwoWay}" Margin="287,49,10,0" Width="257">
+        <ListView x:Name="tbList" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding SelectedItem.ID, ElementName=HauptList, Mode=TwoWay}" Margin="287,248,10,0" Width="257">
             <!--<ListView.View>
                 <GridView>
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=ID, ElementName=HauptList, Mode=TwoWay}" />
@@ -70,5 +53,14 @@
             <Button x:Name="btnDelete" Content="Delete text" Grid.Row="1" Grid.Column="1" Click="btnDelete_Click" />
             <Button x:Name="btnPriority" Content="Up priority" Click="btnPriority_Click" />
         </StackPanel>
+        <ListBox Grid.Column="1" ItemsSource="{Binding MenuItems}"  HorizontalAlignment="Left" Height="189" Margin="10,54,0,0" VerticalAlignment="Top" Width="533">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Header}" Margin="20 0 0 0" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
