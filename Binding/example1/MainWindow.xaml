@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:example1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="363.265" Width="561.734">
+        Title="MainWindow" Height="415.265" Width="561.734">
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -15,7 +15,38 @@
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="HauptList" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding ListOfTasks}" Margin="10,26,272,5" Grid.ColumnSpan="2" >
+        <ToolBar Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="39" Margin="10,10,0,0" VerticalAlignment="Top" Width="534">
+            <Menu>
+                <MenuItem Header="Menu1">
+                    <MenuItem Header="SubMenu1.1">
+                        <MenuItem Header="SubMenu1.1.1">
+
+                        </MenuItem>
+                        <MenuItem Header="SubMenu1.1.2">
+
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="SubMenu1.2">
+                        <MenuItem Header="SubMenu1.2.1">
+
+                        </MenuItem>
+                        <MenuItem Header="SubMenu1.2.2">
+
+                        </MenuItem>
+                        <MenuItem Header="SubMenu1.2.3">
+
+                        </MenuItem>
+                        <MenuItem Header="SubMenu1.2.4">
+
+                        </MenuItem>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Menu2">
+
+                </MenuItem>
+            </Menu>
+        </ToolBar>
+        <ListBox x:Name="HauptList" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding ListOfTasks}" Margin="10,49,272,5" Grid.ColumnSpan="2" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -26,7 +57,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListView x:Name="tbList" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding SelectedItem.ID, ElementName=HauptList, Mode=TwoWay}" Margin="287,26,10,0" Width="257">
+        <ListView x:Name="tbList" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding SelectedItem.ID, ElementName=HauptList, Mode=TwoWay}" Margin="287,49,10,0" Width="257">
             <!--<ListView.View>
                 <GridView>
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=ID, ElementName=HauptList, Mode=TwoWay}" />
