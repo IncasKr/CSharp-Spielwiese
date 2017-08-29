@@ -39,7 +39,7 @@ namespace example1
             }
         }
 
-        public ObservableCollection<MenuItemViewModel> MenuItems { get; private set; }
+        public ObservableCollection<MenuItemViewModel> MenuItems { get; set; }
 
         private static int CompareGroups(Data x, Data y)
         {
@@ -97,7 +97,7 @@ namespace example1
             List<Data> groups = new List<Data>
             {
                 new Data("AInbound1"),
-                new Data("AInbound2"),
+                new Data("aInbound2"),
                 new Data("PG_AOutbound1", DataType.Outbound),
                 new Data("NInbound2"),
                 new Data("AInbound3"),
@@ -119,7 +119,7 @@ namespace example1
                 {
                     continue;
                 }
-                var eltsGroup = groups.GroupBy(n =>n.Name[0]);
+                var eltsGroup = groups.GroupBy(n =>n.Name.ToUpper()[0]);
                 kind.MenuItems = new ObservableCollection<MenuItemViewModel>();
                 foreach (var eltGroup in eltsGroup)
                 {
@@ -144,31 +144,8 @@ namespace example1
                             }
                             break;
                     }
-                    
                 }
-                
-            }
-
-            /*MenuItems = new ObservableCollection<MenuItemViewModel>
-            {
-                new MenuItemViewModel { Header = "Inbound",
-                    MenuItems = new ObservableCollection<MenuItemViewModel>
-                    {
-                        new MenuItemViewModel { Header = "AInbound1" },
-                        new MenuItemViewModel { Header = "AInbound2" },
-                        new MenuItemViewModel { Header = "BInbound1" },
-                        new MenuItemViewModel { Header = "vInbound1" }
-                    }
-                },
-                new MenuItemViewModel { Header = "Outbound",
-                    MenuItems = new ObservableCollection<MenuItemViewModel>
-                    {
-                        new MenuItemViewModel { Header = "BOutbound1" },
-                        new MenuItemViewModel { Header = "BOutbound2" },
-                        new MenuItemViewModel { Header = "AOutbound2" }
-                    }
-                }
-            }; */           
+            }            
         }
 
         public MainWindow()
