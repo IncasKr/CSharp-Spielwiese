@@ -25,6 +25,7 @@ namespace example1
             Type = type;
         }
     }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
