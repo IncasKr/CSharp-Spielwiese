@@ -1,4 +1,5 @@
-﻿using System;
+﻿using example1.Properties;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -100,6 +101,7 @@ namespace example1
                 new Data("AInbound1"),
                 new Data("aInbound2"),
                 new Data("PG_AOutbound1", DataType.Outbound),
+                new Data("NInbound1"),
                 new Data("NInbound2"),
                 new Data("AInbound3"),
                 new Data("SInbound1"),
@@ -137,12 +139,22 @@ namespace example1
                             kind.MenuItems.Add(new MenuItemViewModel { Header = elts.First().Name });
                             break;
                         default:
-                            kind.MenuItems.Add(cat);
-                            cat.MenuItems = new ObservableCollection<MenuItemViewModel>();
-                            foreach (var item in elts)
+                            if (elts.Count() > Settings.Default.ItemsMaxBeforeSort)
                             {
-                                cat.MenuItems.Add(new MenuItemViewModel { Header = item.Name });
+                                kind.MenuItems.Add(cat);
+                                cat.MenuItems = new ObservableCollection<MenuItemViewModel>();
+                                foreach (var item in elts)
+                                {
+                                    cat.MenuItems.Add(new MenuItemViewModel { Header = item.Name });
+                                }
                             }
+                            else
+                            {
+                                foreach (var item in elts)
+                                {
+                                    kind.MenuItems.Add(new MenuItemViewModel { Header = item.Name });
+                                }
+                            }                           
                             break;
                     }
                 }
