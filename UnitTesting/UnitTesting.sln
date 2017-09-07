@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogAn", "LogAn\LogAn.csproj", "{3288A0E7-EDAF-4A96-A523-8CB80092CBF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogAnTests", "LogAnTests\LogAnTests.csproj", "{7EC4F696-0837-4A40-9C87-36724D8BE4F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogAn.Tests", "LogAnTests\LogAn.Tests.csproj", "{7EC4F696-0837-4A40-9C87-36724D8BE4F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventsTesterProj", "EventsTester\EventsTesterProj.csproj", "{5E2A8930-0179-446B-9551-9551A2ECB5F6}"
 EndProject
@@ -30,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4CCCBBC1-CFC5-4898-8EE7-2FA048FD0F08}
 	EndGlobalSection
 EndGlobal
