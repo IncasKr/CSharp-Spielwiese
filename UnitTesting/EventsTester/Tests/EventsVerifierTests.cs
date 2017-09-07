@@ -22,7 +22,6 @@ namespace TeamAgile.NUnitExtensions.EventsTesting.Tests
 		[Test]
 		public void Create()
 		{
-			verifier = new EventsVerifier();
 			Assert.IsNotNull(verifier);
 		}
 
