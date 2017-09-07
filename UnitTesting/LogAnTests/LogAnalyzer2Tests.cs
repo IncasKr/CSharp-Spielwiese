@@ -293,5 +293,17 @@ namespace LogAn.Tests
             // Asserts using Rhino Mocks
             simulatedService.AssertWasCalled( svc => svc.LogError("Filename too short:abc.ext"));
         }
+
+        [Test]
+        public void StubThatThrowsException_RhinoMocks()
+        {
+            IWebService simulatedService = MockRepository.GenerateStub<IWebService>();
+            simulatedService
+                .Expect(t => t.LogError(""))
+                .Throw(new Exception("fake exception 2"))
+                .Constraints(Rhino.Mocks.Constraints.Is.Anything());
+            LogAnalyzer2 log = new LogAnalyzer2(simulatedService);
+            log.Analyze("abc.ext");
+        }
     }
 }

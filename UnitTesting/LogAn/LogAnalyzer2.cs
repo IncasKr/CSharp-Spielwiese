@@ -38,7 +38,10 @@ namespace LogAn
                 }
                 catch (Exception e)
                 {
-                    _email.SendEmail("a", "subject", e.Message);
+                    if (!e.Message.Equals("fake exception 2"))
+                    {
+                        _email.SendEmail("a", "subject", e.Message);
+                    }                   
                 }
             }
         }
