@@ -305,5 +305,17 @@ namespace LogAn.Tests
             LogAnalyzer2 log = new LogAnalyzer2(simulatedService);
             log.Analyze("abc.ext");
         }
+
+        [Test]
+        public void MockInterfaceWithRhinoMocks()
+        {
+            MockRepository mocks = new MockRepository();
+            ILogger simulatedLogger = mocks.StrictMock<ILogger>();
+            simulatedLogger.LogError("param value 1 is a string", 2,"param value 3 is a string");
+            mocks.ReplayAll();
+            MyTestedClass.SetLogger(simulatedLogger);
+            MyTestedClass.DoSomething();
+            mocks.VerifyAll();
+        }
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="FileExtensionManager.cs" />
     <Compile Include="IExtensionManager.cs" />
     <Compile Include="IGetResults.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="IServices.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="LogAnalyzer.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SomeView.cs" />
     <Compile Include="StubService.cs" />
+    <Compile Include="MyTestedClass.cs" />
     <Compile Include="TraceMessage.cs" />
   </ItemGroup>
   <ItemGroup>
