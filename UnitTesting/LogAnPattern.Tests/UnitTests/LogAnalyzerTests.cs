@@ -19,5 +19,13 @@ namespace LogAnPattern.Tests.UnitTests
             LogAnalyzer la = new LogAnalyzer();
             Assert.Throws(typeof(TypeLoadException), () => la.Analyze("myemptyfile.txt"));
         }
+
+        [Test]
+        public void SemanticsChange()
+        {
+            LogAnalyzer logan = new LogAnalyzer();
+            logan.Initializer();
+            Assert.IsFalse(logan.IsValid("abc"));
+        }
     }
 }
