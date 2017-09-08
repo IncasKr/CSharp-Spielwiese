@@ -53,11 +53,13 @@
   <ItemGroup>
     <Compile Include="Base\BaseStringParserTests.cs" />
     <Compile Include="Base\BaseTestClass.cs" />
+    <Compile Include="Base\StringParserTests.cs" />
     <Compile Include="Integration\StubLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\ConfigurationManagerTests.cs" />
     <Compile Include="UnitTests\IISLogStringParserTests.cs" />
     <Compile Include="UnitTests\LogAnalyzerTests.cs" />
+    <Compile Include="UnitTests\StandardStringParserGenericTests.cs" />
     <Compile Include="UnitTests\StandardStringParserTests.cs" />
     <Compile Include="UnitTests\XMLStringParserTests.cs" />
   </ItemGroup>
