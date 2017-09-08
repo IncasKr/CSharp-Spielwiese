@@ -23,7 +23,7 @@ namespace LogAnPattern.Tests.UnitTests
         [Test]
         public void Analyze_EmptyFile_ThrowsException()
         {
-            LogAnalyzer la = new LogAnalyzer();
+            LogAnalyzer la = MakeDefaultAnalyzer();
             Assert.Throws(typeof(TypeLoadException), () => la.Analyze("myemptyfile.txt"));
         }
 
@@ -32,6 +32,14 @@ namespace LogAnPattern.Tests.UnitTests
         {
             LogAnalyzer logan = MakeDefaultAnalyzer();
             Assert.IsFalse(logan.IsValid("abc"));
+        }
+
+        [Test]
+        public void TestWithMultipleAsserts()
+        {
+            LogAnalyzer logan = MakeDefaultAnalyzer();
+            Assert.IsFalse(logan.IsValid("abc"));
+            Assert.IsTrue(logan.IsValid("abcde.txt"));
         }
     }
 }
