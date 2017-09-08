@@ -13,31 +13,30 @@ namespace LogAnPattern.Tests.UnitTests
     [TestFixture]
     public class LogAnalyzerTests : BaseTestClass
     {
-        public static LogAnalyzer MakeDefaultAnalyzer()
-        {
-            LogAnalyzer analyzer = new LogAnalyzer();
-            analyzer.Initialize();
-            return analyzer;
-        }
+        private LogAnalyzer logan = null;
 
+        [SetUp]
+        public override void Setup()
+        {
+            logan = new LogAnalyzer();
+            logan.Initialize();
+        }
+        
         [Test]
         public void Analyze_EmptyFile_ThrowsException()
         {
-            LogAnalyzer la = MakeDefaultAnalyzer();
-            Assert.Throws(typeof(TypeLoadException), () => la.Analyze("myemptyfile.txt"));
+            Assert.Throws(typeof(TypeLoadException), () => logan.Analyze("myemptyfile.txt"));
         }
 
         [Test]
         public void SemanticsChange()
         {
-            LogAnalyzer logan = MakeDefaultAnalyzer();
             Assert.IsFalse(logan.IsValid("abc"));
         }
 
         [Test]
         public void TestWithMultipleAsserts()
         {
-            LogAnalyzer logan = MakeDefaultAnalyzer();
             Assert.IsFalse(logan.IsValid("abc"));
             Assert.IsTrue(logan.IsValid("abcde.txt"));
         }
