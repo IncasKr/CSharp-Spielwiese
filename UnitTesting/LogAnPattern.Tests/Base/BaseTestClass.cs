@@ -11,7 +11,7 @@ namespace LogAnPattern.Tests.Base
     public class BaseTestClass
     {
         [SetUp]
-        public void Setup()
+        public virtual void Setup()
         {
             Console.WriteLine("in setup");
             LoggingFacility.Logger = new StubLogger();

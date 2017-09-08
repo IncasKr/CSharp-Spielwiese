@@ -14,6 +14,13 @@ namespace LogAnPattern.Tests.UnitTests
     [TestFixture]
     public class ConfigurationManagerTests : BaseTestClass
     {
+        [SetUp]
+        public override void Setup()
+        {
+            base.Setup();
+            Console.WriteLine("in derived");            
+        }
+
         [Test]
         public void Analyze_EmptyFile_ThrowsException()
         {
