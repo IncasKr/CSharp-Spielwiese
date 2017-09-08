@@ -25,7 +25,7 @@ namespace LogAnPattern
             _nameToTest = fileName;
         }
 
-        public void Initializer()
+        public void Initialize()
         {
             _file = new FileData();
             _file.FileName = _nameToTest;

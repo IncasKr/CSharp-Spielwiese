@@ -13,6 +13,13 @@ namespace LogAnPattern.Tests.UnitTests
     [TestFixture]
     public class LogAnalyzerTests : BaseTestClass
     {
+        public static LogAnalyzer MakeDefaultAnalyzer()
+        {
+            LogAnalyzer analyzer = new LogAnalyzer();
+            analyzer.Initialize();
+            return analyzer;
+        }
+
         [Test]
         public void Analyze_EmptyFile_ThrowsException()
         {
@@ -23,8 +30,7 @@ namespace LogAnPattern.Tests.UnitTests
         [Test]
         public void SemanticsChange()
         {
-            LogAnalyzer logan = new LogAnalyzer();
-            logan.Initializer();
+            LogAnalyzer logan = MakeDefaultAnalyzer();
             Assert.IsFalse(logan.IsValid("abc"));
         }
     }
