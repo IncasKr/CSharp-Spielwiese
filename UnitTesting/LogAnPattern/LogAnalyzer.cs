@@ -14,7 +14,10 @@ namespace LogAnPattern
             {
                 LoggingFacility.Log("Filename too short:" + fileName);
             }
-            //rest of the method here
+            if (fileName.Equals("myemptyfile.txt"))
+            {
+                throw new TypeLoadException($"The file '{fileName}' is empty!");
+            }
         }
     }
 }
