@@ -67,7 +67,7 @@ namespace LogAnPattern.Tests.Base
             string input = "header; \n";
             IStringParser parser = GetParser(input);
             bool result = parser.HasCorrectHeader();
-            Assert.IsTrue(result);
+            Assert.IsFalse(result);
         }
     }
 }
