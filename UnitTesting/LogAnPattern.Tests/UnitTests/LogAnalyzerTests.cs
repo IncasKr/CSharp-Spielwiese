@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using LogAnPattern.Tests.Integration;
+using LogAnPattern.Tests.Base;
 
 namespace LogAnPattern.Tests.UnitTests
 {
@@ -11,14 +12,8 @@ namespace LogAnPattern.Tests.UnitTests
     /// Summary description for LogAnalyzerTests
     /// </summary>
     [TestFixture]
-    public class LogAnalyzerTests
+    public class LogAnalyzerTests : BaseTestClass
     {
-        [SetUp]
-        public void Setup()
-        {
-            LoggingFacility.Logger = new StubLogger();
-        }
-
         [Test]
         public void Analyze_EmptyFile_ThrowsException()
         {

@@ -51,6 +51,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\BaseTestClass.cs" />
     <Compile Include="Integration\StubLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\ConfigurationManagerTests.cs" />
@@ -59,9 +60,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Base\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\LogAnPattern\LogAnPattern.csproj">
       <Project>{6ba43136-7ca5-4959-b66d-086446a40f5b}</Project>
