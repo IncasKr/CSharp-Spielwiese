@@ -48,7 +48,7 @@
     <Compile Include="IStringParser.cs" />
     <Compile Include="LogAnalyzer.cs" />
     <Compile Include="LoggingFacility.cs" />
-    <Compile Include="LogStringParser.cs" />
+    <Compile Include="IISLogStringParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StandardStringParser.cs" />

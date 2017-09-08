@@ -8,9 +8,9 @@ namespace LogAnPattern
 {
     public class XMLStringParser : BaseStringParser
     {
-        public XMLStringParser()
+        public XMLStringParser(string value)
         {
-
+            StringToParse = value;
         }
 
         public override string GetTextVersionFromHeader()

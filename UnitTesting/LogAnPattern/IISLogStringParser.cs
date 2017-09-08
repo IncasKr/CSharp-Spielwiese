@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace LogAnPattern
 {
-    public class LogStringParser : BaseStringParser
+    public class IISLogStringParser : BaseStringParser
     {
-        public LogStringParser()
+        public IISLogStringParser(string value)
         {
-
+            StringToParse = value;
         }
 
         public override string GetTextVersionFromHeader()
