@@ -13,6 +13,12 @@ namespace LogAnPattern.Tests.UnitTests
         // Defines sharedPerson state.
         Person person = new Person();
 
+        [SetUp]
+        public void Setup()
+        {
+            person.PhoneNumber = "";
+        }
+
         [Test]
         public void CreateAnalyzer_GoodFileName_ReturnsTrue()
         {
