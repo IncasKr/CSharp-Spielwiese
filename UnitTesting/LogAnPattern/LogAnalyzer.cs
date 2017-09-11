@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -33,12 +34,22 @@ namespace LogAnPattern
             _nameToTest = "myemptyfile.txt";
         }
 
+        public bool IsValid(FileInfo fileObj)
+        {
+            if (!fileObj.Exists)
+            {
+                return false;
+            }
+            return IsValid(fileObj.Name);
+        }
+
         public bool IsValid(string fileName)
         {
             if (_file == null)
             {
                 throw new NotInitializedException($"The LogAnalyzer.Initialize() method should be called before any other operation!");
             }
+            Analyze(fileName);
             return _file.FileName.ToLower().EndsWith(".txt") && _file.Load(fileName);
         }       
     }
