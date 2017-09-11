@@ -66,5 +66,18 @@ namespace LogAnPattern.Tests.UnitTests
             Assert.AreEqual("Open", output.GetLine(1)[1]);
             Assert.AreEqual("Roy", output.GetLine(1)[2]);
         }
+
+        [Test]
+        public void Analyze_SimpleStringLine_UsesDefaulTabDelimiterToParseFields2()
+        {
+            LogAnalyzer log = new LogAnalyzer();
+            // Sets up an expected object.
+            AnalyzedOutput expected = new AnalyzedOutput();
+            expected.AddLine("10:05", "Open", "Roy");
+            // Gets actual object.
+            AnalyzedOutput output = log.Analyze("10:05\tOpen\tRoy");
+            // Compares expected and actual objects.
+            Assert.AreEqual(expected, output);
+        }
     }
 }

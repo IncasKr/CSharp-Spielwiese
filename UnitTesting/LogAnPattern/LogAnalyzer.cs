@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LogAnPattern
 {
-    public struct AnalyzedOutput
+    public class AnalyzedOutput
     {
         public int LineCount
         {
@@ -27,6 +27,28 @@ namespace LogAnPattern
             {
                 Lines = new List<string>();
             }            
+        }
+
+        public void AddLine(string time, string state, string name)
+        {
+            Lines.Add($"{time}\t{state}\t{name}");
+        }
+
+        public override bool Equals(object obj)
+        {
+            var item = obj as AnalyzedOutput;
+            if (item == null || !this.LineCount.Equals(item.LineCount))
+            {
+                return false;
+            }
+            foreach (var line in this.Lines)
+            {
+                if (!item.Lines.Contains(line))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public string[] GetLine(int position)
