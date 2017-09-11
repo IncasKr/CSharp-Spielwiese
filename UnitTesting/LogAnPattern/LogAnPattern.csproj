@@ -49,6 +49,7 @@
     <Compile Include="LogAnalyzer.cs" />
     <Compile Include="LoggingFacility.cs" />
     <Compile Include="IISLogStringParser.cs" />
+    <Compile Include="MyOverridableClass.cs" />
     <Compile Include="NotInitializedException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
