@@ -61,6 +61,7 @@
     <Compile Include="UnitTests\IISLogStringParserTests.cs" />
     <Compile Include="UnitTests\IsolationsAntiPatterns.cs" />
     <Compile Include="UnitTests\LogAnalyzerTests.cs" />
+    <Compile Include="UnitTests\SharedStateCorruption.cs" />
     <Compile Include="UnitTests\StandardStringParserGenericTests.cs" />
     <Compile Include="UnitTests\StandardStringParserTests.cs" />
     <Compile Include="UnitTests\XMLStringParserTests.cs" />
