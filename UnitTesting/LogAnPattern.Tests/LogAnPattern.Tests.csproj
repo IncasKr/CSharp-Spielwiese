@@ -57,6 +57,7 @@
     <Compile Include="Integration\StubLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\ConfigurationManagerTests.cs" />
+    <Compile Include="UnitTests\HiddenTestCall.cs" />
     <Compile Include="UnitTests\IISLogStringParserTests.cs" />
     <Compile Include="UnitTests\IsolationsAntiPatterns.cs" />
     <Compile Include="UnitTests\LogAnalyzerTests.cs" />
