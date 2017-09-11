@@ -8,23 +8,62 @@ using System.Threading.Tasks;
 
 namespace LogAnPattern
 {
+    public struct AnalyzedOutput
+    {
+        public int LineCount
+        {
+            get { return Lines.Count; }
+        }
+
+        private List<string> Lines;
+
+        public AnalyzedOutput(List<string> list = null)
+        {
+            if (list != null)
+            {
+                Lines = list;
+            }
+            else
+            {
+                Lines = new List<string>();
+            }            
+        }
+
+        public string[] GetLine(int position)
+        {
+            if (position - 1 < 0 || position - 1 >= LineCount)
+            {
+                return null;
+            }
+            return Lines[position - 1].Split('\t');
+        }
+    }
     public class LogAnalyzer
     {
         private string _nameToTest = "myemptyfile.txt";
 
         private FileData _file;
 
-        public void Analyze(string fileName)
+        public AnalyzedOutput Analyze(string fileName)
         {
-            if (fileName.Length < 8)
+            var validCount = fileName != null ? fileName.Split('\t').Length : 0;
+            if (validCount.Equals(3))
             {
-                LoggingFacility.Log($"Filename too short: {fileName}");
+                return new AnalyzedOutput(new List<string>{ fileName });
             }
-            if (fileName.Equals(_nameToTest))
+            else
             {
-                throw new TypeLoadException($"The file '{fileName}' is empty!");
-            }
-            _file.FileName = fileName;
+                if (fileName.Length < 8)
+                {
+                    LoggingFacility.Log($"Filename too short: {fileName}");
+                }
+                if (fileName.Equals(_nameToTest))
+                {
+                    throw new TypeLoadException($"The file '{fileName}' is empty!");
+                }
+                _file.FileName = fileName;
+                return new AnalyzedOutput();
+            }            
         }
 
         public void Initialize()

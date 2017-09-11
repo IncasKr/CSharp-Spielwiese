@@ -55,5 +55,16 @@ namespace LogAnPattern.Tests.UnitTests
             bool valid = logan.IsValid(fileInfo);
             Assert.IsFalse(valid);
         }
+
+        [Test]
+        public void Analyze_SimpleStringLine_UsesDefaulTabDelimiterToParseFields()
+        {
+            LogAnalyzer log = new LogAnalyzer();
+            AnalyzedOutput output = log.Analyze("10:05\tOpen\tRoy");
+            Assert.AreEqual(1, output.LineCount);
+            Assert.AreEqual("10:05", output.GetLine(1)[0]);
+            Assert.AreEqual("Open", output.GetLine(1)[1]);
+            Assert.AreEqual("Roy", output.GetLine(1)[2]);
+        }
     }
 }
