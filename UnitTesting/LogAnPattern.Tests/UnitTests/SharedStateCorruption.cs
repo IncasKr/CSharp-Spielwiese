@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,12 +40,12 @@ namespace LogAnPattern.Tests.UnitTests
             Assert.IsNull(found);
         }
 
-        [Test]
-        public void CheckVariousSumResults()
+        [TestCase(1001, 1, 2, ExpectedResult = 3, Category = "Pass")]
+        [TestCase(1, 1001, 2, ExpectedResult = 3, Category = "No pass")]
+        [TestCase(1, 2, 1001, ExpectedResult = 3, Category = "Pass")]
+        public int SumTests(int x, int y, int z)
         {
-            Assert.AreEqual(3, Sum(1001, 1, 2));
-            Assert.AreEqual(3, Sum(1, 1001, 2));
-            Assert.AreEqual(3, Sum(1, 2, 1001));
+            return Sum(x, y, z);
         }
     }
 
