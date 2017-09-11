@@ -13,6 +13,11 @@ namespace LogAnPattern.Tests.UnitTests
         // Defines sharedPerson state.
         Person person = new Person();
 
+        internal int Sum(int nb1, int nb2, int nb3)
+        {
+            return (nb1 + nb2 == 3) ? nb1 + nb2 : nb2 + nb3;
+        }
+
         [SetUp]
         public void Setup()
         {
@@ -32,6 +37,14 @@ namespace LogAnPattern.Tests.UnitTests
         {
             string found = person.FindPhoneStartingWith("0"); // Reads shared state.
             Assert.IsNull(found);
+        }
+
+        [Test]
+        public void CheckVariousSumResults()
+        {
+            Assert.AreEqual(3, Sum(1001, 1, 2));
+            Assert.AreEqual(3, Sum(1, 1001, 2));
+            Assert.AreEqual(3, Sum(1, 2, 1001));
         }
     }
 
