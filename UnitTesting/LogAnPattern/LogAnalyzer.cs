@@ -24,14 +24,13 @@ namespace LogAnPattern
             {
                 throw new TypeLoadException($"The file '{fileName}' is empty!");
             }
-            _nameToTest = fileName;
+            _file.FileName = fileName;
         }
 
         public void Initialize()
         {
             _file = new FileData();
-            _file.FileName = _nameToTest;
-            _nameToTest = "myemptyfile.txt";
+            _nameToTest = "myemptyfile.txt";            
         }
 
         public bool IsValid(FileInfo fileObj)
