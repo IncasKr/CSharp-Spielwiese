@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogAnPattern.Tests", "LogAn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetStandardLibrary.Tests", "NetStandardLibrary.Tests\NetStandardLibrary.Tests.csproj", "{2BEAE851-6745-4C9A-BDBE-9A538692203E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntroToNUnit", "IntroToNUnit\IntroToNUnit.csproj", "{E04D9E60-A2E8-4239-A90D-B8DC35CB4EAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{2BEAE851-6745-4C9A-BDBE-9A538692203E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BEAE851-6745-4C9A-BDBE-9A538692203E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BEAE851-6745-4C9A-BDBE-9A538692203E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E04D9E60-A2E8-4239-A90D-B8DC35CB4EAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E04D9E60-A2E8-4239-A90D-B8DC35CB4EAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E04D9E60-A2E8-4239-A90D-B8DC35CB4EAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E04D9E60-A2E8-4239-A90D-B8DC35CB4EAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
