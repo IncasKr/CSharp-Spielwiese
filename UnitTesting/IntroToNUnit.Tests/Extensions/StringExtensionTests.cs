@@ -8,7 +8,7 @@ namespace IntroToNUnit.Tests.Extensions
     [TestFixture]
     public class StringExtensionTests
     {
-        [Test]
+        [Test, Category("Fast"), Order(2)]
         public void StringContainsReturnsTrueIfStringIsFound()
         {
             string str = "The quick brown fox jumps over the lazy dog.";
@@ -19,7 +19,7 @@ namespace IntroToNUnit.Tests.Extensions
             Assert.That(found, Is.True);
         }
 
-        [Test]
+        [Test, Category("Fast"), Order(1)]
         public void StringContainsReturnsFalseIfStringIsNotFound()
         {
             string str = "The quick brown fox jumps over the lazy dog.";
@@ -30,7 +30,7 @@ namespace IntroToNUnit.Tests.Extensions
             Assert.That(found, Is.False);
         }
 
-        [Test]
+        [Test, Category("Fast"), Order(3), Ignore("For the test")]
         public void StringContainsCanIgnoreCase()
         {
             string str = "The quick brown fox jumps over the lazy dog.";

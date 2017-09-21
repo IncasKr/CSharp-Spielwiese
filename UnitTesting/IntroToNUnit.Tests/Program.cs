@@ -25,6 +25,7 @@ using NUnit.Common;
 using NUnitLite;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Xml.XPath;
@@ -44,7 +45,6 @@ namespace NUnitLite.Tests
         private static string SearchXPathNavigator(string attribute, string xPathString = "/test-run")
         {
             // Initializing variables
-            string XMLFilePath = "ICCResult.xml";
             XPathDocument xpathDoc;
             XPathNavigator xpathNavigator;
             XPathNodeIterator xpathNodeIterator;
@@ -53,7 +53,7 @@ namespace NUnitLite.Tests
 
             try
             {
-                xpathDoc = new XPathDocument(XMLFilePath);
+                xpathDoc = new XPathDocument(currentResultFilename);
                 xpathNavigator = xpathDoc.CreateNavigator();
 
                 expr = xpathNavigator.Compile(xPathString);
@@ -72,6 +72,20 @@ namespace NUnitLite.Tests
             return listOfAttributes[0];
         }
 
+        private static void Init(ref string[] arguments, string currResultFilename)
+        {
+            arguments = new string[]
+            {
+                "--noh",
+                "--workers=10",
+                "--labels=After",
+                "--trace=Off",
+                "--pause",
+                $"--result={currResultFilename}",
+                "--where:method=~/CanConvert*/ && cat==Base || cat==Fast"
+            };
+        }
+
         /// <summary>
         /// The main program executes the tests. Output may be routed to
         /// various locations, depending on the arguments passed.
@@ -80,43 +94,39 @@ namespace NUnitLite.Tests
         /// <param name="args"></param>
         public static int Main(string[] args)
         {
+            string[] listTests = null;
+            if ((args[0].ToLower().Equals("/f") || args[0].ToLower().Equals("/file")) && File.Exists(args[1]))
+            {
+                listTests = File.ReadAllLines(args[1]);
+            }
             Console.Title = "ICCT Tool";
             Console.TreatControlCAsInput = true;
             Console.SetWindowSize(102, 25);
-            currentResultFilename = "ICCResult";
-            args = new string[]
+            currentResultFilename = "ICCResult1.xml";
+            Init(ref args, currentResultFilename);
+            int test1;
+            int test2;
+            using(var writer = new ExtendedTextWrapper(TextWriter.Null))
             {
-                "--noh",
-                "--workers=10",
-                "--encoding=ascii",
-                "--labels=After",
-                "--trace=Off",
-                $"--result={currentResultFilename}.xml",
-                "--where:method=~/CanConvert*/ && cat==Base || cat==Fast"
-            };
-            //var test = new AutoRun(Assembly.LoadFrom(@"C:\Users\Douabalet\Google Drive\INCAS\IncasIntern\UnitTesting\LogAnPattern.Tests\bin\Debug\LogAnPattern.Tests.dll")).Execute(args);
+                test1 = new AutoRun(Assembly.LoadFrom(@"LogAnPattern.Tests.dll")).Execute(args, writer, Console.In);                               
+            }
+            WriteHeader();
+            WriteResult();
             /*var test = new AutoRun().Execute(args);
             Console.Clear();
             WriteHeader();
             WriteResult("IntracallClient");
             return test;*/
-            using (var writer = new ExtendedTextWrapper(Console.Out))
+            currentResultFilename = "ICCResult2.xml";
+            Init(ref args, currentResultFilename);
+            using (var writer = new ExtendedTextWrapper(TextWriter.Null))
             {                
-                var test = new AutoRun(Assembly.GetExecutingAssembly())
-                    .Execute(args, writer, Console.In);
-                Console.Clear();
-                WriteHeader();
-                WriteResult("IntracallClient");
-                return 0;
+                test2 = new AutoRun(Assembly.GetExecutingAssembly()).Execute(args, writer, Console.In);                              
             }
-                /*using (var writer = new ExtendedTextWrapper(Console.Out))
-                {
-                    var test = new AutoRun(Assembly.GetExecutingAssembly())
-                        .Execute(args, writer, Console.In);
-                    Console.ReadLine();
-                    return test;
-                }*/
-            }
+            WriteResult();
+            Console.ReadLine();
+            return test1 + test2;
+        }
 
         private static void WriteHeader()
         {
@@ -127,12 +137,12 @@ namespace NUnitLite.Tests
             WirteProperty("OS Platform", "platform", "/test-run/test-suite/environment");
             WirteProperty("Machine name", "machine-name", "/test-run/test-suite/environment");
             WirteProperty("User", "user", "/test-run/test-suite/environment");
-            WirteProperty("User Domain", "user-domain", "/test-run/test-suite/environment");
-            Console.WriteLine($"\n\n{new string('#', 100)}");
+            WirteProperty("User Domain", "user-domain", "/test-run/test-suite/environment");            
         }
 
-        private static void WriteResult(string testName)
+        private static void WriteResult()
         {
+            Console.WriteLine($"\n{new string('#', 100)}\n");
             ICWriteLine("\nTest Files", ConsoleColor.Cyan);
             WirteProperty(null, "name");
             ICWriteLine("\nTest Run Summary", ConsoleColor.Cyan);
@@ -140,8 +150,7 @@ namespace NUnitLite.Tests
             WriteParameters(new string[] { "Total", "Passed", "Failed", "Warnings", "Skipped", "Inconclusive" }, "/test-run/test-suite");
             WirteProperty("Start time", "start-time");
             WirteProperty("End time", "end-time");
-            WirteProperty("Duration", "duration");
-            Console.ReadLine();
+            WirteProperty("Duration", "duration");      
         }
 
         private static void WirteProperty(string label, string value, string node = "/test-run", ConsoleColor labelColor = ConsoleColor.Green, ConsoleColor valueColor = ConsoleColor.White)
@@ -150,7 +159,7 @@ namespace NUnitLite.Tests
             string vTmp = SearchXPathNavigator(value, node);
             if (label != null && label.Equals("Duration"))
             {
-                int vTicks = (int)(decimal.Parse(vTmp) * 1000);
+                int vTicks = (int)(decimal.Parse(vTmp.Replace('.', CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator.ToCharArray()[0])) * 1000);
                 TimeSpan vTime = new TimeSpan(0, 0, 0, 0, vTicks);
                 ICWriteLine(string.Format("{0:g}", vTime), valueColor);
             }

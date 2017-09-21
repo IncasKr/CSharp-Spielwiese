@@ -25,7 +25,7 @@ namespace LogAnPattern.Tests.UnitTests
             fileInfo = new FileInfo("c:\\someFile.txt");
         }
         
-        [Test]
+        [Test, Category("Base")]
         public void Analyze_EmptyFile_ThrowsException()
         {
             Assert.Throws(typeof(TypeLoadException), () => logan.Analyze("myemptyfile.txt"));
@@ -37,26 +37,26 @@ namespace LogAnPattern.Tests.UnitTests
             Assert.IsFalse(logan.IsValid("abc"));
         }
 
-        [Test]
+        [Test, Category("Fast")]
         public void IsValid_LengthBiggerThan8_IsFalse()
         {
             Assert.IsTrue(logan.IsValid("123456789.txt"));
         }
 
-        [Test]
+        [Test, Category("Fast")]
         public void IsValid_LengthSmallerThan8_IsTrue()
         {
             Assert.IsTrue(logan.IsValid("123.txt"));
         }
 
-        [Test]
+        [Test, Category("Fast")]
         public void IsValid_BadFileInfoInput_returnsFalse()
         {
             bool valid = logan.IsValid(fileInfo);
             Assert.IsFalse(valid);
         }
 
-        [Test]
+        [Test, Category("Fast")]
         public void Analyze_SimpleStringLine_UsesDefaulTabDelimiterToParseFields()
         {
             LogAnalyzer log = new LogAnalyzer();
@@ -67,7 +67,7 @@ namespace LogAnPattern.Tests.UnitTests
             Assert.AreEqual("Roy", output.GetLine(1)[2]);
         }
 
-        [Test]
+        [Test, Category("Fast")]
         public void Analyze_SimpleStringLine_UsesDefaulTabDelimiterToParseFields2()
         {
             LogAnalyzer log = new LogAnalyzer();
