@@ -30,7 +30,7 @@ namespace IntroToNUnit.Tests.Extensions
             Assert.That(found, Is.False);
         }
 
-        [Test, Category("Fast"), Order(3), Ignore("For the test")]
+        [Test, Category("Test"), Order(3), Ignore("For the test")]
         public void StringContainsCanIgnoreCase()
         {
             string str = "The quick brown fox jumps over the lazy dog.";
