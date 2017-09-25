@@ -16,7 +16,7 @@ namespace IntroToNUnit.Tests
     public class EnumToStringConverterTests
     {
         [Category("Base"), Order(2)]
-        [TestCase((TestTypes)10, "1")]
+        [TestCase((TestTypes)10, "")]
         [TestCase(TestTypes.a, "A")]
         [TestCase(TestTypes.B, "B")]
         [TestCase(TestTypes.none, "None")]
@@ -32,7 +32,7 @@ namespace IntroToNUnit.Tests
             Assert.That(actual, Is.Not.Null.And.EqualTo(expected));
         }
 
-        [Category("Slow"), Order(1)]
+        [Category("Final"), Category("Slow"), Order(1)]
         [TestCase((TestTypes)10, ExpectedResult = "")]
         [TestCase(TestTypes.a, ExpectedResult = "A")]
         [TestCase(TestTypes.B, ExpectedResult = "B")]

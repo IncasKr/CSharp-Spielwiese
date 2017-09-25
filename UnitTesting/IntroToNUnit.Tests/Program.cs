@@ -40,6 +40,15 @@ namespace NUnitLite.Tests
 
         private static List<string> testArguments = new List<string>();
 
+        private static List<string> lExtentions = new List<string> { ".txt", ".dll", ".exe" };
+
+        private static List<string> lCommands = new List<string> { "/f", "/l" };
+
+        private static int TestsTotal;
+
+        private static string CurrAssemblyName;
+
+
         /// <summary>
         /// Retrieve the value of the attribute of the node in the configuration file
         /// </summary>
@@ -76,17 +85,16 @@ namespace NUnitLite.Tests
             return listOfAttributes[0];
         }
 
-        private static void SetArgs(ref string[] arguments, string currResultFilename)
+        private static void SetArgs(ref List<string> arguments, string currResultFilename)
         {
-            arguments = new string[]
+            arguments = new List<string>
             {
                 "--noh",
                 "--workers=10",
+                "--wait",
                 "--labels=After",
                 "--trace=Off",
-                "--pause",
-                $"--result={currResultFilename}",
-                "--where:method=~/CanConvert*/ && cat==Base || cat==Fast"
+                $"--result={currResultFilename}"
             };
         }
 
@@ -111,13 +119,17 @@ namespace NUnitLite.Tests
 
         private static void RunTest(string fileName)
         {
-            currentResultFilename = $"{ Path.GetFileNameWithoutExtension(fileName).Split('.')[0]}Result.xml";
-            testArguments = GetDefaultArgs(currentResultFilename);
-            using (var writer = new ExtendedTextWrapper(TextWriter.Null))
+            CurrAssemblyName = fileName;
+            if (File.Exists(fileName) && lExtentions.Exists(e => e.Equals(Path.GetExtension(fileName).ToLower())))
             {
-                errorResult += new AutoRun(Assembly.LoadFrom(fileName)).Execute(testArguments.ToArray(), writer, TextReader.Null);
-            }
-            WriteResult();
+                currentResultFilename = $"{ Path.GetFileNameWithoutExtension(fileName).Split('.')[0]}Result.xml";
+                SetArgs(ref testArguments, currentResultFilename);
+                using (var writer = new ExtendedTextWrapper(TextWriter.Null))
+                {
+                    errorResult += new AutoRun(Assembly.LoadFrom(fileName)).Execute(testArguments.ToArray(), writer, TextReader.Null);
+                }
+                WriteResult();
+            }           
         }
 
         /// <summary>
@@ -128,13 +140,11 @@ namespace NUnitLite.Tests
         /// <param name="args"></param>
         public static int Main(string[] args)
         {
-            List<string> lExtentions = new List<string> { "txt", "dll", "exe" };
-            List<string> lCommands = new List<string> { "/f", "/l" };
             string[] testsFiles = null;
             
             WriteHeader(); 
 
-            /*if (args.Length.Equals(0))
+            if (args.Length.Equals(0))
             {
                 testsFiles = File.ReadAllLines(@"C:\testList.txt");
                 foreach (var item in testsFiles)
@@ -148,11 +158,15 @@ namespace NUnitLite.Tests
                 {
                     if (args[0].ToLower().Equals("/f"))
                     {
-
+                        testsFiles = new string[] { args[1] };
                     }
                     else
                     {
                         testsFiles = File.ReadAllLines(args[1]);
+                    }
+                    foreach (var item in testsFiles)
+                    {
+                        RunTest(item);
                     }
                 }
                 else
@@ -167,29 +181,7 @@ namespace NUnitLite.Tests
                 ICWriteLine("Arguments invalid! Please use '/f filename' or '/l filename' as arguments to run the application.", ConsoleColor.Red);
                 Console.ReadLine();
                 return -2;
-            }*/
-            
-            /*currentTestFilename = "ICCResult1.xml";
-            SetArgs(ref args, currentTestFilename);
-            int test1;
-            int test2;
-            using(var writer = new ExtendedTextWrapper(TextWriter.Null))
-            {
-                test1 = new AutoRun(Assembly.LoadFrom(@"LogAnPattern.Tests.dll")).Execute(args, writer, Console.In);                               
-            }
-            WriteResult();*/
-            /*var test = new AutoRun().Execute(args);
-            Console.Clear();
-            WriteHeader();
-            WriteResult("IntracallClient");
-            return test;*/
-            /*currentTestFilename = "ICCResult2.xml";
-            SetArgs(ref args, currentTestFilename);
-            using (var writer = new ExtendedTextWrapper(TextWriter.Null))
-            {                
-                test2 = new AutoRun(Assembly.GetExecutingAssembly()).Execute(args, writer, Console.In);                              
-            }
-            WriteResult();*/
+            }            
             Console.ReadLine();
             return errorResult;
         }
@@ -250,6 +242,29 @@ namespace NUnitLite.Tests
                 TimeSpan vTime = new TimeSpan(0, 0, 0, 0, vTicks);
                 ICWriteLine(string.Format("{0:g}", vTime), valueColor);
             }
+            else if (label != null && label.Equals("Overall result"))
+            {
+                TestsTotal = int.TryParse(SearchXPathNavigator("total", node), out int val) ? val : 0;
+                switch (vTmp)
+                {
+                    case "Failed":
+                        if (TestsTotal.Equals(0))
+                        {
+                            ICWriteLine($"{vTmp}: The assembly '{CurrAssemblyName}' contains no tests.", ConsoleColor.Red);
+                        }
+                        else
+                        {
+                            ICWriteLine(vTmp, ConsoleColor.Red);
+                        }
+                        break;
+                    case "Skipped":
+                        ICWriteLine(vTmp, ConsoleColor.Yellow);
+                        break;
+                    default:
+                        ICWriteLine(vTmp, valueColor);
+                        break;
+                }
+            }
             else
             {
                 ICWriteLine(vTmp, valueColor);
@@ -266,6 +281,9 @@ namespace NUnitLite.Tests
                 ICWrite($"{label}: ", labelColor);
                 switch (label)
                 {
+                    case "Total":
+                        ICWrite(TestsTotal.ToString());
+                        break;
                     case "Failed":
                     case "Failures": 
                     case "Error":

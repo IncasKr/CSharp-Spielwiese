@@ -25,7 +25,7 @@ namespace LogAnPattern.Tests.UnitTests
             fileInfo = new FileInfo("c:\\someFile.txt");
         }
         
-        [Test, Category("Base")]
+        [Test, Category("Final"), Category("Base")]
         public void Analyze_EmptyFile_ThrowsException()
         {
             Assert.Throws(typeof(TypeLoadException), () => logan.Analyze("myemptyfile.txt"));
@@ -56,7 +56,7 @@ namespace LogAnPattern.Tests.UnitTests
             Assert.IsFalse(valid);
         }
 
-        [Test, Category("Fast")]
+        [Test, Category("Final"), Category("Fast")]
         public void Analyze_SimpleStringLine_UsesDefaulTabDelimiterToParseFields()
         {
             LogAnalyzer log = new LogAnalyzer();
