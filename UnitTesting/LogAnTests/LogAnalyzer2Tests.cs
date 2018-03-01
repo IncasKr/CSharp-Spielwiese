@@ -216,7 +216,7 @@ namespace LogAn.Tests
             {
                 // Records expected event registration
                 viewMock.Load += null;
-                LastCall.IgnoreArguments();
+                LastCall.IgnoreArguments();                
             }
             new Presenter(viewMock);
             mocks.VerifyAll();
