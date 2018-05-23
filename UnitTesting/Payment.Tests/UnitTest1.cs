@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using Rhino.Mocks;
-using Rhino.Mocks.Constraints;
 using System;
 
 namespace Payment.Tests
@@ -152,6 +151,64 @@ namespace Payment.Tests
             mocks.ReplayAll();
             events.RaiseEvent();
             mocks.VerifyAll();
+        }
+
+        [Test]
+        public void Test_Transaction_With_Standard_Syntax()
+        {
+            MockRepository mocks = new MockRepository();
+            IPaymentProcessing dependency = mocks.StrictMock<IPaymentProcessing>();
+            int custumer = 1;
+            double debit = 1000.00;
+
+            // define expectations
+            Expect.Call(dependency.TakePayment(1, 1, 10.00)).Return(false);
+            dependency.DoSomething();
+            mocks.ReplayAll();
+
+            // run test subject
+            PaymentProcessor subject = new PaymentProcessor(dependency);
+            subject.TakePayment(1, 1, 10.00);
+
+            // verify expectations
+            mocks.VerifyAll();
+        }
+
+        [Test]
+        public void Test_Transaction_With_RecordReplay_Syntax()
+        {
+            MockRepository mocks = new MockRepository();
+            IPaymentProcessing dependency = mocks.StrictMock<IPaymentProcessing>();
+
+            using (mocks.Record())
+            {
+                Expect.Call(dependency.TakePayment(1, 1, 10.00)).Return(false);
+                dependency.DoSomething();
+            }
+
+            using (mocks.Playback())
+            {
+                PaymentProcessor subject = new PaymentProcessor(dependency);
+                subject.TakePayment(1, 1, 10.00);
+            }
+        }
+
+        [Test]
+        public void Test_Transaction_With_Fluent_Syntax()
+        {
+            MockRepository mocks = new MockRepository();
+            IPaymentProcessing dependency = mocks.StrictMock<IPaymentProcessing>();
+
+            With.Mocks(mocks).Expecting(() =>
+            {
+                Expect.Call(dependency.TakePayment(1, 1, 10.00)).Return(false);
+                dependency.DoSomething();
+            })
+            .Verify(delegate
+            {
+                PaymentProcessor subject = new PaymentProcessor(dependency);
+                subject.TakePayment(1, 1, 10.00);
+            });
         }
     }
 }
