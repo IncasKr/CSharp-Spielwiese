@@ -1,6 +1,6 @@
 ﻿namespace Payment
 {
-    internal class PaymentProcessor
+    public class PaymentProcessor
     {
         internal IPaymentProcessing wsProxy;
 
