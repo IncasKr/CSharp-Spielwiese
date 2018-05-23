@@ -140,5 +140,18 @@ namespace Payment.Tests
             events.AssertWasCalled(x => x.Paid += Arg<EventHandler>.Is.Anything);
         }
 
+        [Test]
+        public void VerifyingThatAnEventWasFired()
+        {
+            MockRepository mocks = new MockRepository();
+            IEventSubscriber subscriber = mocks.StrictMock<IEventSubscriber>();
+            IPaidEvents events = new PaidEvents();
+            // This doesn't create an expectation because no method is called on subscriber!! 
+            events.Paid += new EventHandler(subscriber.Handler);
+            subscriber.Handler(events, EventArgs.Empty);
+            mocks.ReplayAll();
+            events.RaiseEvent();
+            mocks.VerifyAll();
+        }
     }
 }
