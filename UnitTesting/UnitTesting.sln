@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsRunner", "TestsRunner\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICDemoTool", "ICDemoTool\ICDemoTool.csproj", "{D44BE309-209C-4AA2-B9F5-0746C9EBE893}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment", "Payment\Payment.csproj", "{391D3CC3-2957-4B63-96E3-C183B6D4C797}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Tests", "Payment.Tests\Payment.Tests.csproj", "{0712C03F-B48F-4D2B-ACE6-38D41058E0B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{D44BE309-209C-4AA2-B9F5-0746C9EBE893}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D44BE309-209C-4AA2-B9F5-0746C9EBE893}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D44BE309-209C-4AA2-B9F5-0746C9EBE893}.Release|Any CPU.Build.0 = Release|Any CPU
+		{391D3CC3-2957-4B63-96E3-C183B6D4C797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{391D3CC3-2957-4B63-96E3-C183B6D4C797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{391D3CC3-2957-4B63-96E3-C183B6D4C797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{391D3CC3-2957-4B63-96E3-C183B6D4C797}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0712C03F-B48F-4D2B-ACE6-38D41058E0B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0712C03F-B48F-4D2B-ACE6-38D41058E0B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0712C03F-B48F-4D2B-ACE6-38D41058E0B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0712C03F-B48F-4D2B-ACE6-38D41058E0B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
