@@ -66,7 +66,9 @@ namespace Payment.Tests
             {
                 Expect
                     .Call(dependency.TakePayment(1, 1, 10.00))
+                    .IgnoreArguments()
                     .Return(true);
+                dependency.DoSomething();
             }
 
             // Replay and validate interaction
@@ -78,7 +80,7 @@ namespace Payment.Tests
             }
 
             // Post-interaction assertions
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
         
         private string Formal(string first, string surname)
@@ -162,7 +164,9 @@ namespace Payment.Tests
             double debit = 1000.00;
 
             // define expectations
-            Expect.Call(dependency.TakePayment(1, 1, 10.00)).Return(false);
+            Expect.Call(dependency.TakePayment(1, 1, 10.00))
+                .IgnoreArguments()
+                .Return(true);
             dependency.DoSomething();
             mocks.ReplayAll();
 
@@ -182,7 +186,9 @@ namespace Payment.Tests
 
             using (mocks.Record())
             {
-                Expect.Call(dependency.TakePayment(1, 1, 10.00)).Return(false);
+                Expect.Call(dependency.TakePayment(1, 1, 10.00))
+                    .IgnoreArguments()
+                    .Return(true);
                 dependency.DoSomething();
             }
 
@@ -201,7 +207,9 @@ namespace Payment.Tests
 
             With.Mocks(mocks).Expecting(() =>
             {
-                Expect.Call(dependency.TakePayment(1, 1, 10.00)).Return(false);
+                Expect.Call(dependency.TakePayment(1, 1, 10.00))
+                .IgnoreArguments()
+                .Return(true);
                 dependency.DoSomething();
             })
             .Verify(delegate
