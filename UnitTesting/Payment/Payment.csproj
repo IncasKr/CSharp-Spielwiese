@@ -42,8 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IEventSubscriber.cs" />
     <Compile Include="INameSource.cs" />
+    <Compile Include="IPaidEvents.cs" />
     <Compile Include="IPaymentProcessing.cs" />
+    <Compile Include="PaidEvents.cs" />
     <Compile Include="PaymentProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

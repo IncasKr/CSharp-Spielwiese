@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
+using System;
 
 namespace Payment.Tests
 {
@@ -102,5 +103,42 @@ namespace Payment.Tests
             Assert.AreEqual(expected, actual);
             //mocks.VerifyAllExpectations();
         }
+
+        public void MethodThatSubscribeToEventBlah(IPaidEvents events)
+        {
+            events.Paid += new EventHandler(Events_Blah);
+        }
+
+        private void Events_Blah(object obj, EventArgs e)
+        {
+            Console.WriteLine($"Event {e} is occurred.");
+        }
+
+        [Test]
+        public void VerifyingThatEventWasAttached()
+        {
+            MockRepository mocks = new MockRepository();
+            IPaidEvents events = mocks.StrictMock<IPaidEvents>();
+            With.Mocks(mocks).Expecting(delegate
+            {
+                events.Paid += new EventHandler(Events_Blah);
+            })
+           .Verify(delegate
+           {
+               MethodThatSubscribeToEventBlah(events);
+           });
+        }
+
+
+        [Test]
+        public void VerifyingThatEventWasAttached_AAA()
+        {
+            var events = MockRepository.GenerateMock<IPaidEvents>();
+            // Assign event
+            events.Paid += Events_Blah;
+            // verify event
+            events.AssertWasCalled(x => x.Paid += Arg<EventHandler>.Is.Anything);
+        }
+
     }
 }
