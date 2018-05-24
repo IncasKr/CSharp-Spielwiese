@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Rhino.Mocks;
 using System;
+using System.Collections;
 
 namespace Payment.Tests
 {
@@ -160,9 +161,7 @@ namespace Payment.Tests
         {
             MockRepository mocks = new MockRepository();
             IPaymentProcessing dependency = mocks.StrictMock<IPaymentProcessing>();
-            int custumer = 1;
-            double debit = 1000.00;
-
+            
             // define expectations
             Expect.Call(dependency.TakePayment(1, 1, 10.00))
                 .IgnoreArguments()
@@ -218,5 +217,30 @@ namespace Payment.Tests
                 subject.TakePayment(1, 1, 10.00);
             });
         }
+
+        [Test]
+        public void AbuseArrayList_UsingGenerateStub()
+        {
+            ArrayList list = MockRepository.GenerateStub<ArrayList>();
+
+            // Evaluate the values from the mock
+            Assert.AreEqual(0, list.Capacity);
+        }
+
+        [Test]
+        public void AbuseArrayList_UsingStrictMockGenerics()
+        {
+            MockRepository mocks = new MockRepository();
+            ArrayList list = mocks.StrictMock<ArrayList>();
+
+            // Setup the expectation of a call on the mock
+            Expect.Call(list.Capacity).Return(999);
+            mocks.ReplayAll();
+
+            // Evaluate the values from the mock
+            Assert.AreEqual(999, list.Capacity);
+            mocks.VerifyAll(); ;
+        }
+        
     }
 }
