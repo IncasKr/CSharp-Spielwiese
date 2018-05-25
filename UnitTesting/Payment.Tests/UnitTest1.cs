@@ -2,6 +2,8 @@
 using Rhino.Mocks;
 using System;
 using System.Collections;
+using System.Net;
+using System.Net.Sockets;
 
 namespace Payment.Tests
 {
@@ -241,6 +243,41 @@ namespace Payment.Tests
             Assert.AreEqual(999, list.Capacity);
             mocks.VerifyAll(); ;
         }
-        
+
+        [Test]
+        public void AbuseArrayList_UsingCreateMockGenerics()
+        {
+            MockRepository mocks = new MockRepository();
+            ArrayList list = mocks.StrictMock<ArrayList>(new Object[] 
+            {
+                15
+            });
+            Socket sock = mocks.StrictMock<Socket>(new Object[] 
+            {
+                AddressFamily.InterNetwork,
+                SocketType.Stream,
+                ProtocolType.Tcp
+            });
+
+            /*Expect.Call(delegate
+            {
+                sock.Bind(new IPEndPoint(IPAddress.Any, 12112));
+            });*/
+
+            // Setup the expectation of a call on the mock
+            Expect.Call(delegate 
+            {
+                list.GetRange(1, 1);
+            }).Return(null);
+            Expect.Call(list.Capacity).Return(999);
+            
+            mocks.ReplayAll();
+
+            // Evaluate the values from the mock
+            Assert.AreEqual(999, list.Capacity);
+            Assert.AreEqual(null, list.GetRange(1, 1));
+            
+            mocks.VerifyAll(); ;
+        }
     }
 }
