@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ServerSecure</RootNamespace>
     <AssemblyName>ServerSecure</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,7 +36,6 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\XSockets.Client.5.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,15 +51,15 @@
     <Reference Include="System.Xml" />
     <Reference Include="vtortola.WebSockets, Version=2.2.1.0, Culture=neutral, PublicKeyToken=7f78616efb4a208d, processorArchitecture=MSIL">
       <HintPath>..\packages\vtortola.WebSocketListener.2.2.1.0\lib\net45\vtortola.WebSockets.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="vtortola.WebSockets.Deflate, Version=2.2.1.0, Culture=neutral, PublicKeyToken=7f78616efb4a208d, processorArchitecture=MSIL">
       <HintPath>..\packages\vtortola.WebSocketListener.2.2.1.0\lib\net45\vtortola.WebSockets.Deflate.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="vtortola.WebSockets.Rfc6455, Version=2.2.1.0, Culture=neutral, PublicKeyToken=7f78616efb4a208d, processorArchitecture=MSIL">
       <HintPath>..\packages\vtortola.WebSocketListener.2.2.1.0\lib\net45\vtortola.WebSockets.Rfc6455.dll</HintPath>
-      <Private>True</Private>
+    </Reference>
+    <Reference Include="XSockets.Client40, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XSockets.Client.5.0.1\lib\net40\XSockets.Client40.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
