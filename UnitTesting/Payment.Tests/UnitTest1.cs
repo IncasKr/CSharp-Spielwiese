@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
 namespace Payment.Tests
 {
