@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "HelloWorld\HelloWorld.csproj", "{CBCA5547-AD47-4D36-89D0-B6002BDD8648}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eBiB.Tests", "eBiB.Tests\eBiB.Tests.csproj", "{5B3A19CB-0268-4016-9ECE-6EFC1D9901F7}"
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "eBiBDocu", "eBiBDocu\eBiBDocu.shfbproj", "{36C823BE-5BD3-4366-AC76-F56928CD4B50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppArchitect", "WebAppArchitect\WebAppArchitect.csproj", "{5270B72F-6BA5-46F1-BB40-2812D2902570}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,8 +65,15 @@ Global
 		{36C823BE-5BD3-4366-AC76-F56928CD4B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36C823BE-5BD3-4366-AC76-F56928CD4B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36C823BE-5BD3-4366-AC76-F56928CD4B50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5270B72F-6BA5-46F1-BB40-2812D2902570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5270B72F-6BA5-46F1-BB40-2812D2902570}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5270B72F-6BA5-46F1-BB40-2812D2902570}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5270B72F-6BA5-46F1-BB40-2812D2902570}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B301C4D-891C-4236-B119-11EC0AC3D341}
 	EndGlobalSection
 EndGlobal
