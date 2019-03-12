@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO", "DTO\DTO.csproj", "{A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{3C0789B9-40D6-46E3-B3B8-57112F5111FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfServiceLibrary", "WcfServiceLibrary\WcfServiceLibrary.csproj", "{F45799AD-2B9E-4C17-8DF5-C217CF9C947F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{3C0789B9-40D6-46E3-B3B8-57112F5111FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C0789B9-40D6-46E3-B3B8-57112F5111FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C0789B9-40D6-46E3-B3B8-57112F5111FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F45799AD-2B9E-4C17-8DF5-C217CF9C947F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F45799AD-2B9E-4C17-8DF5-C217CF9C947F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F45799AD-2B9E-4C17-8DF5-C217CF9C947F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F45799AD-2B9E-4C17-8DF5-C217CF9C947F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
