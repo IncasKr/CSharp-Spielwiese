@@ -23,6 +23,8 @@ Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "eBiBDocu", "eBiBDocu\eBiBDo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppArchitect", "WebAppArchitect\WebAppArchitect.csproj", "{5270B72F-6BA5-46F1-BB40-2812D2902570}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{FA8854DF-68BE-410A-A27F-1EDCA154DA97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{5270B72F-6BA5-46F1-BB40-2812D2902570}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5270B72F-6BA5-46F1-BB40-2812D2902570}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5270B72F-6BA5-46F1-BB40-2812D2902570}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA8854DF-68BE-410A-A27F-1EDCA154DA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA8854DF-68BE-410A-A27F-1EDCA154DA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA8854DF-68BE-410A-A27F-1EDCA154DA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA8854DF-68BE-410A-A27F-1EDCA154DA97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

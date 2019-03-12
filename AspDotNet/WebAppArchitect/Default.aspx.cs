@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -9,7 +10,7 @@ namespace WebAppArchitect
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            DataTable dt = LoadData();
+            DataTable dt = PersonManager.LoadData();
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -19,33 +20,6 @@ namespace WebAppArchitect
                 }
                 Response.Write("<br />");
             }
-        }
-
-        private DataTable LoadData()
-        {
-            DataTable dt = new DataTable();
-
-            using (SqlConnection cn = new SqlConnection())
-            {
-                cn.ConnectionString = ConfigurationManager.ConnectionStrings["ChaineDeConnexion"].ConnectionString;
-                cn.Open();
-
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.CommandText = "Select * from [Persons]";
-                    cmd.Connection = cn;
-
-                    using (SqlDataReader rdr = cmd.ExecuteReader())
-                    {
-                        if (rdr.Read())
-                        {
-                            dt.Load(rdr);
-                        }
-                    }
-                }
-            }
-
-            return dt;
         }
     }
 }
