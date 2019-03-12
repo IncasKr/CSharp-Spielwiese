@@ -19,6 +19,10 @@
             <asp:GridView ID="GridView1" runat="server">
             </asp:GridView>
         </div>
+        <div>
+            <asp:Label ID="Label1" runat="server" Text="Info for the 4th person':"></asp:Label>
+            <asp:Label ID="Result1" runat="server"></asp:Label>
+        </div>
     </form>
 </body>
 </html>
