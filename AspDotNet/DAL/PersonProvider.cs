@@ -12,6 +12,13 @@ namespace DAL
         {
             List<PersonEntity> list = new List<PersonEntity>();
 
+            // Test
+            for (int i = 1; i <= 10; i++)
+            {
+                list.Add(new PersonEntity() { ID = i.ToString(), FirstName = $"Firstname{i}", LastName = $"Lastname{i}" });
+            }
+            return list;
+
             using (SqlConnection cn = new SqlConnection())
             {
                 cn.ConnectionString = ConfigurationManager.ConnectionStrings["ChaineDeConnexion"].ConnectionString;
