@@ -2,7 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
+using System.Data;
+using System.Data.Common;
+using SQLServer = System.Data.SqlClient;
+/*
+ * Spacenames supported with using class "DbProviderFactory":
+ * System.Data.EntityClient.EntityProviderFactory ;
+ * System.Data.Odbc.OdbcFactory ;
+ * System.Data.OleDb.OleDbFactory ;
+ * System.Data.OracleClient.OracleClientFactory ;
+ * System.Data.SqlClient.SqlClientFactory;
+*/
 
 namespace DAL
 {
@@ -11,7 +21,9 @@ namespace DAL
         public List<PersonEntity> LoadData()
         {
             List<PersonEntity> list = new List<PersonEntity>();
-
+            // Creation de la fabrique
+            DbProviderFactory factory = DbProviderFactories.GetFactory(ConfigurationManager.ConnectionStrings["ConnectionStrings"].ProviderName);
+            
             // Test
             for (int i = 1; i <= 10; i++)
             {
@@ -19,17 +31,18 @@ namespace DAL
             }
             return list;
 
-            using (SqlConnection cn = new SqlConnection())
+            // Objet connection
+            using (IDbConnection cn = factory.CreateConnection())
             {
-                cn.ConnectionString = ConfigurationManager.ConnectionStrings["ChaineDeConnexion"].ConnectionString;
+                cn.ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionStrings"].ConnectionString;
                 cn.Open();
 
-                using (SqlCommand cmd = new SqlCommand())
+                using (IDbCommand cmd = factory.CreateCommand())
                 {
                     cmd.CommandText = "Select * from [Persons]";
                     cmd.Connection = cn;
 
-                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    using (IDataReader rdr = cmd.ExecuteReader())
                     {
                         while (rdr.Read())
                         {
