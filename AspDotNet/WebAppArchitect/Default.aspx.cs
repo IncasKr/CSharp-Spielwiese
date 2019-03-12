@@ -1,8 +1,7 @@
 ﻿using BLL;
+using DTO;
 using System;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace WebAppArchitect
 {
@@ -10,16 +9,13 @@ namespace WebAppArchitect
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            DataTable dt = PersonManager.LoadData();
+            List<PersonEntity> list = PersonManager.LoadData();
 
-            for (int i = 0; i < dt.Rows.Count; i++)
+            foreach (var p in list)
             {
-                for (int j = 0; j < dt.Columns.Count; j++)
-                {
-                    Response.Write(dt.Rows[i][j].ToString());
-                }
-                Response.Write("<br />");
+                Response.Write(string.Format("{0}, {1}, {2}<br />", p.ID, p.FirstName, p.LastName));
             }
+
         }
     }
 }

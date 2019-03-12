@@ -1,14 +1,16 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using DTO;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 
 namespace BLL
 {
     public static class PersonManager
     {
-        public static DataTable LoadData()
+        public static List<PersonEntity> LoadData()
         {
-            DataTable dt = new DataTable();
+            List<PersonEntity> list = new List<PersonEntity>();
 
             using (SqlConnection cn = new SqlConnection())
             {
@@ -22,15 +24,20 @@ namespace BLL
 
                     using (SqlDataReader rdr = cmd.ExecuteReader())
                     {
-                        if (rdr.Read())
+                        while (rdr.Read())
                         {
-                            dt.Load(rdr);
+                            PersonEntity p = new PersonEntity();
+                            p.ID = rdr["PersonId"] == DBNull.Value ? string.Empty : rdr["PersonId"].ToString();
+                            p.LastName = rdr["LastName"] == DBNull.Value ? string.Empty : rdr["LastName"].ToString();
+                            p.FirstName = rdr["FirstName"] == DBNull.Value ? string.Empty : rdr["FirstName"].ToString();
+
+                            list.Add(p);
                         }
                     }
                 }
             }
 
-            return dt;
+            return list;
         }
     }
 }

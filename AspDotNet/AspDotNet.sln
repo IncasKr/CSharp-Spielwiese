@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppArchitect", "WebAppAr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{FA8854DF-68BE-410A-A27F-1EDCA154DA97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO", "DTO\DTO.csproj", "{ABFF07BD-A7C8-4FA1-8A91-3772192E2334}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{FA8854DF-68BE-410A-A27F-1EDCA154DA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA8854DF-68BE-410A-A27F-1EDCA154DA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA8854DF-68BE-410A-A27F-1EDCA154DA97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABFF07BD-A7C8-4FA1-8A91-3772192E2334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABFF07BD-A7C8-4FA1-8A91-3772192E2334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABFF07BD-A7C8-4FA1-8A91-3772192E2334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABFF07BD-A7C8-4FA1-8A91-3772192E2334}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
