@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System;
+using System.Collections.Generic;
+using System.Security.Authentication;
 using System.Security.Principal;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace UserInfos
 {
@@ -16,9 +19,38 @@ namespace UserInfos
                 Console.WriteLine($"\t\t{group.Translate(typeof(NTAccount)).ToString()}");
             Console.WriteLine($"\tImpersonation level: {currentAccount.ImpersonationLevel} | Is authenticated: {currentAccount.IsAuthenticated} | Authenticate type: {currentAccount.AuthenticationType}");
             Console.WriteLine($"\tAccount type ==> System: {currentAccount.IsSystem} | Guest: {currentAccount.IsGuest} | Anonymous: {currentAccount.IsAnonymous}");
+            Console.WriteLine($"Token from AD: {GetTokenFromAD("Douabalet", "740")}");
 
 
-            Console.ReadLine();
+           Console.ReadLine();
+        }
+
+        private static string GetTokenFromAD(string clientId, string appKey)
+        {
+            string tenantName = "ad-example.com";
+            string authString = "https://login.microsoftonline.com/" + tenantName;
+            AuthenticationContext authenticationContext = new AuthenticationContext(authString, false);
+            // Config for OAuth client credentials             
+            ClientCredential clientCred = new ClientCredential(clientId, appKey);
+            string resource = "https://graph.windows.net";
+            string token;
+            try
+            {
+                IEnumerable<TokenCacheItem> adList = authenticationContext.TokenCache.ReadItems();
+                Task<AuthenticationResult> authenticationResult = authenticationContext.AcquireTokenAsync(resource, clientCred);
+                token = authenticationResult.Result.AccessToken;
+                return token;
+            }
+            catch (AuthenticationException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Acquiring a token failed with the following error: {0}", ex.Message);
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine("Error detail: {0}", ex.InnerException.Message);
+                }
+                return null;
+            }    
         }
     }
 }
