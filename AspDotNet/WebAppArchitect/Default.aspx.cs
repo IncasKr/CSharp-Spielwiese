@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace WebAppArchitect
@@ -8,6 +9,22 @@ namespace WebAppArchitect
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            DataTable dt = LoadData();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                for (int j = 0; j < dt.Columns.Count; j++)
+                {
+                    Response.Write(dt.Rows[i][j].ToString());
+                }
+                Response.Write("<br />");
+            }
+        }
+
+        private DataTable LoadData()
+        {
+            DataTable dt = new DataTable();
+
             using (SqlConnection cn = new SqlConnection())
             {
                 cn.ConnectionString = ConfigurationManager.ConnectionStrings["ChaineDeConnexion"].ConnectionString;
@@ -20,22 +37,15 @@ namespace WebAppArchitect
 
                     using (SqlDataReader rdr = cmd.ExecuteReader())
                     {
-                        while (rdr.Read())
+                        if (rdr.Read())
                         {
-                            for (int i = 0; i < rdr.FieldCount; i++)
-                            {
-                                if (rdr[i] != DBNull.Value)
-                                    Response.Write(rdr[i].ToString());
-                                else
-                                    Response.Write("NULL");
-                                if (i < rdr.FieldCount)
-                                    Response.Write("|");
-                            }
-                            Response.Write("<br />");
+                            dt.Load(rdr);
                         }
                     }
                 }
             }
+
+            return dt;
         }
     }
 }
