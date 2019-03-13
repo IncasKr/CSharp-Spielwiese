@@ -8,16 +8,16 @@ namespace CodeFirst.Console
         static void Main(string[] args)
         {
             System.Console.WriteLine("List of harleys");
-            AfficheAllVehicule();
+            ShowVehicles();
             System.Console.WriteLine("Fin");
             System.Console.ReadLine();
 
         }
 
-        private static void AfficheAllVehicule()
+        private static void ShowVehicles()
         {
             HarleyProvider harleyProvider = new HarleyProvider();
-            foreach (var harley in harleyProvider.GetAllHarleys())
+            foreach (var harley in harleyProvider.GetHarleys())
             {
                 System.Console.WriteLine($"\t{harley}");
             }

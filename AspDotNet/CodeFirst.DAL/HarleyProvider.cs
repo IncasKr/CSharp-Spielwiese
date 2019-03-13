@@ -11,8 +11,9 @@ namespace CodeFirst.DAL
 
         }
 
-        public List<EntityHarley> GetAllHarleys()
+        public List<EntityHarley> GetHarleys()
         {
+            // create the database tables, if it does not exist.
             using (GarageContext context = new GarageContext())
             {
                 return context.Harleys.ToList();
