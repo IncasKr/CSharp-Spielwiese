@@ -101,9 +101,6 @@
     <ContentLayout Include="ContentLayout.content" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icons\Help.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\eBiB\eBiB.csproj">
       <Name>eBiB</Name>
       <Project>{1e293271-c09b-40fa-990a-ae11795c143c}</Project>
