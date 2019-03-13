@@ -1,5 +1,5 @@
-﻿using DTO;
-using System.ServiceModel;
+﻿using System.ServiceModel;
+using WAA.DTO;
 
 namespace WcfServiceLibrary
 {

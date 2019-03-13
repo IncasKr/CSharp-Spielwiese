@@ -1,7 +1,7 @@
-﻿using BLL;
-using DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using WAA.BLL;
+using WAA.DTO;
 using WcfServiceLibrary;
 
 namespace WebAppArchitect

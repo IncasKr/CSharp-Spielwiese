@@ -36,10 +36,12 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -52,13 +54,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BLL\BLL.csproj">
-      <Project>{fa8854df-68be-410a-a27f-1edca154da97}</Project>
-      <Name>BLL</Name>
+    <ProjectReference Include="..\WAA.BLL\WAA.BLL.csproj">
+      <Project>{FA8854DF-68BE-410A-A27F-1EDCA154DA97}</Project>
+      <Name>WAA.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DTO\DTO.csproj">
-      <Project>{abff07bd-a7c8-4fa1-8a91-3772192e2334}</Project>
-      <Name>DTO</Name>
+    <ProjectReference Include="..\WAA.DTO\WAA.DTO.csproj">
+      <Project>{ABFF07BD-A7C8-4FA1-8A91-3772192E2334}</Project>
+      <Name>WAA.DTO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -7,8 +7,8 @@
     <ProjectGuid>{FA8854DF-68BE-410A-A27F-1EDCA154DA97}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BLL</RootNamespace>
-    <AssemblyName>BLL</AssemblyName>
+    <RootNamespace>WAA.BLL</RootNamespace>
+    <AssemblyName>WAA.BLL</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -45,13 +45,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
+    <ProjectReference Include="..\WAA.DAL\WAA.DAL.csproj">
       <Project>{3C0789B9-40D6-46E3-B3B8-57112F5111FC}</Project>
-      <Name>DAL</Name>
+      <Name>WAA.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DTO\DTO.csproj">
+    <ProjectReference Include="..\WAA.DTO\WAA.DTO.csproj">
       <Project>{ABFF07BD-A7C8-4FA1-8A91-3772192E2334}</Project>
-      <Name>DTO</Name>
+      <Name>WAA.DTO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -99,13 +99,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BLL\BLL.csproj">
+    <ProjectReference Include="..\WAA.BLL\WAA.BLL.csproj">
       <Project>{FA8854DF-68BE-410A-A27F-1EDCA154DA97}</Project>
-      <Name>BLL</Name>
+      <Name>WAA.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DTO\DTO.csproj">
+    <ProjectReference Include="..\WAA.DTO\WAA.DTO.csproj">
       <Project>{ABFF07BD-A7C8-4FA1-8A91-3772192E2334}</Project>
-      <Name>DTO</Name>
+      <Name>WAA.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\WcfServiceLibrary\WcfServiceLibrary.csproj">
       <Project>{f45799ad-2b9e-4c17-8df5-c217cf9c947f}</Project>

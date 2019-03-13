@@ -1,8 +1,8 @@
-﻿using DAL;
-using DTO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using WAA.DAL;
+using WAA.DTO;
 
-namespace BLL
+namespace WAA.BLL
 {
     public static class PersonManager
     {

@@ -1,9 +1,9 @@
-﻿using DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
+using WAA.DTO;
 using SQLServer = System.Data.SqlClient;
 /*
  * Spacenames supported with using class "DbProviderFactory":
@@ -14,7 +14,7 @@ using SQLServer = System.Data.SqlClient;
  * System.Data.SqlClient.SqlClientFactory;
 */
 
-namespace DAL
+namespace WAA.DAL
 {
     public class PersonProvider
     {
@@ -22,7 +22,7 @@ namespace DAL
         {
             List<PersonEntity> list = new List<PersonEntity>();
             // Creation de la fabrique
-            DbProviderFactory factory = DbProviderFactories.GetFactory(ConfigurationManager.ConnectionStrings["ConnectionStrings"].ProviderName);
+            DbProviderFactory factory = null;// DbProviderFactories.GetFactory(ConfigurationManager.ConnectionStrings["ConnectionStrings"].ProviderName);
             
             // Test
             for (int i = 1; i <= 10; i++)

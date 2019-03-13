@@ -1,6 +1,6 @@
-﻿using BLL;
-using DTO;
-using System.Linq;
+﻿using System.Linq;
+using WAA.BLL;
+using WAA.DTO;
 
 namespace WcfServiceLibrary
 {

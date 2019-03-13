@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace DTO
+namespace WAA.DTO
 {
     [DataContract]
     public class PersonEntity
