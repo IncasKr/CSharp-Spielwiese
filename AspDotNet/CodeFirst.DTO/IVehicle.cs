@@ -10,6 +10,7 @@ namespace CodeFirst.DTO
     {
         int Capacity { get; set; }
         string Color { get; set; }
+        int ID { get; set; }
         string Model { get; set; }
         int Power { get; set; }
         int SeatNumber { get; set; }

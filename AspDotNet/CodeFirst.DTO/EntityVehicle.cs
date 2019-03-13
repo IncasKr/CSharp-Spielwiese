@@ -10,9 +10,11 @@ namespace CodeFirst.DTO
     {
         public abstract int Capacity { get; set; }
         public string Color { get; set; }
+        public int ID { get; set; }
         public string Model { get; set; }
         public abstract int Power { get; set; }
         public int SeatNumber { get; set; }
-        public int WeelsNumber { get; set; }        
+        public int WeelsNumber { get; set; }
+        public virtual EntityGarage Garage { get; set; }
     }
 }
