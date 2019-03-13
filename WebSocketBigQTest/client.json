@@ -1,0 +1,30 @@
+{
+	"Version": "1.0.0",
+	"GUID": "01234567-0123-0123-0123-012345678901",
+	"Email": "joel",
+	"Password": "",
+  "AcceptInvalidSSLCerts": true,
+  "DefaultSyncTimeoutMs": 10000,
+	"Heartbeat": {
+		"Enable": true,
+		"IntervalMs": 1000,
+		"MaxFailures": 5
+	},
+	"Debug": {
+		"Enable": true,
+		"MsgResponseTime": true,
+		"ConsoleLogging": true
+	},
+	"TcpServer": {
+		"Enable": true,
+		"IP": "127.0.0.1",
+		"Port": 8000
+	},
+	"TcpSSLServer": {
+		"Enable": false,
+		"IP": "127.0.0.1",
+		"Port": 8001,
+		"PFXCertFile": "Test.pfx",
+		"PFXCertPassword": "ndsoft"
+	}
+}

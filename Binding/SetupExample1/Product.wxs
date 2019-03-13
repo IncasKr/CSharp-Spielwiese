@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" >
+	<Product Id="*" Name="Example Setup v1" Language="1033" Version="1.0.0.0" Manufacturer="INCAS GmbH" UpgradeCode="87e39d04-4d92-4d2e-ab42-1e2ae80ec5b0">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Property Id="MSIUSEREALADMINDETECTION" Value="1" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+    <!-- .NET 4 Version Check -->
+    <PropertyRef Id="NETFRAMEWORK45" />
+    <Condition Message="This setup requires .Net 4.5">Installed OR NETFRAMEWORK45</Condition>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Order="2">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">1</Publish>
+    </UI>
+    <Feature Id="ProductFeature" Title="Example Setup v1" Level="1">
+			<ComponentRef Id="EXAMPLE1.EXE"/>
+		</Feature>
+  
+	  <Directory Id="TARGETDIR" Name="SourceDir">
+		  <Directory Id="ProgramFilesFolder">
+        <Directory Id="INCASDIR" Name="INCAS">
+          <Directory Id="INSTALLLOCATION" Name="sample">
+            <Component Id="EXAMPLE1.EXE" DiskId="1" Guid="{ACE2698F-CE61-4EA1-88AC-1F10CA8A7E53}" >
+              <File Id="EXAMPLE1.EXE" KeyPath="yes" Name="example1" Source="$(var.example1.TargetDir)example1.exe" />
+              <CreateFolder>
+                <util:PermissionEx User="Users" GenericAll="yes" />
+              </CreateFolder>
+            </Component>
+          </Directory>
+        </Directory>
+		  </Directory>
+	  </Directory>
+	</Product>
+</Wix>

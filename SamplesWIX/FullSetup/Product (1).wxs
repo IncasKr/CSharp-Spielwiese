@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="training to create a Tcpview Setup" Language="1033" Version="1.0.0.0" Manufacturer="INCAS GmbH" UpgradeCode="f2bc3ce7-575d-4858-94e0-8d978378472e">
+		<!--Infos package of Windows Installer.
+        InstallerVersion="200" for 2.0 version of Windows Installer-->
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Comments="Copyriht (c) 2017 INCAS GmbH all rights reserved" />
+    <!--splitting package into several parts -->
+    <!--<Property Id="DiskPrompt" Value="Amazing Software - [1]" />
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="no" DiskPrompt="Disk 1" VolumeLabel="Disk1" />
+    <Media Id="2" Cabinet="media2.cab" EmbedCab="no" DiskPrompt="Disk 2" VolumeLabel="Disk2" />-->
+    
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+    <UIRef Id="WixUI_Minimal" />
+    
+		<Feature Id="ProductFeature" Title="FullInstallation" Description="Installs all components." Level="1" Absent="disallow">
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="OtherComponents" />
+      <ComponentRef Id="CMP_EXEShortcut" />
+      <ComponentRef Id="CMP_INCASShortcutsDir" />
+		</Feature>
+
+    <Feature Id="optionalFeature" Title="BasicInstallation" Description="Installs only the needed components to start." Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <Feature Id="HelpFeature" Title="Documentation" Description="Installs the help file." Level="1" Absent="allow">
+        <ComponentRef Id="TCPVIEWHELP" />
+      </Feature>      
+    </Feature>    
+  </Product>
+
+	<Fragment>    
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+        <Directory Id="INCASDIR" Name="INCAS">
+				  <Directory Id="INSTALLFOLDER" Name="Tcpview">
+            <Directory Id="HELPFOLDER" Name="Help" />
+          </Directory>
+        </Directory>        
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+          <Directory Id="INCASShortcutsDir" Name="INCAS">
+            <Directory Id="APPShortcutsDir" Name="ICTcpView">
+            </Directory>
+          </Directory>
+      </Directory>
+		</Directory>
+  </Fragment>
+
+	<Fragment>
+    <DirectoryRef Id="INCASShortcutsDir">
+      <Component Id="CMP_INCASShortcutsDir" Guid="{B12C7835-CF70-40C6-B23E-A0038BECDDCE}">
+        <RemoveFolder Id="RemoveMyAPPShortcutsDir" On="uninstall" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\Microsoft\INCAS"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>      
+    </DirectoryRef>
+    <Icon Id="icon.ico" SourceFile="files\soft.ico"/>
+    <DirectoryRef Id="APPShortcutsDir">
+      <Component Id="CMP_EXEShortcut" Guid="{5ECA9FF5-BCF2-4725-80F9-5F2226711221}">
+        <Shortcut Id="EXEStartMenuShortcut"
+                  Name="TcpView.exe"
+                  Description="The executable of tcpView"
+                  Target="[INSTALLFOLDER]tcpview.exe"
+                  Icon="icon.ico" />
+        <Shortcut Id="UninstallShortcut"
+          Name="Uninstall TcpView"
+          Description="Uninstalls a TcpView for training"
+          Target="[System64Folder]msiexec.exe"
+          Arguments="/x [ProductCode]" />
+        <RemoveFolder Id="RemoveINCASShortcutsDir" On="uninstall" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\Microsoft\INCAS\ICTcpView"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+	</Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+      <Component>
+        <File Id="TCPVIEWEXE" Name="tcpview.exe" Source="files\tcpview.exe" KeyPath="yes" Vital="yes" DiskId="1" />
+      </Component>
+      <Component Id="TCPVIEWCONSOLEVERSION">
+        <File Id="TCPVCON" Name="tcpvcon.exe" Source="files\tcpvcon.exe" KeyPath="yes" Vital="yes" DiskId="1" />
+      </Component>
+      <Component>
+        <File Id="TEXTFILE" Name="eula.txt" Source="files\eula.txt" KeyPath="yes" ReadOnly="yes" DiskId="1" />
+      </Component>
+    </ComponentGroup>
+    
+    <ComponentGroup Id="OtherComponents" Directory="HELPFOLDER">
+      <Component>
+        <File Id="TCPVIEWHELP" Name="tcpview.hlp" Source="files\tcpview.hlp" KeyPath="yes" DiskId="1" />        
+      </Component>
+      <Component Id="ONLYWITHWINXPORLESS">
+        <File Id="TCPVIEWHELPOLD" Name="tcpview.chm" Source="files\tcpview.chm" KeyPath="yes" DiskId="1" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

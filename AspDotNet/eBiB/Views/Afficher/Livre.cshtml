@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>eBibliotheque - Details Livre</title>
+</head>
+<body>
+    <table>
+        @{
+            eBiB.Models.Book book = ViewData["Book"] as eBiB.Models.Book;
+            <caption>Détails du livre "@book.Title"</caption>
+            <tr>
+                <th><u>Titre</u></th>
+                <th>|</th>
+                <th><u>Date de parution</u></th>
+                <th>|</th>
+                <th><u>Emprunteur</u></th>
+            </tr>
+            <tr>
+                <th>@book.Title</th>
+                <th>|</th>
+                <th>@book.ReleaseDate</th>
+                <th>|</th>
+                <th>@ViewData["ClientName"]</th>
+            </tr> 
+        }       
+    </table>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" >
+	<Product Id="*" Name="SetupExample2" Language="1033" Version="1.0.0.0" Manufacturer="INCAS GmbH" UpgradeCode="81fb248c-c515-44a3-8d98-54ab19bc7ea3">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Property Id="MSIUSEREALADMINDETECTION" Value="1" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+    <!-- .NET 4 Version Check -->
+    <PropertyRef Id="NETFRAMEWORK45" />
+    <Condition Message="This setup requires .Net 4.5">Installed OR NETFRAMEWORK45</Condition>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Order="2">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">1</Publish>
+    </UI>
+    
+    <Feature Id="ProductFeature" Title="SetupExample2" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="EXAMPLE1.EXE"/>
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLLOCATION" Name="SetupExample2" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLLOCATION">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+      <Component Id="EXAMPLE1.EXE" DiskId="1" Guid="{ACE2798F-CE61-4EA1-88AC-1F10CA8A7E53}" >
+        <File Id="EXAMPLE1.EXE" Name="example1.exe" Source="$(var.example1.TargetDir)example1.exe" />
+        <File Id="EXAMPLE1.EXE.CONFIG" Name="example1.exe.Config" Source="$(var.example1.TargetDir)example1.exe.config" />
+        <CreateFolder>
+          <util:PermissionEx User="Users" GenericAll="yes" />
+        </CreateFolder>
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
