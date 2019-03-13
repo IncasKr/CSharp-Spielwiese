@@ -8,7 +8,11 @@ namespace CodeFirst.DTO
 {
     public interface IVehicle
     {
-        string Model { get; set; }
+        int Capacity { get; set; }
         string Color { get; set; }
+        string Model { get; set; }
+        int Power { get; set; }
+        int SeatNumber { get; set; }
+        int WeelsNumber { get; set; }
     }
 }
