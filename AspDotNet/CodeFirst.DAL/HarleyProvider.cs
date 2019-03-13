@@ -15,12 +15,19 @@ namespace CodeFirst.DAL
 
         private bool Exist(EntityHarley harleyObject)
         {
-            return context.Harleys.Any(h => 
+            try
+            {
+                return context.Harleys.Any(h =>
                     h.Capacity.Equals(harleyObject.Capacity) &&
                     h.Color.Equals(harleyObject.Color) &&
                     h.Model.Equals(harleyObject.Model) &&
                     h.Power.Equals(harleyObject.Power)
-                );               
+                );
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }                          
         }
 
         public bool Create(EntityHarley newHarley)

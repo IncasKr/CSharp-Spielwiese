@@ -6,5 +6,10 @@ namespace CodeFirst.DAL
     public class GarageContext : DbContext
     {
         public DbSet<EntityHarley> Harleys { get; set; }
+
+        public GarageContext() : base("ndDBTest")
+        {
+
+        }
     }
 }
