@@ -14,8 +14,8 @@ namespace WebAppArchitect
         {
             this.DataBind();
             IThreeTierServiceLibrary client = new ThreeTierServiceLibrary();
-            PersonEntity pers = client.GetPersonByName("Lastname4");
-            Result1.Text = $"ID = {pers.ID} | Firstname = {pers.FirstName} | Lastname = {pers.LastName}";
+            PersonEntity pers = client.GetPersonByName("Alexander");
+            Result1.Text = $"ID = {pers?.ID} | Firstname = {pers?.FirstName} | Lastname = {pers?.LastName}";
         }
     }
 }

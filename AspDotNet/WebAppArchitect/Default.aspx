@@ -20,7 +20,8 @@
             </asp:GridView>
         </div>
         <div>
-            <asp:Label ID="Label1" runat="server" Text="Info for the 4th person':"></asp:Label>
+            <asp:Label ID="LabelWait" runat="server" Visible="false" Text="Waiting for data..."></asp:Label>
+            <asp:Label ID="Label1" runat="server" Text="Info for the student named 'Alexander':"></asp:Label>
             <asp:Label ID="Result1" runat="server"></asp:Label>
         </div>
     </form>
