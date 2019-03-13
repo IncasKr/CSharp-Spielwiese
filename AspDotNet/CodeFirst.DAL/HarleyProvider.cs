@@ -6,18 +6,18 @@ namespace CodeFirst.DAL
 {
     public class HarleyProvider
     {
-        private GarageContext context;
-        public HarleyProvider()
+        private GarageContext garageContext;
+        public HarleyProvider(GarageContext context = null)
         {
             // create the database tables, if it does not exist.
-            context = new GarageContext();
+            garageContext = context ?? new GarageContext();
         }
 
         private bool Exist(EntityHarley harleyObject)
         {
             try
             {
-                return context.Harleys.Any(h =>
+                return garageContext.Harleys.Any(h =>
                     h.Capacity.Equals(harleyObject.Capacity) &&
                     h.Color.Equals(harleyObject.Color) &&
                     h.Model.Equals(harleyObject.Model) &&
@@ -36,13 +36,13 @@ namespace CodeFirst.DAL
             {
                 return false;
             }
-            var createdHarley = context.Harleys.Add(newHarley);
-            return context.SaveChanges() > 0;
+            var createdHarley = garageContext.Harleys.Add(newHarley);
+            return garageContext.SaveChanges() > 0;
         }
 
         public List<EntityHarley> GetHarleys()
         {
-            return context.Harleys.ToList();
+            return garageContext.Harleys.ToList();
         }
 
         public bool Update(EntityHarley harleyObject, bool persist = false)
@@ -51,10 +51,10 @@ namespace CodeFirst.DAL
             {
                 return false;
             }
-            var foundEntity = context.Harleys.SingleOrDefault(h => h.ID.Equals(harleyObject.ID));
+            var foundEntity = garageContext.Harleys.SingleOrDefault(h => h.ID.Equals(harleyObject.ID));
             if (foundEntity == null) return false;
-            context.Entry(foundEntity).CurrentValues.SetValues(harleyObject);
-            return persist ? context.SaveChanges() > 0 : true;                 
+            garageContext.Entry(foundEntity).CurrentValues.SetValues(harleyObject);
+            return persist ? garageContext.SaveChanges() > 0 : true;                 
         }
     }
 }

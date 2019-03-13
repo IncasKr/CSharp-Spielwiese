@@ -1,6 +1,12 @@
-﻿namespace CodeFirst.DTO
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CodeFirst.DTO
 {
-    public class EntityHarley : EntityMotorBike
+    public class EntityFerrari : EntityCar
     {
         public int ID { get; set; }
         public override string Color { get; set; }

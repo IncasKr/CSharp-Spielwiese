@@ -41,8 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityCar.cs" />
+    <Compile Include="EntityFerrari.cs" />
+    <Compile Include="EntityGarage.cs" />
     <Compile Include="EntityHarley.cs" />
+    <Compile Include="IVehicle.cs" />
+    <Compile Include="EntityMotorBike.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EntityVehicle.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

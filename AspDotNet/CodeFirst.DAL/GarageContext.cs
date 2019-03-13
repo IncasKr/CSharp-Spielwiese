@@ -7,9 +7,13 @@ namespace CodeFirst.DAL
     {
         public DbSet<EntityHarley> Harleys { get; set; }
 
+        public DbSet<EntityFerrari> Ferraris { get; set; }
+
+        public DbSet<EntityGarage> Garages { get; set; }
+
         public GarageContext() : base("ndDBTest")
         {
-
+            Database.SetInitializer<GarageContext>(new GarageContextInitializer());
         }
     }
 }

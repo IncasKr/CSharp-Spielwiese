@@ -48,7 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FerrariProvider.cs" />
     <Compile Include="GarageContext.cs" />
+    <Compile Include="GarageContextInitializer.cs" />
     <Compile Include="HarleyProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
