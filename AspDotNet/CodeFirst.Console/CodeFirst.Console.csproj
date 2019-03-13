@@ -49,5 +49,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeFirst.DAL\CodeFirst.DAL.csproj">
+      <Project>{9C21B90B-82A0-4DA4-9F6B-61B42CB00778}</Project>
+      <Name>CodeFirst.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeFirst.DTO\CodeFirst.DTO.csproj">
+      <Project>{7b05bd35-07ce-486d-bfe6-7bff664744d4}</Project>
+      <Name>CodeFirst.DTO</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
