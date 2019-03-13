@@ -1,16 +1,16 @@
 ﻿using CodeFirst.DAL;
 using System;
 
-namespace CodeFirst.Console
+namespace CodeFirst.Cons
 {
     class Program
     {
         static void Main(string[] args)
         {
-            System.Console.WriteLine("List of harleys");
+            Console.WriteLine("List of harleys");
             ShowVehicles();
-            System.Console.WriteLine("Fin");
-            System.Console.ReadLine();
+            Console.WriteLine("Fin");
+            Console.ReadLine();
 
         }
 
@@ -19,7 +19,7 @@ namespace CodeFirst.Console
             HarleyProvider harleyProvider = new HarleyProvider();
             foreach (var harley in harleyProvider.GetHarleys())
             {
-                System.Console.WriteLine($"\t{harley}");
+                Console.WriteLine($"\t{harley}");
             }
         }
     }
