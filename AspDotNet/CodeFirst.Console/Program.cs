@@ -7,12 +7,16 @@ namespace CodeFirst.Console
     {
         static void Main(string[] args)
         {
+            System.Console.WriteLine("List of harleys");
+            AfficheAllVehicule();
+            System.Console.WriteLine("Fin");
+            System.Console.ReadLine();
+
         }
 
         private static void AfficheAllVehicule()
         {
             HarleyProvider harleyProvider = new HarleyProvider();
-            System.Console.WriteLine("List of harleys");
             foreach (var harley in harleyProvider.GetAllHarleys())
             {
                 System.Console.WriteLine($"\t{harley}");
