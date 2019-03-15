@@ -18,7 +18,7 @@ namespace CodeFirst.DAL.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-            Console.WriteLine("===== Fill up new data starting... =====");
+            /*Console.WriteLine("===== Fill up new data starting... =====");
             List<EntityHarley> listeHarley = new List<EntityHarley>
             {
                 new EntityHarley { Color = "Black", Model = "Fatbob", Capacity = 15, Power = 150, SeatNumber = 1, WeelsNumber = 2, CustomPainting = 0 },
@@ -36,7 +36,7 @@ namespace CodeFirst.DAL.Migrations
             listeHarley.ForEach(entity => garage.Vehicles.Add(entity));
             context.Garages.Add(garage);
             listeFerrari.ForEach(entity => context.Ferraris.Add(entity));
-            Console.WriteLine("===== Fill up new data end. =====");
+            Console.WriteLine("===== Fill up new data end. =====");*/
         }
     }
 }
