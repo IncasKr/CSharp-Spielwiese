@@ -15,5 +15,10 @@ namespace CodeFirst.DAL
         {
             Database.SetInitializer<GarageContext>(new GarageContextInitializer());
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+
+        }
     }
 }

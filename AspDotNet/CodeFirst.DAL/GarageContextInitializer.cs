@@ -12,6 +12,7 @@ namespace CodeFirst.DAL
     {
         protected override void Seed(GarageContext context)
         {
+            Console.WriteLine("===== Fill up new data starting... =====");
             List<EntityHarley> listeHarley = new List<EntityHarley>
             {
                 new EntityHarley { Color = "Black", Model = "Fatbob", Capacity = 15, Power = 150 },
@@ -27,7 +28,7 @@ namespace CodeFirst.DAL
 
             listeHarley.ForEach(entity => context.Harleys.Add(entity));
             listeFerrari.ForEach(entity => context.Ferraris.Add(entity));
+            Console.WriteLine("===== Fill up new data end. =====");
         }
-
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CodeFirst.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,7 +25,7 @@ namespace CodeFirst.DAL
                     h.Power.Equals(harleyObject.Power)
                 );
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
                 return false;
             }                          

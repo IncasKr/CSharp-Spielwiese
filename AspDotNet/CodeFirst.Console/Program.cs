@@ -68,7 +68,7 @@ namespace CodeFirst.Cons
 
         static void UpdatingColor(string color)
         {
-            Console.WriteLine("===== Mise à jour de la couleur =====");
+            Console.WriteLine("===== Updating the color of all harleys =====");
             foreach (EntityHarley harley in harleyProvider.GetHarleys())
             {
                 harley.Color = color;

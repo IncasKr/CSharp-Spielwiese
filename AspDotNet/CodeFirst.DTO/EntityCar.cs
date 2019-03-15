@@ -8,7 +8,6 @@ namespace CodeFirst.DTO
 {
     public abstract class EntityCar : EntityVehicle
     {
-        public override int Capacity { get; set; }
-        public override int Power { get; set; }
+        
     }
 }
