@@ -6,6 +6,6 @@ namespace CodeFirst.DTO
     public class EntityFerrari : EntityCar
     {
         [DefaultValue("false")]
-        public bool Turbo { get; set; }
+        public bool HasTurbo { get; set; }
     }
 }
