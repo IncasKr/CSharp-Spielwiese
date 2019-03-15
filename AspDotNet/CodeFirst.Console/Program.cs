@@ -42,28 +42,36 @@ namespace CodeFirst.Cons
                 Color = "Black",
                 Model = "883 Iron",
                 Capacity = 12,
-                Power = 220
+                Power = 220,
+                SeatNumber = 2,
+                WeelsNumber = 2
             });
             harleyProvider.Create(new EntityHarley
             {
                 Color = "Red",
                 Model = "1200 Nighster",
                 Capacity = 12,
-                Power = 150
+                Power = 150,
+                SeatNumber = 1,
+                WeelsNumber = 2
             });
             harleyProvider.Create(new EntityHarley
             {
                 Color = "Gray",
                 Model = "1200 Forty height",
                 Capacity = 12,
-                Power = 100
+                Power = 100,
+                SeatNumber = 2,
+                WeelsNumber = 2
             });
             harleyProvider.Create(new EntityHarley
             {
                 Color = "Black",
                 Model = "Fat boy",
                 Capacity = 25,
-                Power = 200
+                Power = 200,
+                SeatNumber = 1,
+                WeelsNumber = 2
             });
             Console.WriteLine("======================");
         }
