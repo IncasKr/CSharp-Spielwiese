@@ -23,7 +23,7 @@ namespace CodeFirst.DAL
                 new EntityFerrari { Color = "Blue", Model = "California", Capacity = 50, Power = 365, SeatNumber = 2, WeelsNumber = 4 }
             };
 
-            var garage = new EntityGarage();
+            var garage = new EntityGarage("Krefeld");
             listeHarley.ForEach(entity => garage.Vehicles.Add(entity));
             context.Garages.Add(garage);
             listeFerrari.ForEach(entity => context.Ferraris.Add(entity));
