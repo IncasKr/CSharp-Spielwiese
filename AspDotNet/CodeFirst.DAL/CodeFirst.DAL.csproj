@@ -52,6 +52,10 @@
     <Compile Include="GarageContext.cs" />
     <Compile Include="GarageContextInitializer.cs" />
     <Compile Include="HarleyProvider.cs" />
+    <Compile Include="Migrations\201903151321249_Initial.cs" />
+    <Compile Include="Migrations\201903151321249_Initial.Designer.cs">
+      <DependentUpon>201903151321249_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -64,6 +68,11 @@
       <Project>{7B05BD35-07CE-486D-BFE6-7BFF664744D4}</Project>
       <Name>CodeFirst.DTO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201903151321249_Initial.resx">
+      <DependentUpon>201903151321249_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
