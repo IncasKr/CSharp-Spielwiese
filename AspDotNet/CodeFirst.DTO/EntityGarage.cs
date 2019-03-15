@@ -10,5 +10,10 @@ namespace CodeFirst.DTO
     {
         public int ID { get; set; }
         public virtual ICollection<EntityVehicle> Vehicles { get; set; }
+
+        public EntityGarage()
+        {
+            Vehicles = new List<EntityVehicle>();
+        }
     }
 }

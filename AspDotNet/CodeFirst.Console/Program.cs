@@ -7,9 +7,11 @@ namespace CodeFirst.Cons
     class Program
     {
         private static HarleyProvider harleyProvider;
+        private static GarageContext garage;
         static void Main(string[] args)
         {
-            harleyProvider = new HarleyProvider();
+            garage = new GarageContext();
+            harleyProvider = new HarleyProvider(garage);
             FillHarleys();
             ShowVehicles();
             UpdatingColor("Blue");

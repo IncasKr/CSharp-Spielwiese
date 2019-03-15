@@ -37,8 +37,15 @@ namespace CodeFirst.DAL
             {
                 return false;
             }
-            var createdHarley = garageContext.Harleys.Add(newHarley);
-            return garageContext.SaveChanges() > 0;
+            try
+            {
+                var createdHarley = garageContext.Harleys.Add(newHarley);
+                return garageContext.SaveChanges() > 0; 
+            }
+            catch (Exception e)
+            {
+                return false;
+            }            
         }
 
         public List<EntityHarley> GetHarleys()
