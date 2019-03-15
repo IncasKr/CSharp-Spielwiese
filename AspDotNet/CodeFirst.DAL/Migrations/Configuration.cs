@@ -5,14 +5,14 @@ namespace CodeFirst.DAL.Migrations
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
     
-    internal sealed class Configuration : DbMigrationsConfiguration<CodeFirst.DAL.GarageContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<GarageContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(CodeFirst.DAL.GarageContext context)
+        protected override void Seed(GarageContext context)
         {
             //  This method will be called after migrating to the latest version.
 
