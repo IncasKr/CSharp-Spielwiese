@@ -15,7 +15,7 @@ namespace CodeFirst.DAL
 
         public GarageContext() : base("ndDBTest")
         {
-            Database.SetInitializer<GarageContext>(new GarageContextInitializer());
+            Database.SetInitializer<GarageContext>(null);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
