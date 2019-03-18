@@ -1,6 +1,8 @@
 ﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices.Protocols;
+using System.Net;
 using System.Security.Authentication;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -19,7 +21,10 @@ namespace UserInfos
                 Console.WriteLine($"\t\t{group.Translate(typeof(NTAccount)).ToString()}");
             Console.WriteLine($"\tImpersonation level: {currentAccount.ImpersonationLevel} | Is authenticated: {currentAccount.IsAuthenticated} | Authenticate type: {currentAccount.AuthenticationType}");
             Console.WriteLine($"\tAccount type ==> System: {currentAccount.IsSystem} | Guest: {currentAccount.IsGuest} | Anonymous: {currentAccount.IsAnonymous}");
-            Console.WriteLine($"Token from AD: {GetTokenFromAD("Douabalet", "740")}");
+            Console.Write($"Please enter the password of current user:");
+            string pwd = Console.ReadLine();
+            Console.WriteLine($"User authenticated: {LdapHelper.User(pwd)}");
+            LdapHelper.fnImp();
 
 
            Console.ReadLine();
@@ -27,7 +32,7 @@ namespace UserInfos
 
         private static string GetTokenFromAD(string clientId, string appKey)
         {
-            string tenantName = "ad-example.com";
+            string tenantName = "incas.com";
             string authString = "https://login.microsoftonline.com/" + tenantName;
             AuthenticationContext authenticationContext = new AuthenticationContext(authString, false);
             // Config for OAuth client credentials             
