@@ -23,9 +23,16 @@ namespace UserInfos
             Console.WriteLine($"\tAccount type ==> System: {currentAccount.IsSystem} | Guest: {currentAccount.IsGuest} | Anonymous: {currentAccount.IsAnonymous}");
             Console.Write($"Please enter the password of current user:");
             string pwd = Console.ReadLine();
-            Console.WriteLine($"User authenticated: {LdapHelper.User(pwd)}");
-            LdapHelper.fnImp();
-
+            if (LdapHelper.User(pwd))
+            {
+                Console.WriteLine("User authenticated");
+                LdapHelper.fnImp();
+            }
+            else
+            {
+                Console.WriteLine("User not authenticated!");
+            }
+            
 
            Console.ReadLine();
         }

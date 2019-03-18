@@ -21,12 +21,14 @@ namespace UserInfos
             bool validation;
             try
             {
-                LdapConnection lcon = new LdapConnection(new LdapDirectoryIdentifier((string)null, false, false));
-                NetworkCredential nc = new NetworkCredential(Environment.UserName, password, Environment.UserDomainName);
-                lcon.Credential = nc;
-                lcon.AuthType = AuthType.Negotiate;
-                lcon.Bind(nc); // user has authenticated at this point, as the credentials were used to login to the dc.
-                validation = true;
+                using (LdapConnection lcon = new LdapConnection(new LdapDirectoryIdentifier((string)null, false, false)))
+                {
+                    NetworkCredential nc = new NetworkCredential(Environment.UserName, password, Environment.UserDomainName);
+                    lcon.Credential = nc;
+                    lcon.AuthType = AuthType.Negotiate;
+                    lcon.Bind(nc); // user has authenticated at this point, as the credentials were used to login to the dc.
+                    validation = true;
+                }
             }
             catch (LdapException e)
             {
