@@ -11,43 +11,52 @@ using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace UserInfos
 {
     public class LdapHelper
     {
+        public enum CategoryType
+        {
+            CN,
+            DC,
+            OU
+        }
+
         private const int ACCOUNTDISABLE = 0x0002;
         private const int NORMAL_ACCOUNT = 0x0200;
+
+        public static Agent CurrentUser = new Agent();
 
         #region Token parameters
 
         private const string ALGORITHM_NAME = "HmacSHA256";
         private const string SALT = "ZyCwQjKQuK9OLsmNZIL7"; // Generated at https://www.random.org/strings
         private const int TOKEN_EXPIRATION_SECONDS = 10;
-
+        
         #endregion
 
         #region Token Methods
 
         /// <summary>
-        /// Generates a token for an agent with a specified IP address.
+        /// Generates a token for an agent.
         /// </summary>
-        /// <param name="username">The username access.</param>
-        /// <param name="password">The password access.</param>
-        /// <param name="ipAddress">The IP address for the agent.</param>
-        /// <param name="agent">The agent name.</param>
+        /// <param name="username">The access username for the agent.</param>
+        /// <param name="machineName">The machine name that the agent is logged in.</param>
+        /// <param name="userEmail">The email address for the agent.</param>
         /// <param name="ticks">The ticks that the token will be created.</param>
         /// <returns>The created token.</returns>
-        public static string GenerateToken(string username, string password, string ipAddress, string agent, long ticks)
+        public static string GenerateToken(string username, long lastSetPasswordTiks, string machineName, string userEmail, long ticks)
         {
-            string hash = string.Join(":", new string[] { username, ipAddress, agent, ticks.ToString() });
+            string hash = string.Join(":", new string[] { username, userEmail, machineName, ticks.ToString() });
             string hashLeft = "";
             string hashRight = "";
 
             using (HMAC hmac = HMACSHA256.Create(ALGORITHM_NAME))
             {
-                hmac.Key = Encoding.UTF8.GetBytes(GetHashedPassword(password));
+                hmac.Key = Encoding.UTF8.GetBytes(GetHashedPassword(lastSetPasswordTiks.ToString()));
                 hmac.ComputeHash(Encoding.UTF8.GetBytes(hash));
 
                 hashLeft = Convert.ToBase64String(hmac.Hash);
@@ -80,10 +89,10 @@ namespace UserInfos
         /// Checks the validity of a token for an agent with a specified IP address.
         /// </summary>
         /// <param name="token">The token to verify.</param>
-        /// <param name="ipAddress">The address for the agent.</param>
+        /// <param name="machineName">The address for the agent.</param>
         /// <param name="agent">The agent name.</param>
         /// <returns>Returns true if the token is validated, otherwise false.</returns>
-        public static bool IsTokenValid(string token, string ipAddress, string agent)
+        public static bool IsTokenValid(string token, string agent)
         {
             bool validated = false;
 
@@ -107,19 +116,10 @@ namespace UserInfos
                     bool expired = Math.Abs((DateTime.UtcNow - timeStamp).TotalSeconds) > TOKEN_EXPIRATION_SECONDS;
                     if (!expired)
                     {
-                        //
-                        // Lookup the user's account from the db.
-                        //
-                        if (username == "dummy")
-                        {
-                            string password = "dummy";
-
-                            // Hash the message with the key to generate a token.
-                            string computedToken = GenerateToken(username, password, ipAddress, agent, ticks);
+                        string computedToken = GenerateToken(agent, CurrentUser.LastSetPassword.Ticks, CurrentUser.MachineName, CurrentUser.Email, ticks);
 
                             // Compare the computed token with the one supplied and ensure they match.
-                            validated = (token == computedToken);
-                        }
+                            validated = (token == computedToken);                        
                     }
                 }
                 else
@@ -218,9 +218,16 @@ namespace UserInfos
                     foreach (var result in searcher.FindAll())
                     {
                         DirectoryEntry de = result.GetUnderlyingObject() as DirectoryEntry;
-                        if (((string)de.Properties["sn"].Value??"").ToLower().Contains(Environment.UserName))
+                        if (((string)de.Properties["sAMAccountName"].Value??"").ToLower().Equals(Environment.UserName))
                         {
-                            Console.WriteLine();
+                            CurrentUser = new Agent()
+                            {
+                                Logon = (string)de.Properties["sAMAccountName"].Value,
+                                MachineName = (string)de.Properties["sAMAccountName"].Value,
+                                LastSetPassword = ConvertLargeIntegerToDate(de.Properties["pwdLastSet"].Value),
+                                Email = (string)de.Properties["mail"].Value
+                            };
+                            Console.WriteLine("###########################################################################");
                             Console.WriteLine("User info details:");
                             Console.WriteLine($"\tFirst Name: {de.Properties["givenName"].Value}");
                             Console.WriteLine($"\tLast Name: {de.Properties["sn"].Value}");
@@ -231,24 +238,34 @@ namespace UserInfos
                             Console.WriteLine($"\tUser account status: {accountStatus}");
                             string accountType = Convert.ToBoolean((int)de.Properties["userAccountControl"].Value & NORMAL_ACCOUNT) ? "normal account" : "other account type";
                             Console.WriteLine($"\tUser account type: {accountType}");
-                            Console.WriteLine($"\tObject Category: {de.Properties["objectCategory"].Value}");
-                            Console.WriteLine($"\tDistinguished Name: {de.Properties["distinguishedName"].Value}");
-
-                            WindowsIdentity currentAccount = WindowsIdentity.GetCurrent();
-                            string[] currentAccountNames = currentAccount.Name.Split('\\');
-                            Console.WriteLine($"\tAccount: {currentAccountNames[currentAccountNames.Length - 1]} | Label: {currentAccount.Label} | AD token: {currentAccount.Token.ToString()}");
-                            Console.WriteLine($"\tImpersonation level: {currentAccount.ImpersonationLevel} | Is authenticated: {currentAccount.IsAuthenticated} | Authenticate type: {currentAccount.AuthenticationType}");
-                            Console.WriteLine($"\tAccount type ==> System: {currentAccount.IsSystem} | Guest: {currentAccount.IsGuest} | Anonymous: {currentAccount.IsAnonymous}");
-                            Console.WriteLine($"\tGroups:");
-                            foreach (var group in currentAccount.Groups)
+                            Console.WriteLine($"\tLast set password on: {CurrentUser.LastSetPassword}");
+                            var accountCategories = GetObjectCategories((string)de.Properties["objectCategory"].Value, CategoryType.CN);
+                            Console.WriteLine($"\tAccount Categories:");
+                            foreach (var item in accountCategories)
                             {
-                                string groupName = group.Translate(typeof(NTAccount)).ToString();
-                                //if (groupName.EndsWith(Environment.UserDomainName))
-                                //{
-                                    Console.WriteLine($"\t\t{groupName}");
-                                //}
+                                Console.WriteLine($"\t\t{item}");
                             }
-                            
+                            var accountDepartments = GetObjectCategories((string)de.Properties["distinguishedName"].Value, CategoryType.OU);
+                            Console.WriteLine($"\tAccount Departments:");
+                            foreach (var item in accountDepartments)
+                            {
+                                Console.WriteLine($"\t\t{item}");
+                            }
+                            bool frontofficeAllowed = accountDepartments.Exists(dept => dept.ToLower().Equals("intracall"));
+                            Console.WriteLine($"\tAllowed to access to Frontoffice: {frontofficeAllowed}");
+                            string genToken = string.Empty;
+                            if (frontofficeAllowed)
+                            {
+                                genToken = GenerateToken(CurrentUser.Logon, CurrentUser.LastSetPassword.Ticks, CurrentUser.MachineName, CurrentUser.Email, DateTime.Now.ToUniversalTime().Ticks);
+                                Console.WriteLine($"\t{DateTime.Now} - Generated token: {genToken}");
+                            }
+                            Console.WriteLine($"\t{DateTime.Now} - Token verified: {IsTokenValid(genToken, CurrentUser.Logon)}");
+                            Thread.Sleep(1000 * (TOKEN_EXPIRATION_SECONDS / 2));
+                            Console.WriteLine($"\t{DateTime.Now} - Token: {IsTokenValid(genToken, CurrentUser.Logon)}");
+                            Thread.Sleep(1000 * (TOKEN_EXPIRATION_SECONDS / 2));
+                            Console.WriteLine($"\t{DateTime.Now} - Token verified: {IsTokenValid(genToken, CurrentUser.Logon)}");
+                            Console.WriteLine("###########################################################################");
+
                             Console.WriteLine();
                             /*PropertyCollection pc = de.Properties;
                             foreach (PropertyValueCollection col in pc)
@@ -258,6 +275,21 @@ namespace UserInfos
                             }*/
                         }
                     }
+                    /*Console.WriteLine("**********Current user info details***********************");
+                    WindowsIdentity currentAccount = WindowsIdentity.GetCurrent();
+                    string[] currentAccountNames = currentAccount.Name.Split('\\');
+                    Console.WriteLine($"\tAccount: {currentAccountNames[currentAccountNames.Length - 1]} | Label: {currentAccount.Label} | AD token: {currentAccount.Token.ToString()}");
+                    Console.WriteLine($"\tImpersonation level: {currentAccount.ImpersonationLevel} | Is authenticated: {currentAccount.IsAuthenticated} | Authenticate type: {currentAccount.AuthenticationType}");
+                    Console.WriteLine($"\tAccount type ==> System: {currentAccount.IsSystem} | Guest: {currentAccount.IsGuest} | Anonymous: {currentAccount.IsAnonymous}");
+                    Console.WriteLine($"\tGroups:");
+                    foreach (var group in currentAccount.Groups)
+                    {
+                        string groupName = group.Translate(typeof(NTAccount)).ToString();
+                        //if (groupName.EndsWith(Environment.UserDomainName))
+                        //{
+                        Console.WriteLine($"\t\t{groupName}");
+                        //}
+                    }*/
                 }
             }            
         }
@@ -291,6 +323,10 @@ namespace UserInfos
             return authenticated;
         }
 
+        /// <summary>
+        /// Authenticates an user on Active Directory.
+        /// </summary>
+        /// <returns>Returns true if the user is authenticated, otherwise false.</returns>
         public static bool AuthenticatedWithWindowsIdentity()
         {
             WindowsIdentity currentAccount = WindowsIdentity.GetCurrent();
@@ -324,5 +360,66 @@ namespace UserInfos
                 return null;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objectCat"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private static List<string> GetObjectCategories(string objectCat, CategoryType type)
+        {
+            if (string.IsNullOrEmpty(objectCat.Trim()))
+            {
+                return null;
+            }
+
+            List<string> list = new List<string>();
+            string[] categories = objectCat.Split(',');
+            foreach (var cat in categories)
+            {
+                string[] catKeyValue = cat.Split('=');
+                if (catKeyValue.Length == 2 && catKeyValue[0] == type.ToString())
+                {
+                    list.Add(catKeyValue[1]);
+                }
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="largeInteger"></param>
+        /// <returns></returns>
+        private static DateTime ConvertLargeIntegerToDate(object largeInteger)
+        {
+            Type type = largeInteger.GetType();
+            int highPart = (int)type.InvokeMember("HighPart", BindingFlags.GetProperty, null, largeInteger, null);
+            int lowPart = (int)type.InvokeMember("LowPart", BindingFlags.GetProperty | BindingFlags.Public, null, largeInteger, null);
+            long value = (long)highPart << 32;
+            value -= lowPart;
+            if (value == long.MaxValue || value <= 0 || DateTime.MaxValue.ToFileTimeUtc() <= value)
+            {
+                return DateTime.MaxValue;
+            }
+
+            return DateTime.FromFileTimeUtc(value);
+        }
+
+        private static long ConvertLargeIntegerToLong(object largeInteger)
+        {
+            return ConvertLargeIntegerToDate(largeInteger).Ticks;
+        }
+    }
+
+    public class Agent
+    {
+        public string Logon { get; set; }
+        public string DomainName { get; set; }
+        public string MachineName { get; set; }
+        public string Email { get; set; }
+        public DateTime LastSetPassword { get; set; }
     }
 }
