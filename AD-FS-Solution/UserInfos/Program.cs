@@ -1,8 +1,6 @@
 ﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Collections.Generic;
-using System.DirectoryServices.Protocols;
-using System.Net;
 using System.Security.Authentication;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -11,29 +9,66 @@ namespace UserInfos
 {
     class Program
     {
-        static void Main(string[] args)
+        private static string GetInputPassword(char passwordCharShowed = '*')
         {
-            WindowsIdentity currentAccount = WindowsIdentity.GetCurrent();
-            string accountToken1 = currentAccount.Token.ToString();
-            Console.WriteLine($"User name: {currentAccount.Name} | Label: {currentAccount.Label} | token: {accountToken1}");
-            Console.WriteLine($"\tGroups:");
-            foreach (var group in currentAccount.Groups)
-                Console.WriteLine($"\t\t{group.Translate(typeof(NTAccount)).ToString()}");
-            Console.WriteLine($"\tImpersonation level: {currentAccount.ImpersonationLevel} | Is authenticated: {currentAccount.IsAuthenticated} | Authenticate type: {currentAccount.AuthenticationType}");
-            Console.WriteLine($"\tAccount type ==> System: {currentAccount.IsSystem} | Guest: {currentAccount.IsGuest} | Anonymous: {currentAccount.IsAnonymous}");
-            Console.Write($"Please enter the password of current user:");
-            string pwd = Console.ReadLine();
-            if (LdapHelper.User(pwd))
+            Queue<char> queue = new Queue<char>();
+            ConsoleKeyInfo consoleKeyInfo;
+            string password = string.Empty;
+            
+            // push until the enter key is pressed
+            while ((consoleKeyInfo = Console.ReadKey(true)).Key != ConsoleKey.Enter)
             {
-                Console.WriteLine("User authenticated");
-                LdapHelper.fnImp();
+                if (consoleKeyInfo.Key != ConsoleKey.Backspace)
+                {
+                    queue.Enqueue(consoleKeyInfo.KeyChar);
+                    Console.Write(passwordCharShowed);                    
+                }
+                else
+                {
+                    if (queue.Count > 0)
+                    {
+                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                        Console.Write(" ");
+                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                        queue.Dequeue();
+                    }
+                }
             }
-            else
+
+            if (consoleKeyInfo.Key == ConsoleKey.Enter)
             {
-                Console.WriteLine("User not authenticated!");
+                Console.Write(consoleKeyInfo.KeyChar);
             }
             
+            return new string(queue.ToArray());
+        }
 
+        static void Main(string[] args)
+        {
+            string user = Environment.UserName;
+            Console.Write("Please geven the password:");
+            string password = GetInputPassword();
+
+            WindowsIdentity currentAccount = WindowsIdentity.GetCurrent();
+            Console.WriteLine($"User name: {currentAccount.Name} | Label: {currentAccount.Label} | AD token: {currentAccount.Token.ToString()}");
+            Console.WriteLine($"\tGroups:");
+            foreach (var group in currentAccount.Groups)
+            {
+                string groupName = group.Translate(typeof(NTAccount)).ToString();
+                if (groupName.EndsWith(Environment.UserDomainName))
+                {
+                    Console.WriteLine($"\t\t{groupName}");
+                }
+            }
+            Console.WriteLine($"\tImpersonation level: {currentAccount.ImpersonationLevel} | Is authenticated: {currentAccount.IsAuthenticated} | Authenticate type: {currentAccount.AuthenticationType}");
+            Console.WriteLine($"\tAccount type ==> System: {currentAccount.IsSystem} | Guest: {currentAccount.IsGuest} | Anonymous: {currentAccount.IsAnonymous}");
+            
+            Console.WriteLine($"{user} authentication with DirectoryEntry method: {LdapHelper.AuthenticatedWithDirectoryEntry("LDAP://incas.com", user, password)}");
+
+            Console.WriteLine($"{user} authentication with LdapConnection method: {LdapHelper.AuthenticatedWithLdapConnection(password)}");
+            Console.WriteLine("\nUser info details:");
+            LdapHelper.GetCurrentUserAccountInfo();
+            
            Console.ReadLine();
         }
 
