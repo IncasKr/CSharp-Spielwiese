@@ -137,6 +137,8 @@ namespace UserInfos
 
         #endregion
 
+        #region Authentication
+
         /// <summary>
         /// Validation for a single user to the active directory
         /// </summary>
@@ -162,6 +164,49 @@ namespace UserInfos
             }
             return validation;
         }
+
+        /// <summary>
+        /// Authenticates an user on Active Directory.
+        /// </summary>
+        /// <param name="serverAD">LDAp server (in the form LDAP://domain.com).
+        /// </param>
+        /// <param name="agent">The username</param>
+        /// <param name="password">The password of the user</param>
+        /// <returns>Returns true if the user is authenticated, otherwise false.</returns>
+        public static bool AuthenticatedWithDirectoryEntry(string serverAD, string agent, string password)
+        {
+            bool authenticated = false;
+
+            try
+            {
+                DirectoryEntry entry = new DirectoryEntry(serverAD, agent, password);
+                object nativeObject = entry.NativeObject;
+                authenticated = true;
+            }
+            catch (DirectoryServicesCOMException cex)
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return authenticated;
+        }
+
+        /// <summary>
+        /// Authenticates an user on Active Directory.
+        /// </summary>
+        /// <returns>Returns true if the user is authenticated, otherwise false.</returns>
+        public static bool AuthenticatedWithWindowsIdentity()
+        {
+            WindowsIdentity currentAccount = WindowsIdentity.GetCurrent();
+            return currentAccount.IsAuthenticated;
+        }
+
+        #endregion
+
+        #region Display
 
         /// <summary>
         /// Lists all the users from current domain
@@ -201,11 +246,11 @@ namespace UserInfos
             {
                 foreach (Principal p in group.GetMembers())
                 {
-                    Console.WriteLine("{0}: {1}", p.StructuralObjectClass, p.DisplayName);                    
+                    Console.WriteLine("{0}: {1}", p.StructuralObjectClass, p.DisplayName);
                 }
             }
         }
-        
+
         /// <summary>
         /// Gets a particular details for the current user account.
         /// </summary>
@@ -218,7 +263,7 @@ namespace UserInfos
                     foreach (var result in searcher.FindAll())
                     {
                         DirectoryEntry de = result.GetUnderlyingObject() as DirectoryEntry;
-                        if (((string)de.Properties["sAMAccountName"].Value??"").ToLower().Equals(Environment.UserName))
+                        if (((string)de.Properties["sAMAccountName"].Value ?? "").ToLower().Equals(Environment.UserName))
                         {
                             CurrentUser = new Agent()
                             {
@@ -291,47 +336,10 @@ namespace UserInfos
                         //}
                     }*/
                 }
-            }            
+            }
         }
 
-        /// <summary>
-        /// Authenticates an user on Active Directory.
-        /// </summary>
-        /// <param name="serverAD">LDAp server (in the form LDAP://domain.com).
-        /// </param>
-        /// <param name="agent">The username</param>
-        /// <param name="password">The password of the user</param>
-        /// <returns>Returns true if the user is authenticated, otherwise false.</returns>
-        public static bool AuthenticatedWithDirectoryEntry(string serverAD, string agent, string password)
-        {
-            bool authenticated = false;
-
-            try
-            {
-                DirectoryEntry entry = new DirectoryEntry(serverAD, agent, password);
-                object nativeObject = entry.NativeObject;
-                authenticated = true;
-            }
-            catch (DirectoryServicesCOMException cex)
-            {
-                
-            }
-            catch (Exception ex)
-            {
-                
-            }
-            return authenticated;
-        }
-
-        /// <summary>
-        /// Authenticates an user on Active Directory.
-        /// </summary>
-        /// <returns>Returns true if the user is authenticated, otherwise false.</returns>
-        public static bool AuthenticatedWithWindowsIdentity()
-        {
-            WindowsIdentity currentAccount = WindowsIdentity.GetCurrent();
-            return currentAccount.IsAuthenticated;
-        }
+        #endregion
 
         public static string GetTokenFromAD(string clientId, string appKey)
         {
