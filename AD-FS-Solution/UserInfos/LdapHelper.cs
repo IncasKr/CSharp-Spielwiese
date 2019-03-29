@@ -1,11 +1,17 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System;
+using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.Protocols;
+using System.IdentityModel.Tokens;
 using System.Net;
 using System.Reflection;
+using System.Security.Authentication;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace UserInfos
 {
@@ -214,17 +220,35 @@ namespace UserInfos
                         DirectoryEntry de = result.GetUnderlyingObject() as DirectoryEntry;
                         if (((string)de.Properties["sn"].Value??"").ToLower().Contains(Environment.UserName))
                         {
-                            Console.WriteLine($"First Name: {de.Properties["givenName"].Value}");
-                            Console.WriteLine($"Last Name: {de.Properties["sn"].Value}");
-                            Console.WriteLine($"Account name: {de.Properties["sAMAccountName"].Value}");
-                            Console.WriteLine($"Line: {de.Properties["telephoneNumber"].Value}");
-                            Console.WriteLine($"Mail: {de.Properties["mail"].Value}");
+                            Console.WriteLine();
+                            Console.WriteLine("User info details:");
+                            Console.WriteLine($"\tFirst Name: {de.Properties["givenName"].Value}");
+                            Console.WriteLine($"\tLast Name: {de.Properties["sn"].Value}");
+                            Console.WriteLine($"\tAccount name: {de.Properties["sAMAccountName"].Value}");
+                            Console.WriteLine($"\tLine: {de.Properties["telephoneNumber"].Value}");
+                            Console.WriteLine($"\tMail: {de.Properties["mail"].Value}");
                             string accountStatus = Convert.ToBoolean((int)de.Properties["userAccountControl"].Value & ACCOUNTDISABLE) ? "not activ" : "activ";
-                            Console.WriteLine($"User account status: {accountStatus}");
+                            Console.WriteLine($"\tUser account status: {accountStatus}");
                             string accountType = Convert.ToBoolean((int)de.Properties["userAccountControl"].Value & NORMAL_ACCOUNT) ? "normal account" : "other account type";
-                            Console.WriteLine($"User account type: {accountType}");
-                            Console.WriteLine($"Object Category: {de.Properties["objectCategory"].Value}");
-                            Console.WriteLine($"Distinguished Name: {de.Properties["distinguishedName"].Value}");
+                            Console.WriteLine($"\tUser account type: {accountType}");
+                            Console.WriteLine($"\tObject Category: {de.Properties["objectCategory"].Value}");
+                            Console.WriteLine($"\tDistinguished Name: {de.Properties["distinguishedName"].Value}");
+
+                            WindowsIdentity currentAccount = WindowsIdentity.GetCurrent();
+                            string[] currentAccountNames = currentAccount.Name.Split('\\');
+                            Console.WriteLine($"\tAccount: {currentAccountNames[currentAccountNames.Length - 1]} | Label: {currentAccount.Label} | AD token: {currentAccount.Token.ToString()}");
+                            Console.WriteLine($"\tImpersonation level: {currentAccount.ImpersonationLevel} | Is authenticated: {currentAccount.IsAuthenticated} | Authenticate type: {currentAccount.AuthenticationType}");
+                            Console.WriteLine($"\tAccount type ==> System: {currentAccount.IsSystem} | Guest: {currentAccount.IsGuest} | Anonymous: {currentAccount.IsAnonymous}");
+                            Console.WriteLine($"\tGroups:");
+                            foreach (var group in currentAccount.Groups)
+                            {
+                                string groupName = group.Translate(typeof(NTAccount)).ToString();
+                                //if (groupName.EndsWith(Environment.UserDomainName))
+                                //{
+                                    Console.WriteLine($"\t\t{groupName}");
+                                //}
+                            }
+                            
                             Console.WriteLine();
                             /*PropertyCollection pc = de.Properties;
                             foreach (PropertyValueCollection col in pc)
@@ -265,6 +289,40 @@ namespace UserInfos
                 
             }
             return authenticated;
+        }
+
+        public static bool AuthenticatedWithWindowsIdentity()
+        {
+            WindowsIdentity currentAccount = WindowsIdentity.GetCurrent();
+            return currentAccount.IsAuthenticated;
+        }
+
+        public static string GetTokenFromAD(string clientId, string appKey)
+        {
+            string tenantName = "incas.com";
+            string authString = "https://login.microsoftonline.com/" + tenantName;
+            Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext authenticationContext = new Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext(authString, false);
+            // Config for OAuth client credentials             
+            ClientCredential clientCred = new ClientCredential(clientId, appKey);
+            string resource = "https://graph.windows.net";
+            string token;
+            try
+            {
+                IEnumerable<TokenCacheItem> adList = authenticationContext.TokenCache.ReadItems();
+                Task<AuthenticationResult> authenticationResult = authenticationContext.AcquireTokenAsync(resource, clientCred);
+                token = authenticationResult.Result.AccessToken;
+                return token;
+            }
+            catch (AuthenticationException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Acquiring a token failed with the following error: {0}", ex.Message);
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine("Error detail: {0}", ex.InnerException.Message);
+                }
+                return null;
+            }
         }
     }
 }
