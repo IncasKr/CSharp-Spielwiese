@@ -51,6 +51,12 @@ namespace UserInfos
             Console.WriteLine($"{user} authentication with WindowsIdentity method: {LdapHelper.AuthenticatedWithWindowsIdentity()}");
 
             LdapHelper.GetCurrentUserAccountInfo();
+
+            Console.WriteLine($"Domains details:");
+            foreach (DomainInfo item in LdapHelper.EnumerateDomainControllers())
+            {
+                Console.WriteLine($"\tName: {item.Name} | IP: {item.IP} | OS version: {item.OSVersion}");
+            }
             
            Console.ReadLine();
         }
