@@ -63,9 +63,13 @@ namespace UserInfos
             Console.Write("Please enter the group to which the agent should be assigned:");
             string groupToCheckAgent = GetInputString();
             LdapHelper.GetUserForGroup(user, password, agentToCheck, groupToCheckAgent);
-            
 
-           Console.ReadLine();
+            foreach (Users item in new ADUsersManager().GetADUsers("incas"))
+            {
+                Console.WriteLine($"\tName: {item.UserName} | is mapped: {item.isMapped} | mail: {item.Email}");
+            }
+
+            Console.ReadLine();
         }
     }
 }
