@@ -6,7 +6,7 @@ namespace UserInfos
 {
     class Program
     {
-        private static string GetInputPassword(char passwordCharShowed = '*')
+        private static string GetInputString(string charShowed = null)
         {
             Queue<char> queue = new Queue<char>();
             ConsoleKeyInfo consoleKeyInfo;
@@ -18,7 +18,7 @@ namespace UserInfos
                 if (consoleKeyInfo.Key != ConsoleKey.Backspace)
                 {
                     queue.Enqueue(consoleKeyInfo.KeyChar);
-                    Console.Write(passwordCharShowed);                    
+                    Console.Write(string.IsNullOrEmpty(charShowed) ? consoleKeyInfo.KeyChar : charShowed[0]);                    
                 }
                 else
                 {
@@ -34,7 +34,7 @@ namespace UserInfos
 
             if (consoleKeyInfo.Key == ConsoleKey.Enter)
             {
-                Console.Write(consoleKeyInfo.KeyChar);
+                Console.WriteLine(consoleKeyInfo.KeyChar);
             }
             
             return new string(queue.ToArray());
@@ -43,21 +43,28 @@ namespace UserInfos
         static void Main(string[] args)
         {
             string user = Environment.UserName;
-            Console.Write("Please geven the password:");
-            string password = GetInputPassword();
+            Console.Write("Please enter the AD user password:");
+            string password = GetInputString("*");
             
             Console.WriteLine($"{user} authentication with DirectoryEntry method: {LdapHelper.AuthenticatedWithDirectoryEntry("LDAP://incas.com", user, password)}");
             Console.WriteLine($"{user} authentication with LdapConnection method: {LdapHelper.AuthenticatedWithLdapConnection(password)}");
             Console.WriteLine($"{user} authentication with WindowsIdentity method: {LdapHelper.AuthenticatedWithWindowsIdentity()}");
-
+            
             LdapHelper.GetCurrentUserAccountInfo();
-
+            
             Console.WriteLine($"Domains details:");
             foreach (DomainInfo item in LdapHelper.EnumerateDomainControllers())
             {
                 Console.WriteLine($"\tName: {item.Name} | IP: {item.IP} | OS version: {item.OSVersion}");
             }
+
+            Console.Write("Please enter the agent name to check:");
+            string agentToCheck = GetInputString();
+            Console.Write("Please enter the group to which the agent should be assigned:");
+            string groupToCheckAgent = GetInputString();
+            LdapHelper.GetUserForGroup(user, password, agentToCheck, groupToCheckAgent);
             
+
            Console.ReadLine();
         }
     }

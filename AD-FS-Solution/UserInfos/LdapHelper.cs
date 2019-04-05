@@ -7,6 +7,7 @@ using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.ActiveDirectory;
 using System.DirectoryServices.Protocols;
 using System.IdentityModel.Tokens;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Security.Authentication;
@@ -52,6 +53,7 @@ namespace UserInfos
         private const int NORMAL_ACCOUNT = 0x0200;
 
         public static Agent CurrentUser = new Agent();
+        
 
         #region Token parameters
 
@@ -161,7 +163,7 @@ namespace UserInfos
         #endregion
 
         #region Authentication
-
+        
         /// <summary>
         /// Validation for a single user to the active directory
         /// </summary>
@@ -169,6 +171,9 @@ namespace UserInfos
         /// <returns>Returns true if the user is authenticated, otherwise false.</returns>
         public static bool AuthenticatedWithLdapConnection(string password)
         {
+            NetworkCredential test = new NetworkCredential();
+            var t1 = test.GetCredential(new Uri("LDAP://incas.com"), "Basic");
+            //var t2 = test.GetCredential("", 0, "");
             bool validation;
             try
             {
@@ -228,7 +233,7 @@ namespace UserInfos
         }
 
         #endregion
-
+        
         #region Display
 
         /// <summary>
@@ -243,6 +248,7 @@ namespace UserInfos
             {
                 if (child.SchemaClassName == "User")
                 {
+                    string test = child.Name;
                     userNames += child.Name + Environment.NewLine; //Iterates and binds all user using a newline
                     authenticationType += child.Username + Environment.NewLine;
                 }
@@ -267,6 +273,7 @@ namespace UserInfos
             // if found....
             if (group != null)
             {
+                Console.WriteLine("************************Groups************************");
                 foreach (Principal p in group.GetMembers())
                 {
                     Console.WriteLine("{0}: {1}", p.StructuralObjectClass, p.DisplayName);
@@ -474,6 +481,112 @@ namespace UserInfos
             {
                 return new ArrayList();
             }
+        }
+
+        public static void Getgroups1()
+        {
+            DirectoryEntry de = new DirectoryEntry("LDAP://incas.com");
+            DirectorySearcher searcher = new DirectorySearcher(de)
+            {
+                Filter = "(&(ObjectClass=person)(cn=*douabalet*))"
+            };
+            searcher.PropertiesToLoad.Add("distinguishedName");
+            searcher.PropertiesToLoad.Add("sAMAccountName");
+            searcher.PropertiesToLoad.Add("name");
+            searcher.PropertiesToLoad.Add("mail");
+            searcher.PropertiesToLoad.Add("telephoneNumber");
+            searcher.PropertiesToLoad.Add("userAccountControl");
+            searcher.PropertiesToLoad.Add("objectSid");
+            SearchResultCollection results = searcher.FindAll();
+            int i = 0;
+            foreach (SearchResult res in results)
+            {
+                Console.WriteLine("Result" + Convert.ToString(++i));
+                DisplayProperties("distinguishedName", res);
+                DisplayProperties("sAMAccouontName", res);
+                DisplayProperties("name", res);
+                DisplayProperties("mail", res);
+                DisplayProperties("telephoneNumber", res);
+                DisplayProperties("userAccountControl", res);
+                DisplayProperties("objectSid", res);
+                Console.WriteLine();
+            }
+
+
+        }
+        private static void DisplayProperties(string property, SearchResult res)
+        {
+            Console.WriteLine("\t" + property);
+            ResultPropertyValueCollection objects = res.Properties[property];
+            foreach (object obj in objects)
+            {
+                if (property.ToLower().Equals("useraccountcontrol"))
+                {
+                    string accountStatus = Convert.ToBoolean((int)obj & ACCOUNTDISABLE) ? "not activ" : "activ";
+                    string accountType = Convert.ToBoolean((int)obj & NORMAL_ACCOUNT) ? "normal account" : "other account type";
+                    Console.WriteLine($"\t\t Account status: {accountStatus}");
+                    Console.WriteLine($"\t\t Account type: {accountType}");
+                }
+                else
+                {
+                    Console.WriteLine("\t\t" + obj.ToString());
+                }                
+            }
+        }
+
+        public static void GetUserForGroup(string adUser, string adPwd, string agent, string groupName)
+        {
+            List<string> groups = new List<string>();
+            // Connection information
+            var connectionString = "LDAP://incas.com/DC=incas,DC=com";
+            
+            // Split the LDAP Uri
+            var uri = new Uri(connectionString);
+            var host = uri.Host;
+            var container = uri.Segments.Count() >= 1 ? uri.Segments[1] : "";
+
+            try
+            {
+                // Create context to connect to AD
+                var princContext = new PrincipalContext(ContextType.Domain, host, container, adUser, adPwd);
+
+                // Get User
+                UserPrincipal user = UserPrincipal.FindByIdentity(princContext, IdentityType.SamAccountName, agent);
+
+                if (user == null)
+                {
+                    Console.Error.WriteLine($"The user {agent} is not in the system!");
+                    return;
+                }
+
+                foreach (GroupPrincipal group in user.GetGroups())
+                {
+                    groups.Add(group.Name);
+                }
+
+                if (groups.Count == 0)
+                {
+                    Console.Error.WriteLine($"The group {groupName} is not in the system!");
+                    return;
+                }
+
+                if (groups.Exists(g => g.ToLower().Equals(groupName.ToLower())))
+                {
+                    Console.Error.WriteLine($"The user {agent} is assigned to the group {groupName}");
+                    return;
+                }
+                Console.Out.WriteLine($"The user {agent} is not assigned to the group {groupName}");
+                // Browse user's groups
+                foreach (GroupPrincipal group in user.GetGroups())
+                {
+                    Console.Out.WriteLine(group.Name);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.Out.WriteLine(ex.Message);
+            }        
         }
     }
 }
