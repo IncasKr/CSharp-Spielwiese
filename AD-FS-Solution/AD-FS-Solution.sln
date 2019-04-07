@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserInfos", "UserInfos\UserInfos.csproj", "{C41E47D2-A9F5-41DE-8C36-BCDC9F69E4E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinSelfhostSample", "OwinSelfhostSample\OwinSelfhostSample.csproj", "{55BBFE26-AC5E-4BEF-9EC2-8E3E781E5F7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C41E47D2-A9F5-41DE-8C36-BCDC9F69E4E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C41E47D2-A9F5-41DE-8C36-BCDC9F69E4E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C41E47D2-A9F5-41DE-8C36-BCDC9F69E4E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55BBFE26-AC5E-4BEF-9EC2-8E3E781E5F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55BBFE26-AC5E-4BEF-9EC2-8E3E781E5F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55BBFE26-AC5E-4BEF-9EC2-8E3E781E5F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55BBFE26-AC5E-4BEF-9EC2-8E3E781E5F7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
