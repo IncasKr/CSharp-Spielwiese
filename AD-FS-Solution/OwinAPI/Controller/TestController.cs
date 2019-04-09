@@ -11,7 +11,7 @@ namespace OwinAPI.Controller
             return new string[] { "One", "Two", "Three" };
         }
 
-        public string GetFacultyOf(int id)
+        public string GetFacultyOf(int id = 0)
         {
             return $"{DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss.fff")} - Faculty of {id} = {Faculty(id)}";
         }
