@@ -4,7 +4,7 @@ using System.Web.Http;
 
 namespace OwinAPI.Controller
 {
-    class TestController : ApiController
+    public class TestController : ApiController
     {
         public IEnumerable<string> GetTest()
         {
