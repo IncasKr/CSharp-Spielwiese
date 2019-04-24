@@ -2,8 +2,8 @@
 using Owin;
 using System.Web.Http;
 
-[assembly: OwinStartup(typeof(OwinAPI.Startup))]
-namespace OwinAPI
+[assembly: OwinStartup(typeof(OwinLib.Startup))]
+namespace OwinLib
 {
     public class Startup
     {
@@ -14,8 +14,8 @@ namespace OwinAPI
             HttpConfiguration config = new HttpConfiguration();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}/",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "api/{controller}/{action}/{id}/{val}/",
+                defaults: new { id = RouteParameter.Optional, val = RouteParameter.Optional }
             );
             app.UseWebApi(config);
         }

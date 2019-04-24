@@ -311,6 +311,8 @@ namespace UserInfos
                                 Console.WriteLine($"\tAccount name: {de.Properties["sAMAccountName"].Value}");
                                 Console.WriteLine($"\tLine: {de.Properties["telephoneNumber"].Value}");
                                 Console.WriteLine($"\tMail: {de.Properties["mail"].Value}");
+                                Console.WriteLine($"\tdepartment: {de.Properties["department"].Value}");
+                                Console.WriteLine($"\temployeeId: {de.Properties["employeeId"].Value}");
                                 string accountStatus = Convert.ToBoolean((int)de.Properties["userAccountControl"].Value & ACCOUNTDISABLE) ? "not activ" : "activ";
                                 Console.WriteLine($"\tUser account status: {accountStatus}");
                                 string accountType = Convert.ToBoolean((int)de.Properties["userAccountControl"].Value & NORMAL_ACCOUNT) ? "normal account" : "other account type";
@@ -344,12 +346,12 @@ namespace UserInfos
                                 Console.WriteLine("###########################################################################");
 
                                 Console.WriteLine();
-                                /*PropertyCollection pc = de.Properties;
+                                PropertyCollection pc = de.Properties;
                                 foreach (PropertyValueCollection col in pc)
                                 {
                                     Console.WriteLine(col.PropertyName + " : " + col.Value);
                                     Console.WriteLine();
-                                }*/
+                                }
                             }
                         }
                         Console.WriteLine("**********Current user info details***********************");
@@ -438,11 +440,26 @@ namespace UserInfos
         /// </summary>
         /// <param name="largeInteger"></param>
         /// <returns></returns>
-        private static DateTime ConvertLargeIntegerToDate(object largeInteger)
+        public static DateTime ConvertLargeIntegerToDate(object largeInteger)
         {
+            long highPart, lowPart;
             Type type = largeInteger.GetType();
-            int highPart = (int)type.InvokeMember("HighPart", BindingFlags.GetProperty, null, largeInteger, null);
-            int lowPart = (int)type.InvokeMember("LowPart", BindingFlags.GetProperty | BindingFlags.Public, null, largeInteger, null);
+            if (type.Name.Equals("__ComObject"))
+            {
+                highPart = (int)type.InvokeMember("HighPart", BindingFlags.GetProperty, null, largeInteger, null);
+                lowPart = (int)type.InvokeMember("LowPart", BindingFlags.GetProperty | BindingFlags.Public, null, largeInteger, null);
+            }
+            else
+            {
+                highPart = (long)largeInteger;
+                lowPart = DateTime.Now.Ticks;
+            }
+
+            if (highPart == 9223372036854775807)
+            {
+                return DateTime.FromFileTimeUtc(0);
+            }
+            
             long value = (long)highPart << 32;
             value -= lowPart;
             if (value == long.MaxValue || value <= 0 || DateTime.MaxValue.ToFileTimeUtc() <= value)
@@ -453,7 +470,7 @@ namespace UserInfos
             return DateTime.FromFileTimeUtc(value);
         }
 
-        private static long ConvertLargeIntegerToLong(object largeInteger)
+        public static long ConvertLargeIntegerToLong(object largeInteger)
         {
             return ConvertLargeIntegerToDate(largeInteger).Ticks;
         }
@@ -538,12 +555,12 @@ namespace UserInfos
         {
             List<string> groups = new List<string>();
             // Connection information
-            var connectionString = "LDAP://incas.com/DC=incas,DC=com";
+            var connectionString = $"LDAP://incas.com/DC=incas,DC=com/";
             
             // Split the LDAP Uri
             var uri = new Uri(connectionString);
             var host = uri.Host;
-            var container = uri.Segments.Count() >= 1 ? uri.Segments[1] : "";
+            var container = uri.Segments.Count() > 1 ? uri.Segments[1].Trim('/') : null;
 
             try
             {
