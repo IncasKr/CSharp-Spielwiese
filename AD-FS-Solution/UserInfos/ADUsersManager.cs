@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
+using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
@@ -14,7 +15,7 @@ namespace UserInfos
             List<Users> lstADUsers = new List<Users>();
             try
             {
-                string DomainPath = $"LDAP://{domain}/DC={domain.Split('.')[0]},DC=com";
+                string DomainPath = $"LDAP://{domain}";
                 DirectoryEntry searchRoot = new DirectoryEntry(DomainPath);
                 DirectorySearcher search = new DirectorySearcher(searchRoot)
                 {
@@ -79,6 +80,25 @@ namespace UserInfos
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        public static bool IsAuthenticated(string accountName)
+        {
+            Uri ServerURI = new Uri("LDAP://incas.com/DC=incas,DC=com");
+            var ServerHost = ServerURI.Host;
+            var container = ServerURI.Segments.Count() > 1 ? ServerURI.Segments[1].Trim('/') : null;
+            try
+            {
+                // Create context to connect to AD
+                var princContext = new PrincipalContext(ContextType.Domain, ServerHost, container);
+                // Get User
+                var user = UserPrincipal.FindByIdentity(princContext, IdentityType.SamAccountName, accountName);
+                return user != null && (user.Enabled??false);
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }

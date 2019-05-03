@@ -311,8 +311,9 @@ namespace UserInfos
                                 Console.WriteLine($"\tAccount name: {de.Properties["sAMAccountName"].Value}");
                                 Console.WriteLine($"\tLine: {de.Properties["telephoneNumber"].Value}");
                                 Console.WriteLine($"\tMail: {de.Properties["mail"].Value}");
-                                Console.WriteLine($"\tdepartment: {de.Properties["department"].Value}");
-                                Console.WriteLine($"\temployeeId: {de.Properties["employeeId"].Value}");
+                                Console.WriteLine($"\tMobile: {de.Properties["mobile"].Value}");
+                                Console.WriteLine($"\tGUID: {de.Properties["objectGuid"].Value}");
+                                Console.WriteLine($"\tSID: {de.Properties["objectSid"].Value}");
                                 string accountStatus = Convert.ToBoolean((int)de.Properties["userAccountControl"].Value & ACCOUNTDISABLE) ? "not activ" : "activ";
                                 Console.WriteLine($"\tUser account status: {accountStatus}");
                                 string accountType = Convert.ToBoolean((int)de.Properties["userAccountControl"].Value & NORMAL_ACCOUNT) ? "normal account" : "other account type";
@@ -565,7 +566,7 @@ namespace UserInfos
             try
             {
                 // Create context to connect to AD
-                var princContext = new PrincipalContext(ContextType.Domain, host, container, adUser, adPwd);
+                var princContext = new PrincipalContext(ContextType.Domain, host, container/*, adUser, adPwd*/);
 
                 // Get User
                 UserPrincipal user = UserPrincipal.FindByIdentity(princContext, IdentityType.SamAccountName, agent);
@@ -586,18 +587,18 @@ namespace UserInfos
                     Console.Error.WriteLine($"The group {groupName} is not in the system!");
                     return;
                 }
-
+                // Browse user's groups
+                foreach (string grp in groups)
+                {
+                    Console.Out.WriteLine(grp);
+                }
                 if (groups.Exists(g => g.ToLower().Equals(groupName.ToLower())))
                 {
                     Console.Error.WriteLine($"The user {agent} is assigned to the group {groupName}");
                     return;
                 }
                 Console.Out.WriteLine($"The user {agent} is not assigned to the group {groupName}");
-                // Browse user's groups
-                foreach (GroupPrincipal group in user.GetGroups())
-                {
-                    Console.Out.WriteLine(group.Name);
-                }
+                
             }
             catch (Exception ex)
             {
@@ -605,5 +606,243 @@ namespace UserInfos
                 Console.Out.WriteLine(ex.Message);
             }        
         }
+
+        public static List<UserInfo> GetADUsers(string hostname, string[] groupsToLook, bool onlyActivated = false)
+        {
+            List<UserInfo> results = new List<UserInfo>();
+            if (string.IsNullOrWhiteSpace(hostname))
+            {
+                return results;
+            }
+            string[] dParams = hostname.Split('.');
+            string dParamsStr = string.Empty;
+            if (dParams.Length >= 2)
+            {
+                dParamsStr += $"DC={dParams[dParams.Length - 2]},DC={dParams[dParams.Length - 1]}";
+            }
+            string adURL = $"LDAP://{hostname}/{dParamsStr}";
+            
+            try
+            {
+                List<string> accounts = new List<string>();
+                // Split the LDAP Uri.
+                var uri = new Uri(adURL);
+                var host = uri.Host;
+                var container = uri.Segments.Count() > 1 ? uri.Segments[1].Trim('/') : null;
+                // Gets account names from directory entry.
+                using (DirectoryEntry searchRoot = new DirectoryEntry(adURL))
+                {
+                    DirectorySearcher search = new DirectorySearcher(searchRoot)
+                    {
+                        Filter = "(&(objectClass=user)(objectCategory=person))"
+                    };
+                    search.PropertiesToLoad.Add("samaccountname");
+
+                    foreach (SearchResult res in search.FindAll())
+                    {
+                        accounts.Add((string)res.Properties["samaccountname"][0]);
+                    }
+                }
+
+                // Create context to get users info from AD.
+                using (var princContext = new PrincipalContext(ContextType.Domain, host, container))
+                {
+                    foreach (var account in accounts)
+                    {
+                        // Gets User
+                        UserPrincipal user = UserPrincipal.FindByIdentity(princContext, IdentityType.SamAccountName, account);
+                        bool accountEnabled = user.Enabled ?? false;
+                        if (user == null || string.IsNullOrWhiteSpace(user.EmailAddress) ||
+                            string.IsNullOrWhiteSpace(user.Surname) || (onlyActivated && !accountEnabled))
+                        {
+                            continue;
+                        }
+                        // Gets user groups
+                        /*List<string> groups = new List<string>();
+                        foreach (GroupPrincipal group in user.GetGroups())
+                        {
+                            groups.Add(group.Name);
+                        }*/
+
+                        // Checks whether the user is assigned to one of the groups entered as a parameter.
+                        if (groupsToLook != null && !groupsToLook.Any(grp => user.IsMemberOf(princContext, IdentityType.Name, grp.ToLower())))
+                        {
+                            continue;
+                        }
+                        // populates user info.
+                        UserInfo objSurveyUsers = new UserInfo()
+                        {
+                            FirstName = user.GivenName,
+                            LastName = user.Surname,
+                            Account = account.ToLower(),
+                            Line = user.VoiceTelephoneNumber,
+                            Email = user.EmailAddress,
+                            IsEnabled = user.Enabled ?? false//,
+                            //Groups = groups
+                        };
+                        results.Add(objSurveyUsers);
+                    }
+                }                               
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            results.Sort(delegate (UserInfo x, UserInfo y)
+            {
+                if (x.Account == null && y.Account == null) return 0;
+                else if (x.Account == null) return -1;
+                else if (y.Account == null) return 1;
+                else return x.Account.CompareTo(y.Account);
+            });
+            return results;
+        }
+
+        public static List<GroupInfo> GetADGroups(string hostname, string[] groupsToLook, bool onlyActivated = false)
+        {
+            List<GroupInfo> results = new List<GroupInfo>();
+            if (string.IsNullOrWhiteSpace(hostname))
+            {
+                return results;
+            }
+            string[] dParams = hostname.Split('.');
+            string dParamsStr = string.Empty;
+            if (dParams.Length >= 2)
+            {
+                dParamsStr += $"DC={dParams[dParams.Length - 2]},DC={dParams[dParams.Length - 1]}";
+            }
+            string adURL = $"LDAP://{hostname}/{dParamsStr}";
+
+            try
+            {
+                List<string> accounts = new List<string>();
+                // Split the LDAP Uri.
+                var uri = new Uri(adURL);
+                var host = uri.Host;
+                var container = uri.Segments.Count() > 1 ? uri.Segments[1].Trim('/') : null;
+                // Gets account names from directory entry.
+                using (DirectoryEntry searchRoot = new DirectoryEntry(adURL))
+                {
+                    DirectorySearcher search = new DirectorySearcher(searchRoot)
+                    {
+                        // All not empty groups
+                        Filter = "(&(objectClass=group)(member=*))"
+                    };
+                    search.PropertiesToLoad.Add("samaccountname");
+                    foreach (SearchResult res in search.FindAll())
+                    {
+                        accounts.Add((string)res.Properties["samaccountname"][0]);
+                    }
+                }
+                // Create context to get users info from AD.
+                using (var princContext = new PrincipalContext(ContextType.Domain, host, container))
+                {
+                    foreach (var account in accounts)
+                    {
+                        // Gets group
+                        GroupPrincipal group = GroupPrincipal.FindByIdentity(princContext, IdentityType.SamAccountName, account);
+                        if (group == null)
+                        {
+                            continue;
+                        }                        
+                        // populates user info.
+                        GroupInfo objSurvey = new GroupInfo()
+                        {
+                            GUID = group.Guid.GetValueOrDefault().ToString(),
+                            Name = group.Name
+                        };
+                        results.Add(objSurvey);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            results.Sort(delegate (GroupInfo grp1, GroupInfo grp2)
+            {
+                if (grp1.Name == null && grp2.Name == null) return 0;
+                else if (grp1.Name == null) return -1;
+                else if (grp2.Name == null) return 1;
+                else return grp1.Name.CompareTo(grp2.Name);
+            });
+            return results;
+        }
+
+        public static List<UserInfo> GetUsersFrom(string[] departmentsToLook, bool onlyActivated = false)
+        {
+            List<UserInfo> lstADUsers = new List<UserInfo>();
+            try
+            {
+                string DomainPath = $"LDAP://incas.com/DC=incas,DC=com";
+                DirectoryEntry searchRoot = new DirectoryEntry(DomainPath);
+                DirectorySearcher search = new DirectorySearcher(searchRoot)
+                {
+                    Filter = "(&(objectClass=user)(objectCategory=person))"
+                };
+                search.PropertiesToLoad.Add("givenName");
+                search.PropertiesToLoad.Add("sn");
+                search.PropertiesToLoad.Add("samaccountname");
+                search.PropertiesToLoad.Add("telephoneNumber");
+                search.PropertiesToLoad.Add("mail");
+                search.PropertiesToLoad.Add("userAccountControl");
+                search.PropertiesToLoad.Add("distinguishedName");
+                SearchResultCollection resultCol = search.FindAll();
+
+                if (resultCol != null)
+                {
+                    foreach (SearchResult result in resultCol)
+                    {
+                        string UserNameEmailString = string.Empty;
+                        string tmp = ((String)result.Properties["distinguishedName"][0]);
+                        string[] departments = tmp.Split(',').Where(it => it.ToLower().Contains("ou=")).ToArray().Select(val => new string(val.Split('=')[1].ToCharArray())).ToArray();
+                        bool iscurrentUserEnabled = Convert.ToBoolean((int)result.Properties["userAccountControl"][0] & ACCOUNTDISABLE);
+
+                        if (result.Properties.Contains("samaccountname") &&
+                            result.Properties.Contains("mail") &&
+                            result.Properties.Contains("telephoneNumber") &&
+                            departments.Any(dpt => departmentsToLook.Any(dp => dp.ToLower().Equals(dpt.ToLower()))) &&
+                            (!onlyActivated || iscurrentUserEnabled))
+                        {
+                            UserInfo objSurveyUsers = new UserInfo
+                            {
+                                FirstName = (String)result.Properties["givenName"][0],
+                                LastName = (String)result.Properties["sn"][0],
+                                Account = (String)result.Properties["samaccountname"][0],
+                                Line = (String)result.Properties["telephoneNumber"][0],
+                                Email = (String)result.Properties["mail"][0],
+                                IsEnabled = iscurrentUserEnabled
+                            };
+                            lstADUsers.Add(objSurveyUsers);
+                        }
+                    }
+                }
+                return lstADUsers;
+            }
+            catch (Exception ex)
+            {
+                return lstADUsers;
+            }
+        }
+    }
+
+    public class UserInfo
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FullName { get { return $"{FirstName}, {LastName}"; } }
+        public string Account { get; set; }
+        public string Line { get; set; }
+        public string Email { get; set; }
+        public bool IsEnabled { get; set; }
+        public List<string> Groups { get; set; }        
+    }
+
+    public class GroupInfo
+    {
+        public string GUID { get; set; }
+        public string SID { get; set; }
+        public string Name { get; set; }
+        public string DistinguishedName { get; set; }
     }
 }
