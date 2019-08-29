@@ -57,8 +57,8 @@ namespace UserInfos
             foreach (DomainInfo item in LdapHelper.EnumerateDomainControllers())
             {
                 Console.WriteLine($"\tName: {item.Name} | IP: {item.IP} | OS version: {item.OSVersion}");
-            }*/
-            /*
+            }
+            
             Console.Write("Please enter the agent name to check:");
             string agentToCheck = GetInputString();
             Console.Write("Please enter the group to which the agent should be assigned:");
@@ -73,6 +73,9 @@ namespace UserInfos
             }
             */
             //var adServerAddress = Domain.GetDomain();
+            string test = null;
+            // var val = test.ToLower();
+            Console.WriteLine($"Current domain: {Environment.GetEnvironmentVariable("USERDNSDOMAIN").ToLower()}");
             Console.WriteLine($"##{Domain.GetCurrentDomain().Name}##");
             foreach (GroupInfo item in LdapHelper.GetADGroups("incas.com", null))
             {
