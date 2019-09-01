@@ -19,16 +19,14 @@ namespace LoginSsoAdfs
 
         public void ConfigureAuth(IAppBuilder app)
         {
-            app.UseCookieAuthentication(
-            new CookieAuthenticationOptions
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = CookieAuthenticationDefaults.AuthenticationType
             });
-            app.UseWsFederationAuthentication(
-            new WsFederationAuthenticationOptions
+            app.UseWsFederationAuthentication(new WsFederationAuthenticationOptions
             {
-                MetadataAddress = "https://localhost/weblogon.asp",
-                Wtrealm = "urn:win"
+                MetadataAddress = "https://adfs.incas.de/federationmetadata/2007-06/federationmetadata.xml",
+                Wtrealm = "https://localhost/weblogon.asp"
             });
 
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
