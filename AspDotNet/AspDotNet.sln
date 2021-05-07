@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.438
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "HelloWorld\HelloWorld.csproj", "{CBCA5547-AD47-4D36-89D0-B6002BDD8648}"
 EndProject
@@ -36,6 +36,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFirst.DAL", "CodeFirst.DAL\CodeFirst.DAL.csproj", "{9C21B90B-82A0-4DA4-9F6B-61B42CB00778}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFirst.DTO", "CodeFirst.DTO\CodeFirst.DTO.csproj", "{7B05BD35-07CE-486D-BFE6-7BFF664744D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlTableExtractor", "HtmlTableExtractor\HtmlTableExtractor.csproj", "{112C3F2B-A549-47F4-AA3F-63001FFCA437}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,10 @@ Global
 		{7B05BD35-07CE-486D-BFE6-7BFF664744D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B05BD35-07CE-486D-BFE6-7BFF664744D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B05BD35-07CE-486D-BFE6-7BFF664744D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{112C3F2B-A549-47F4-AA3F-63001FFCA437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{112C3F2B-A549-47F4-AA3F-63001FFCA437}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{112C3F2B-A549-47F4-AA3F-63001FFCA437}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{112C3F2B-A549-47F4-AA3F-63001FFCA437}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
