@@ -1,0 +1,69 @@
+﻿@model PaginatedList<HtmlTableExtractor.Models.CovidStatistic>
+
+@{
+    ViewData["Title"] = "Statistic";
+}
+
+<p>Percentage of population vaccinated by country</p>
+
+<form action="CovidStatistic" method="get">
+    <div class="form-actions no-color">
+        <p>
+            URL: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Extract" class="btn btn-default" /> |
+            <a asp-action="Index">Reset</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["CountrySortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Country</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["VaccinatedSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Vaccinated People</a>
+</th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TotalSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Total Population</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VaccinatedPeople)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPopulation)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
